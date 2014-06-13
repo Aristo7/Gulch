@@ -1,0 +1,16 @@
+[
+{
+  "modid": "gulch",
+  "name": "Gulch",
+  "description": "'Gulch' a tech mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Aristo7", "horvay"],
+  "credits": "...",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
