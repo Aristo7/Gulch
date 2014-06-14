@@ -80,5 +80,5 @@ artifacts {
 task copyTask(type: Copy) {
     from 'build\\libs\\'
     into '..\\Forge\\eclipse\\mods'
-    include 'Gulch-universal-*.jar'
+    include 'Gulch-deobf-*.jar'
 }
