@@ -48,6 +48,17 @@
     <orderEntry type="library" exported="" name="Gradle: jinput-platform-2.0.5-natives-osx" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jinput-platform-2.0.5-natives-windows" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-reflect-2.10.2" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.1.1119/forgeSrc-1.7.2-10.12.1.1119.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.1.1119/forgeSrc-1.7.2-10.12.1.1119-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
 

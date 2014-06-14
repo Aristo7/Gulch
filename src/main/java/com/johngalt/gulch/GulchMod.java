@@ -1,5 +1,6 @@
 package com.johngalt.gulch;
 
+import com.johngalt.gulch.items.GaltItems;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -7,9 +8,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * Created by olozit on 6/13/2014.
+ * Created on 6/13/2014.
  */
-
 @Mod(modid = References.MODID, version = References.VERSION, name = References.MODNAME)
 public class GulchMod
 {
@@ -19,7 +19,7 @@ public class GulchMod
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
-
+        GaltItems.RegisterItems();
     }
 
     @Mod.EventHandler
