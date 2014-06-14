@@ -3,6 +3,8 @@ package com.johngalt.gulch.tileentities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -118,5 +120,43 @@ public class GaltTileEntityContainer extends TileEntity implements IInventory
     public boolean isItemValidForSlot(int var1, ItemStack var2)
     {
         return true;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTagCompound)
+    {
+        super.readFromNBT(nbtTagCompound);
+        NBTTagList nbttaglist = nbtTagCompound.getTagList("Items", 10); // 10 = NBTTagCompound
+        this.inventory = new ItemStack[this.getSizeInventory()];
+
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+            int j = nbttagcompound.getByte("Slot");
+
+            if (j >= 0 && j < this.inventory.length)
+            {
+                this.inventory[j] = ItemStack.loadItemStackFromNBT(nbttagcompound);
+            }
+        }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound nbtTagCompound)
+    {
+        super.writeToNBT(nbtTagCompound);
+        NBTTagList nbttaglist = new NBTTagList();
+
+        for (int i = 0; i < this.inventory.length; ++i)
+        {
+            if (this.inventory[i] != null)
+            {
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                nbttagcompound.setByte("Slot", (byte)i);
+                this.inventory[i].writeToNBT(nbttagcompound);
+                nbttaglist.appendTag(nbttagcompound);
+            }
+        }
+        nbtTagCompound.setTag("Items", nbttaglist);
     }
 }
