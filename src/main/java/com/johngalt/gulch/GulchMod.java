@@ -19,7 +19,15 @@ public class GulchMod
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+
+    }
+
+    @Mod.EventHandler
+    public static void load(FMLPreInitializationEvent event)
+    {
+        GaltItems.InitializeItems();
         GaltItems.RegisterItems();
+
     }
 
     @Mod.EventHandler
