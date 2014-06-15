@@ -1,11 +1,8 @@
 package com.johngalt.gulch.gui;
 
-import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.References;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 /**
  * Created on 6/14/2014.
@@ -20,7 +17,8 @@ public class GaltGUI extends GuiScreen
      */
     int xSize = 176;
     int ySize = 214;
-    private static final ResourceLocation backgroundimage = new ResourceLocation(References.MODID.toLowerCase() + ":" + "textures/gui/galtgui.png");
+    private static final ResourceLocation backgroundimage = new ResourceLocation(References.MODID.toLowerCase() + ":" +
+                                                                                         "textures/gui/galtguiwithprogress.png");
 
     public GaltGUI()
     {
@@ -37,7 +35,7 @@ public class GaltGUI extends GuiScreen
         // set the y for the texture, Total height - textureSize - 30 (up) / 2,
         int j = (this.height - ySize - 30) / 2;
         // draw the texture
-        drawTexturedModalRect(par2, j, 0, 0, xSize,  ySize);
+        drawTexturedModalRect(par2, j, 0, 0, xSize, ySize);
     }
 
     public boolean doesGuiPauseGame()
