@@ -1,1 +1,9 @@
 item.gulch.blaster_ammo.name=Blaster Ammo
+item.gulch.blaster_rifle.name=Blaster Rifle
+tile.gulch:GaltBlock.name=Galt Ore
+tile.gulch:GaltInteractiveBlock.name=Galt Interactive
+tile.gulch:GaltContainerBlock.name=Galt Container
+
+item.gulch:GaltItem.name=Galt Item
+
+itemGroup.gulch=Gulch Tab

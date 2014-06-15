@@ -15,6 +15,26 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
+
+repositories {
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name "ProfMobius Maven FS"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name 'ForgeFS'
+        url 'http://files.minecraftforge.net/maven'
+    }
+}
+
 //Apply forge plugin
 apply plugin: "forge"
 
@@ -40,6 +60,10 @@ minecraft {
     assetDir = "run/assets"
 }
 version = "${config.minecraft_version}-${config.mod_version}"
+
+dependencies {
+    compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
+}
 
 //From sources, you can exclude stuff if you like, not required.
 processResources{
