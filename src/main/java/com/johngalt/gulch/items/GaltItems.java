@@ -1,6 +1,5 @@
 package com.johngalt.gulch.items;
 
-import com.johngalt.gulch.ItemBlasterRifle;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -9,11 +8,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class GaltItems
 {
     public static ItemBlasterRifle BlasterRifle;
+    public static ItemBlasterAmmo BlasterAmmo;
 
     public static void InitializeItems()
     {
         BlasterRifle = new ItemBlasterRifle();
-
+        BlasterAmmo = new ItemBlasterAmmo();
 
     }
 
@@ -21,7 +21,7 @@ public class GaltItems
     public static void RegisterItems()
     {
         GameRegistry.registerItem(BlasterRifle, "Blaster Rifle");
-
+        GameRegistry.registerItem(BlasterAmmo, "Blaster Ammo");
 
     }
 }

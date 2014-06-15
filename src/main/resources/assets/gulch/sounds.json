@@ -1,0 +1,10 @@
+{
+	"blaster_shot": 
+	{
+		"category": "master",
+		"sounds": 
+			[{
+				"name": "blaster_shot","stream": false
+			}]
+	}
+}

@@ -1,5 +1,6 @@
 package com.johngalt.gulch;
 
+import com.johngalt.gulch.entities.GaltEntities;
 import com.johngalt.gulch.items.GaltItems;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -16,17 +17,22 @@ public class GulchMod
     @SidedProxy(clientSide = References.CLIENTPROXYLOCATION, serverSide = References.COMMONPROXYLOCATION)
     public static CommonProxy proxy;
 
+    @Mod.Instance(References.MODID)
+    public static GulchMod instance;
+
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
-
+        GaltItems.InitializeItems();
+        GaltItems.RegisterItems();
+        GaltEntities.RegisterEntities();
+        proxy.registerRenderers();
     }
 
     @Mod.EventHandler
     public static void load(FMLPreInitializationEvent event)
     {
-        GaltItems.InitializeItems();
-        GaltItems.RegisterItems();
+
 
     }
 

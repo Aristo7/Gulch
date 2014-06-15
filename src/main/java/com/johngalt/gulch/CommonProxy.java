@@ -5,4 +5,8 @@ package com.johngalt.gulch;
  */
 public class CommonProxy
 {
+    public void registerRenderers()
+    {
+
+    }
 }
