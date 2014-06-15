@@ -1,9 +1,6 @@
 package com.johngalt.gulch.tileentities;
 
-import com.johngalt.gulch.GulchMod;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 /**
  * Created on 6/14/2014.

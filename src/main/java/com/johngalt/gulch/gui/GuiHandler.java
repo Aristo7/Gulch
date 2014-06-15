@@ -10,12 +10,14 @@ import net.minecraft.world.World;
  */
 public class GuiHandler implements IGuiHandler
 {
-    public GuiHandler(){}
+    public GuiHandler()
+    {
+    }
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if(ID == 1)
+        if (ID == 1)
         {
             // Create an Object of our TE, so we can give that to our inventory.
             GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
@@ -27,9 +29,8 @@ public class GuiHandler implements IGuiHandler
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if(ID == 0)
-            return new GaltGUI();
-        else if(ID == 1)
+        if (ID == 0) return new GaltGUI();
+        else if (ID == 1)
         {
             // Create an Object of our TE, so we can give that to our GUI.
             GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);

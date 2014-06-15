@@ -10,6 +10,6 @@ public class GaltEntities
 {
     public static void RegisterEntities()
     {
-        EntityRegistry.registerModEntity(EntityBlasterBolt.class, "BlasterBolt",EntityRegistry.findGlobalUniqueEntityId(), GulchMod.instance, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityBlasterBolt.class, "BlasterBolt", EntityRegistry.findGlobalUniqueEntityId(), GulchMod.instance, 120, 3, true);
     }
 }

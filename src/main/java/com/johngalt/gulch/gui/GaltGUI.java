@@ -18,7 +18,7 @@ public class GaltGUI extends GuiScreen
     int xSize = 176;
     int ySize = 214;
     private static final ResourceLocation backgroundimage = new ResourceLocation(References.MODID.toLowerCase() + ":" +
-                                                                                         "textures/gui/galtguiwithprogress.png");
+            "textures/gui/galtguiwithprogress.png");
 
     public GaltGUI()
     {

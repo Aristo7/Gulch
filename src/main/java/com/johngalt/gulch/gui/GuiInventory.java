@@ -83,10 +83,7 @@ public class GuiInventory extends GuiContainer
         par2 = (this.width - arrowUDelta) / 2 + 1;
         j = (this.height - arrowVDelta) / 2 - 34;
         // This time, my V is lower, and my dV depends on how far the smashing progress is.
-        drawTexturedModalRect(par2, j, arrowU, (arrowV + arrowVDelta + 1), arrowUDelta,
-                              Math.round(arrowVDelta * (((float) this.tileEntityTestContainer.getSmashTime() -
-                                      this.tileEntityTestContainer.getSmashTimeRemaining()) /
-                                      this.tileEntityTestContainer.getSmashTime())));
+        drawTexturedModalRect(par2, j, arrowU, (arrowV + arrowVDelta + 1), arrowUDelta, Math.round(arrowVDelta * (((float) this.tileEntityTestContainer.getSmashTime() - this.tileEntityTestContainer.getSmashTimeRemaining()) / this.tileEntityTestContainer.getSmashTime())));
 
     }
 }

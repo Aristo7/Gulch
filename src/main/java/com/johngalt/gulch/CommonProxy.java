@@ -13,6 +13,7 @@ public class CommonProxy
     {
 
     }
+
     public void registerTileEntities()
     {
         GameRegistry.registerTileEntity(GaltTileEntity.class, "GaltTileEntity");

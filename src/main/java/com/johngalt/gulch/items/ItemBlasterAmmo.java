@@ -28,7 +28,7 @@ public class ItemBlasterAmmo extends Item
     @Override
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon(References.MODID +":"+ getUnlocalizedName().substring(5));
+        this.itemIcon = iconRegister.registerIcon(References.MODID + ":" + getUnlocalizedName().substring(5));
     }
 
     @SideOnly(Side.CLIENT)

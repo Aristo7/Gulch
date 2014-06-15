@@ -16,11 +16,11 @@ import net.minecraft.tileentity.TileEntity;
 public class GaltTileEntityContainer extends TileEntity implements IInventory
 {
     private ItemStack[] inventory;
-    private int     INVENTORY_SIZE = 7;
-    private boolean isSmashing     = false;
-    private Block   OUTPUT_ITEM    = Blocks.dirt;
-    private int     smashDuration  = 200;
-    public  int     smashTime      = smashDuration; // The total smash time
+    private int INVENTORY_SIZE = 7;
+    private boolean isSmashing = false;
+    private Block OUTPUT_ITEM = Blocks.dirt;
+    private int smashDuration = 200;
+    public int smashTime = smashDuration; // The total smash time
     public int smashTimeRemaining; // Value to store the remaining smash time
 
     public GaltTileEntityContainer()
@@ -191,8 +191,7 @@ public class GaltTileEntityContainer extends TileEntity implements IInventory
                                 inventory[6].stackSize++;
 
                                 //if input slot is not empty, decrease
-                                if (inventory[0] != null)
-                                    this.decrStackSize(0, 1);
+                                if (inventory[0] != null) this.decrStackSize(0, 1);
                             }
                         }
                         // else put one item in
@@ -201,8 +200,7 @@ public class GaltTileEntityContainer extends TileEntity implements IInventory
                             inventory[6] = new ItemStack(OUTPUT_ITEM, 1);
 
                             //if input slot is not empty, decrease
-                            if (inventory[0] != null)
-                                this.decrStackSize(0, 1);
+                            if (inventory[0] != null) this.decrStackSize(0, 1);
                         }
                     }
                     //done smashing, so set isSmashing to false

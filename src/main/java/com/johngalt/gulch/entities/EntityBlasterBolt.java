@@ -20,9 +20,9 @@ public class EntityBlasterBolt extends EntityThrowable
     {
         super(par1World, par2EntityLiving);
 
-        this.motionX*=2;
-        this.motionY*=2;
-        this.motionZ*=2;
+        this.motionX *= 2;
+        this.motionY *= 2;
+        this.motionZ *= 2;
     }
 
     @Override
@@ -35,6 +35,6 @@ public class EntityBlasterBolt extends EntityThrowable
     @Override
     protected float getGravityVelocity()
     {
-           return 0;
+        return 0;
     }
 }

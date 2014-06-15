@@ -1,9 +1,8 @@
 package com.johngalt.gulch;
 
-import com.johngalt.gulch.entities.GaltEntities;
 import com.johngalt.gulch.blocks.GaltBlocks;
 import com.johngalt.gulch.creativetab.GaltTab;
-import com.johngalt.gulch.gui.GaltGUI;
+import com.johngalt.gulch.entities.GaltEntities;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.items.GaltItems;
 import cpw.mods.fml.common.Mod;
@@ -36,7 +35,8 @@ public class GulchMod
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
-        GaltItems.InitializeItems();
+        GaltItems.init();
+        GaltBlocks.init();
         GaltItems.RegisterItems();
         GaltEntities.RegisterEntities();
         proxy.registerRenderers();

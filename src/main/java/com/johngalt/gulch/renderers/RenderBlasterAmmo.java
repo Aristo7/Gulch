@@ -36,7 +36,7 @@ public class RenderBlasterAmmo extends Render
     @Override
     protected ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.getEntityTexture((EntityBlasterBolt)par1Entity);
+        return this.getEntityTexture((EntityBlasterBolt) par1Entity);
     }
 
     /**
@@ -47,6 +47,6 @@ public class RenderBlasterAmmo extends Render
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.doRender((EntityBlasterBolt)par1Entity, par2, par4, par6, par8, par9);
+        this.doRender((EntityBlasterBolt) par1Entity, par2, par4, par6, par8, par9);
     }
 }

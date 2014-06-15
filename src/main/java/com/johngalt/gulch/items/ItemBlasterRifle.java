@@ -25,7 +25,7 @@ public class ItemBlasterRifle extends Item
     {
         super();
         setCreativeTab(CreativeTabs.tabCombat);
-        setUnlocalizedName("blaster_rifle");
+        setUnlocalizedName(References.MODID + ".blaster_rifle");
         setMaxStackSize(1);
     }
 
@@ -48,7 +48,7 @@ public class ItemBlasterRifle extends Item
     @Override
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon(References.MODID +":"+ getUnlocalizedName().substring(5));
+        this.itemIcon = iconRegister.registerIcon(References.MODID + ":" + getUnlocalizedName().substring(5));
 
     }
 
