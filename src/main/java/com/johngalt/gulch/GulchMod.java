@@ -2,6 +2,8 @@ package com.johngalt.gulch;
 
 import com.johngalt.gulch.blocks.GaltBlocks;
 import com.johngalt.gulch.creativetab.GaltTab;
+import com.johngalt.gulch.dimension.GulchWorldGen;
+import com.johngalt.gulch.dimension.GulchWorldProvider;
 import com.johngalt.gulch.entities.GaltEntities;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.items.GaltItems;
@@ -11,7 +13,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.DimensionManager;
 
 /**
  * Created on 6/13/2014.
@@ -25,7 +29,9 @@ public class GulchMod
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
 
-    private static CreativeTabs tab = new GaltTab(CreativeTabs.getNextID(), References.MODID);
+    private static CreativeTabs tab            = new GaltTab(CreativeTabs.getNextID(), References.MODID);
+    public static  int          gulchDimension = 66;
+    public static GulchWorldGen worldProvider;
 
     public static CreativeTabs getCreativeTab()
     {
@@ -35,6 +41,8 @@ public class GulchMod
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+        worldProvider = new GulchWorldGen();
+
         GaltItems.init();
         GaltBlocks.init();
         GaltItems.RegisterItems();
@@ -51,6 +59,8 @@ public class GulchMod
     @Mod.EventHandler
     public static void postInit(FMLPostInitializationEvent event)
     {
-
+        GameRegistry.registerWorldGenerator(worldProvider, gulchDimension);
+        DimensionManager.registerProviderType(GulchMod.gulchDimension, GulchWorldProvider.class, false);
+        DimensionManager.registerDimension(GulchMod.gulchDimension, GulchMod.gulchDimension);
     }
 }
