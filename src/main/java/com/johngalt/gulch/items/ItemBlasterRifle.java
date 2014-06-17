@@ -41,14 +41,7 @@ public class ItemBlasterRifle extends Item
             if (!par2World.isRemote)
             {
                 par2World.spawnEntityInWorld(new EntityBlasterBolt(par2World, par3EntityPlayer));
-
-                float zOffset = (float) Math.cos(Math.toRadians(par3EntityPlayer.rotationYaw+40))*0.25F;
-                float xOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationYaw+40)))*0.25F;
-                float yOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationPitch)))*0.25F;
-
-                //Z +S -N    X +E -W
-                //for (int i = 0; i < 10; i++)
-                GaltEffects.spawnParticle(GaltEffects.GaltEffect.Flame, par3EntityPlayer.posX + xOffset, par3EntityPlayer.posY + 1.65F + yOffset, par3EntityPlayer.posZ + zOffset, 0.0F, 0.0F, 0.0F);
+                GaltEffects.spawnParticleAtHeldItem(GaltEffects.GaltEffect.Flame, par3EntityPlayer, 0.0F, 0.0F, 0.0F);
             }
         }
 
