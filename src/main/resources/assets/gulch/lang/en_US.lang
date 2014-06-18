@@ -4,6 +4,7 @@ tile.gulch:GaltBlock.name=Galt Ore
 tile.gulch:GaltInteractiveBlock.name=Galt Interactive
 tile.gulch:GaltContainerBlock.name=Galt Container
 tile.gulch:GulchPortalBlock.name=Gulch Portal
+tile.gulch:GulchPortalFrameBlock.name=Gulch Portal Frame
 
 item.gulch:GaltItem.name=Galt Item
 

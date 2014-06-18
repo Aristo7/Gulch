@@ -140,7 +140,12 @@ public class GulchPortalBlock extends BlockPortal
     @Override
     public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5)
     {
-        byte b0 = 0;
+        // TODO - fix removing the portal
+        return;
+
+        // This logic removes the portal if the frame is broken by replacing all portal blocks with air
+
+        /*byte b0 = 0;
         byte b1 = 1;
 
         if (par1World.getBlock(par2 - 1, par3, par4) == this || par1World.getBlock(par2 + 1, par3, par4) == this)
@@ -188,6 +193,6 @@ public class GulchPortalBlock extends BlockPortal
             {
                 par1World.setBlockToAir(par2, par3, par4);
             }
-        }
+        }*/
     }
 }
