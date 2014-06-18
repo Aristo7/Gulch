@@ -1,5 +1,6 @@
 package com.johngalt.gulch.items;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.References;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,7 +20,7 @@ public class ItemBlasterAmmo extends Item
     public ItemBlasterAmmo()
     {
         super();
-        setCreativeTab(CreativeTabs.tabCombat);
+        setCreativeTab(GulchMod.getCreativeTab());
         setUnlocalizedName(References.MODID + ".blaster_ammo");
         setMaxStackSize(64);
     }

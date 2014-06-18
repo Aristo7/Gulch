@@ -10,6 +10,7 @@ import net.minecraft.world.World;
  */
 public class EntityBlasterBolt extends EntityThrowable
 {
+    int tickCount = -1;
 
     public EntityBlasterBolt(World par1World)
     {
@@ -20,16 +21,29 @@ public class EntityBlasterBolt extends EntityThrowable
     {
         super(par1World, par2EntityLiving);
 
-        this.motionX *= 2;
-        this.motionY *= 2;
-        this.motionZ *= 2;
+        setThrowableHeading(this.motionX, this.motionY, this.motionZ, 3.0F, 1.0F);
+    }
+
+    @Override
+    public void onUpdate()
+    {
+
+        super.onUpdate();
+
+        if (tickCount >= 0)
+        {
+            if (tickCount++ > 1)
+            {
+                this.setDead();
+            }
+        }
     }
 
     @Override
     protected void onImpact(MovingObjectPosition var1)
     {
         this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 1.0F, true);
-        this.setDead();
+        tickCount = 0;
     }
 
     @Override
