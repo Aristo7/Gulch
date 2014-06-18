@@ -3,6 +3,7 @@ item.gulch.blaster_rifle.name=Blaster Rifle
 tile.gulch:GaltBlock.name=Galt Ore
 tile.gulch:GaltInteractiveBlock.name=Galt Interactive
 tile.gulch:GaltContainerBlock.name=Galt Container
+tile.gulch:GulchPortalBlock.name=Gulch Portal
 
 item.gulch:GaltItem.name=Galt Item
 

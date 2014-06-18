@@ -26,6 +26,6 @@ public class GulchWorldProvider extends WorldProvider
     @Override
     public String getDimensionName()
     {
-        return "Tutorial";
+        return "Gulch";
     }
 }

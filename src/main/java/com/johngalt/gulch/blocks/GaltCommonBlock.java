@@ -30,8 +30,7 @@ public class GaltCommonBlock extends Block
     @Override
     public String getUnlocalizedName()
     {
-        String tmp = String.format("tile.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
-        return tmp;
+        return String.format("tile.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
     }
 
     @Override

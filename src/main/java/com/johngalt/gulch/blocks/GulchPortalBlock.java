@@ -7,6 +7,7 @@ package com.johngalt.gulch.blocks;
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.References;
 import com.johngalt.gulch.dimension.GulchTeleporter;
+import com.johngalt.gulch.lib.Strings;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
@@ -21,7 +22,7 @@ public class GulchPortalBlock extends BlockPortal
     public GulchPortalBlock()
     {
         super();
-        setBlockName("GulchPortalBlock");
+        setBlockName(Strings.GulchPortalBlockName);
         this.setCreativeTab(GulchMod.getCreativeTab());
 
         GameRegistry.registerBlock(this, this.getUnwrappedUnlocalizedName(this.getUnlocalizedName()));
@@ -73,12 +74,12 @@ public class GulchPortalBlock extends BlockPortal
         byte b0 = 0;
         byte b1 = 0;
 
-        if (par1World.getBlock(par2 - 1, par3, par4) == Blocks.sandstone || par1World.getBlock(par2 + 1, par3, par4) == Blocks.sandstone)
+        if (par1World.getBlock(par2 - 1, par3, par4) == GaltBlocks.portalFrame || par1World.getBlock(par2 + 1, par3, par4) == GaltBlocks.portalFrame)
         {
             b0 = 1;
         }
 
-        if (par1World.getBlock(par2, par3, par4 - 1) == Blocks.sandstone || par1World.getBlock(par2, par3, par4 + 1) == Blocks.sandstone)
+        if (par1World.getBlock(par2, par3, par4 - 1) == GaltBlocks.portalFrame || par1World.getBlock(par2, par3, par4 + 1) == GaltBlocks.portalFrame)
         {
             b1 = 1;
         }
@@ -111,7 +112,7 @@ public class GulchPortalBlock extends BlockPortal
 
                         if (flag)
                         {
-                            if (j1 != Blocks.sandstone)
+                            if (j1 != GaltBlocks.portalFrame)
                             {
                                 return false;
                             }
@@ -154,7 +155,7 @@ public class GulchPortalBlock extends BlockPortal
         {
         }
 
-        if (par1World.getBlock(par2, i1 - 1, par4) != Blocks.sandstone)
+        if (par1World.getBlock(par2, i1 - 1, par4) != GaltBlocks.portalFrame)
         {
             par1World.setBlockToAir(par2, par3, par4);
         }
@@ -166,7 +167,7 @@ public class GulchPortalBlock extends BlockPortal
             {
             }
 
-            if (j1 == 3 && par1World.getBlock(par2, i1 + j1, par4) == Blocks.sandstone)
+            if (j1 == 3 && par1World.getBlock(par2, i1 + j1, par4) == GaltBlocks.portalFrame)
             {
                 boolean flag = par1World.getBlock(par2 - 1, par3, par4) == this || par1World.getBlock(par2 + 1, par3, par4) == this;
                 boolean flag1 = par1World.getBlock(par2, par3, par4 - 1) == this || par1World.getBlock(par2, par3, par4 + 1) == this;
@@ -177,7 +178,7 @@ public class GulchPortalBlock extends BlockPortal
                 }
                 else
                 {
-                    if ((par1World.getBlock(par2 + b0, par3, par4 + b1) != Blocks.sandstone || par1World.getBlock(par2 - b0, par3, par4 - b1) != this) && (par1World.getBlock(par2 - b0, par3, par4 - b1) != Blocks.sandstone || par1World.getBlock(par2 + b0, par3, par4 + b1) != this))
+                    if ((par1World.getBlock(par2 + b0, par3, par4 + b1) != GaltBlocks.portalFrame || par1World.getBlock(par2 - b0, par3, par4 - b1) != this) && (par1World.getBlock(par2 - b0, par3, par4 - b1) != GaltBlocks.portalFrame || par1World.getBlock(par2 + b0, par3, par4 + b1) != this))
                     {
                         par1World.setBlockToAir(par2, par3, par4);
                     }

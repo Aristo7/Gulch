@@ -4,11 +4,6 @@ package com.johngalt.gulch.dimension;
  * Created by on 6/16/2014.
  */
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
 import com.johngalt.gulch.blocks.GaltBlocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -19,6 +14,11 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class GulchTeleporter extends Teleporter
 {
@@ -35,7 +35,7 @@ public class GulchTeleporter extends Teleporter
     private final LongHashMap destinationCoordinateCache = new LongHashMap();
 
     /**
-     * A list of valid keys for the destinationCoordainteCache. These are based on the X & Z of the players initial
+     * A list of valid keys for the destinationCoordinateCache. These are based on the X & Z of the players initial
      * location.
      */
     @SuppressWarnings("rawtypes")
@@ -79,7 +79,7 @@ public class GulchTeleporter extends Teleporter
                         int l1 = j + j1;
                         int i2 = k + i1 * b1 - l * b0;
                         boolean flag = j1 < 0;
-                        this.worldServerInstance.setBlock(k1, l1, i2, flag ? Blocks.sandstone : Blocks.air);
+                        this.worldServerInstance.setBlock(k1, l1, i2, flag ? GaltBlocks.portalFrame : Blocks.air);
                     }
                 }
             }
@@ -468,7 +468,7 @@ public class GulchTeleporter extends Teleporter
                         j3 = j5 + l2;
                         i4 = j2 + (i3 - 1) * l5 - k2 * k5;
                         flag = l2 < 0;
-                        this.worldServerInstance.setBlock(k3, j3, i4, flag ? Blocks.sandstone : Blocks.air);
+                        this.worldServerInstance.setBlock(k3, j3, i4, flag ? GaltBlocks.portalFrame : Blocks.air);
                     }
                 }
             }
@@ -485,7 +485,7 @@ public class GulchTeleporter extends Teleporter
                     i4 = j2 + (i3 - 1) * l5;
                     flag = i3 == 0 || i3 == 3 || l2 == -1 || l2 == 3;
                     this.worldServerInstance.setBlock(k3, j3, i4,
-                            flag ? Blocks.sandstone : GaltBlocks.portalBlock, 0, 2);
+                            flag ? GaltBlocks.portalFrame : GaltBlocks.portalBlock, 0, 2);
                 }
             }
 
@@ -535,7 +535,7 @@ public class GulchTeleporter extends Teleporter
     public class PortalPosition extends ChunkCoordinates
     {
         /**
-         * The worldtime at which this PortalPosition was last verified
+         * The world time at which this PortalPosition was last verified
          */
         public long lastUpdateTime;
 
