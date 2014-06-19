@@ -19,10 +19,8 @@ public class GaltContainerBlock extends GaltCommonContainer
     protected GaltContainerBlock()
     {
         super(Material.rock);
-        this.setCreativeTab(GulchMod.getCreativeTab());
-        this.setBlockName(Strings.GaltContainerBlockName);
 
-        GaltBlocks.register(this);
+
     }
 
     @Override

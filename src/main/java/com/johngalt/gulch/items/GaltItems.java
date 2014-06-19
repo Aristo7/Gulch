@@ -3,11 +3,15 @@ package com.johngalt.gulch.items;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created on 6/13/2014.
  */
 public class GaltItems
 {
+
     public static ItemBlasterRifle BlasterRifle;
     public static ItemBlasterAmmo BlasterAmmo;
 
@@ -22,7 +26,7 @@ public class GaltItems
 
     public static void register(GaltCommonItem item)
     {
-        GameRegistry.registerItem(item, item.getUnwrappedUnlocalizedName(item.getUnlocalizedName()));
+        GameRegistry.registerItem(item, item.getUnwrappedUnlocalizedName());
     }
 
 

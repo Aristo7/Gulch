@@ -21,11 +21,11 @@ public class GaltBlocks
 
     public static void register(GaltCommonBlock block)
     {
-        GameRegistry.registerBlock(block, block.getUnwrappedUnlocalizedName(block.getUnlocalizedName()));
+        GameRegistry.registerBlock(block, block.getUnwrappedUnlocalizedName());
     }
 
     public static void register(GaltCommonContainer block)
     {
-        GameRegistry.registerBlock(block, block.getUnwrappedUnlocalizedName(block.getUnlocalizedName()));
+        GameRegistry.registerBlock(block, block.getUnwrappedUnlocalizedName());
     }
 }

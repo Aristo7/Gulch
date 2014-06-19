@@ -16,9 +16,6 @@ public class GaltInteractiveBlock extends GaltCommonBlock
     public GaltInteractiveBlock()
     {
         super(Material.rock);
-        this.setBlockName(Strings.GaltInteractiveBlockName);
-        this.setCreativeTab(GulchMod.getCreativeTab());
-        GaltBlocks.register(this);
     }
 
     @Override

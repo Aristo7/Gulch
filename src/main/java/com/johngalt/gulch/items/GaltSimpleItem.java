@@ -10,9 +10,6 @@ public class GaltSimpleItem extends GaltCommonItem
 {
     public GaltSimpleItem()
     {
-        this.setUnlocalizedName(Strings.GaltSimpleItemName);
-        this.setCreativeTab(GulchMod.getCreativeTab());
-
-        GaltItems.register(this);
+        super();
     }
 }

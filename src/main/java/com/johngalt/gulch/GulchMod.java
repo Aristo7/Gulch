@@ -5,6 +5,7 @@ import com.johngalt.gulch.creativetab.GaltTab;
 import com.johngalt.gulch.entities.GaltEntities;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.items.GaltItems;
+import com.johngalt.gulch.lib.GaltLangGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -25,7 +26,7 @@ public class GulchMod
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
 
-    private static CreativeTabs tab = new GaltTab(CreativeTabs.getNextID(), References.MODID);
+    private static CreativeTabs tab = new GaltTab(GaltTab.class.getSimpleName());
 
     public static CreativeTabs getCreativeTab()
     {
@@ -51,6 +52,6 @@ public class GulchMod
     @Mod.EventHandler
     public static void postInit(FMLPostInitializationEvent event)
     {
-
+        GaltLangGenerator.GenerateLangFile();
     }
 }

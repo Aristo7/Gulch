@@ -11,12 +11,10 @@ public class GaltSimpleBlock extends GaltCommonBlock
 {
     public GaltSimpleBlock()
     {
-        this.setBlockName(Strings.GaltSimpleBlockName);
+        super();
         this.setHardness(1f);
         this.setResistance(3f);
-        this.setCreativeTab(GulchMod.getCreativeTab());
         this.setStepSound(Block.soundTypeStone);
 
-        GaltBlocks.register(this);
     }
 }
