@@ -36,7 +36,8 @@ public class GulchPortalBlock extends BlockPortal
     @Override
     public String getUnlocalizedName()
     {
-        return String.format("tile.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
+        return String.format("tile.%s%s", References.RESOURCESPREFIX,
+                getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
     }
 
     @Override
@@ -74,12 +75,14 @@ public class GulchPortalBlock extends BlockPortal
         byte b0 = 0;
         byte b1 = 0;
 
-        if (par1World.getBlock(par2 - 1, par3, par4) == GaltBlocks.portalFrame || par1World.getBlock(par2 + 1, par3, par4) == GaltBlocks.portalFrame)
+        if (par1World.getBlock(par2 - 1, par3, par4) == GaltBlocks.portalFrame || par1World.getBlock(par2 + 1, par3,
+                par4) == GaltBlocks.portalFrame)
         {
             b0 = 1;
         }
 
-        if (par1World.getBlock(par2, par3, par4 - 1) == GaltBlocks.portalFrame || par1World.getBlock(par2, par3, par4 + 1) == GaltBlocks.portalFrame)
+        if (par1World.getBlock(par2, par3, par4 - 1) == GaltBlocks.portalFrame || par1World.getBlock(par2, par3,
+                par4 + 1) == GaltBlocks.portalFrame)
         {
             b1 = 1;
         }
@@ -137,62 +140,79 @@ public class GulchPortalBlock extends BlockPortal
         }
     }
 
+    /*
+        The logic is simply to replace portal blocks with air if any of the blocks nearby have changed.
+     */
     @Override
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5)
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-        // TODO - fix removing the portal
-        return;
+        // This needs to be fixed. I can't get it to work without crashing MC
 
-        // This logic removes the portal if the frame is broken by replacing all portal blocks with air
+        /*
+        int bottomMostPortalY;
 
-        /*byte b0 = 0;
-        byte b1 = 1;
-
-        if (par1World.getBlock(par2 - 1, par3, par4) == this || par1World.getBlock(par2 + 1, par3, par4) == this)
-        {
-            b0 = 1;
-            b1 = 0;
-        }
-
-        int i1;
-
-        for (i1 = par3; par1World.getBlock(par2, i1 - 1, par4) == this; --i1)
+        for (bottomMostPortalY = y; world.getBlock(x, bottomMostPortalY - 1, z) == this; --bottomMostPortalY)
         {
         }
 
-        if (par1World.getBlock(par2, i1 - 1, par4) != GaltBlocks.portalFrame)
+        if (world.getBlock(x, bottomMostPortalY - 1, z) != GaltBlocks.portalFrame)
         {
-            par1World.setBlockToAir(par2, par3, par4);
+            // So the bottom most block after portal block was not a frame!
+            // Thus erase this portal block.
+            // The other portal blocks will get triggered through the disappearance of this one.
+            world.setBlockToAir(x, y, z);
         }
         else
         {
-            int j1;
+            byte orientationByteX = 0;
+            byte orientationByteZ = 1;
 
-            for (j1 = 1; j1 < 4 && par1World.getBlock(par2, i1 + j1, par4) == this; ++j1)
+            if (world.getBlock(x - 1, y, z) == this || world.getBlock(x + 1, y, z) == this)
+            {
+                orientationByteX = 1;
+                orientationByteZ = 0;
+            }
+
+            int topMostPortalY;
+            int highestPossiblePortal = 3;
+
+            for (topMostPortalY = 1; topMostPortalY <= highestPossiblePortal &&
+                    world.getBlock(x, bottomMostPortalY + topMostPortalY, z) == this; ++topMostPortalY)
             {
             }
 
-            if (j1 == 3 && par1World.getBlock(par2, i1 + j1, par4) == GaltBlocks.portalFrame)
+            if (topMostPortalY == 3 && world.getBlock(x, bottomMostPortalY + topMostPortalY, z) ==
+                    GaltBlocks.portalFrame)
             {
-                boolean flag = par1World.getBlock(par2 - 1, par3, par4) == this || par1World.getBlock(par2 + 1, par3, par4) == this;
-                boolean flag1 = par1World.getBlock(par2, par3, par4 - 1) == this || par1World.getBlock(par2, par3, par4 + 1) == this;
+                boolean anotherPortalOnX = world.getBlock(x - 1, y, z) == this || world.getBlock(x + 1, y, z) == this;
+                boolean anotherPortalOnZ = world.getBlock(x, y, z - 1) == this || world.getBlock(x, y, z + 1) == this;
 
-                if (flag && flag1)
+                if (anotherPortalOnX && anotherPortalOnZ)
                 {
-                    par1World.setBlockToAir(par2, par3, par4);
+                    // Portal on both sides means an invalid portal so start removing
+                    world.setBlockToAir(x, y, z);
                 }
                 else
                 {
-                    if ((par1World.getBlock(par2 + b0, par3, par4 + b1) != GaltBlocks.portalFrame || par1World.getBlock(par2 - b0, par3, par4 - b1) != this) && (par1World.getBlock(par2 - b0, par3, par4 - b1) != GaltBlocks.portalFrame || par1World.getBlock(par2 + b0, par3, par4 + b1) != this))
+                    // This pathetic logic means: we expect to either have
+                    // 1) frame one one side and portal on the other OR
+                    // 2) portal on one side and frame on the other
+                    if ((world.getBlock(x + orientationByteX, y, z + orientationByteZ) != GaltBlocks.portalFrame ||
+                            world.getBlock(x - orientationByteX, y, z - orientationByteZ) != this) &&
+                            (world.getBlock(x - orientationByteX, y, z - orientationByteZ) != GaltBlocks.portalFrame ||
+                                    world.getBlock(x + orientationByteX, y, z + orientationByteZ) != this))
                     {
-                        par1World.setBlockToAir(par2, par3, par4);
+                        // not 1) or 2) so removing portal
+                        world.setBlockToAir(x, y, z);
                     }
                 }
             }
             else
             {
-                par1World.setBlockToAir(par2, par3, par4);
+                // Portal too high, start removing
+                world.setBlockToAir(x, y, z);
             }
-        }*/
+        }
+        */
     }
 }

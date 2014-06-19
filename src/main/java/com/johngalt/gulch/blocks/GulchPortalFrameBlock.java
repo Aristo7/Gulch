@@ -28,32 +28,10 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-        // Some helpful snippets
-        //
-        // world.setBlock(x, y, z, GaltBlocks.portalFrame);
-        // world.setBlock(x, y, z, GaltBlocks.portalBlock);
-        // world.getBlock(x - 1, y, z)
-        // Blocks.air
-
         // Any block in the frame may be the last to have been placed, so use a general logic to check the frame
         // Assume +Y is UP!
 
-        for (int offsetx = -3; offsetx <= 3; offsetx++)
-            for (int offsety = -4; offsety <= 4; offsety++)
-                for (int offsetz = -3; offsetz <= 3; offsetz++)
-                    if (isFrameCorrect(world, x, y, z, offsetx, offsety, offsetz))
-                    {
-                        return;
-                    }
-    }
-
-    /*
-    Checks frame validity. Offset XYZ is the location of the current block in the frame you wish to check from.
-     */
-    private boolean isFrameCorrect(World world, int x, int y, int z,
-                                   int offsetX, int offsetY, int offsetZ)
-    {
-        FramePosition[] frame = {
+        FramePosition[] emptyFrame = {
                 new FramePosition(0, 0, 0, GaltBlocks.portalFrame),
                 new FramePosition(0, 1, 0, GaltBlocks.portalFrame),
                 new FramePosition(0, 2, 0, GaltBlocks.portalFrame),
@@ -75,6 +53,21 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
                 new FramePosition(3, 3, 0, GaltBlocks.portalFrame),
                 new FramePosition(3, 4, 0, GaltBlocks.portalFrame)};
 
+        for (int offsetx = -3; offsetx <= 3; offsetx++)
+            for (int offsety = -4; offsety <= 4; offsety++)
+                for (int offsetz = -3; offsetz <= 3; offsetz++)
+                    if (isFrameCorrect(world, emptyFrame, x, y, z, offsetx, offsety, offsetz))
+                    {
+                        return;
+                    }
+    }
+
+    /*
+    Checks frame validity. Offset XYZ is the location of the current block in the frame you wish to check from.
+     */
+    public static boolean isFrameCorrect(World world, FramePosition[] frame, int x, int y, int z,
+                                         int offsetX, int offsetY, int offsetZ)
+    {
         boolean frameCorrect = true;
         for (FramePosition i : frame)
         {
