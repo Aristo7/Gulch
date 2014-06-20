@@ -12,11 +12,17 @@ public class GaltBlocks
     public static Block testInteractiveBlock;
     public static Block testContainerBlock;
 
+    public static Block portalBlock;
+    public static Block portalFrame;
+
     public static void init()
     {
         testBlock = new GaltSimpleBlock();
         testInteractiveBlock = new GaltInteractiveBlock();
         testContainerBlock = new GaltContainerBlock();
+
+        portalBlock = new GulchPortalBlock();
+        portalFrame = new GulchPortalFrameBlock();
     }
 
     public static void register(GaltCommonBlock block)

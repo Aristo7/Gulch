@@ -5,3 +5,5 @@ tile.gulch:GaltInteractiveBlock.name=Interactive Block
 itemGroup.GaltTab=Galt Tab
 item.gulch:ItemBlasterRifle.name=Blaster Rifle
 item.gulch:ItemBlasterAmmo.name=Blaster Ammo
+tile.gulch:GulchPortalFrameBlock.name=Gulch Portal Frame Block
+tile.gulch:GulchPortalBlock.name=Gulch Portal Block

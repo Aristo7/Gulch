@@ -10,4 +10,7 @@ public class Strings
     public static final String GaltContainerBlockName = "GaltContainerBlock";
 
     public static final String GaltSimpleItemName = "GaltItem";
+
+    public static final String GulchPortalBlockName = "GulchPortalBlock";
+    public static final String GulchPortalFrameBlockName = "GulchPortalFrameBlock";
 }
