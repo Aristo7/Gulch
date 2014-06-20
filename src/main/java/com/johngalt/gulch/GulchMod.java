@@ -12,6 +12,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 
 /**
@@ -22,6 +24,9 @@ public class GulchMod
 {
     @SidedProxy(clientSide = References.CLIENTPROXYLOCATION, serverSide = References.COMMONPROXYLOCATION)
     public static CommonProxy proxy;
+
+    @SideOnly(Side.CLIENT)
+    public static final Boolean generateLangFile = true;
 
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
@@ -51,6 +56,9 @@ public class GulchMod
     @Mod.EventHandler
     public static void postInit(FMLPostInitializationEvent event)
     {
-        GaltLangGenerator.GenerateLangFile();
+        if (GulchMod.generateLangFile)
+        {
+            GaltLangGenerator.GenerateLangFile();
+        }
     }
 }

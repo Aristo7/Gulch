@@ -18,23 +18,26 @@ public class GaltLangGenerator
 
     private GaltLangGenerator()
     {
-        InputStream instLangFile = GulchMod.class.getResourceAsStream("/assets/gulch/lang/en_US.lang");
-        try
+        if (GulchMod.generateLangFile)
         {
-            List<String> fileLines = IOUtils.readLines(instLangFile);
-
-            for (String entry : fileLines)
+            InputStream instLangFile = GulchMod.class.getResourceAsStream("/assets/gulch/lang/en_US.lang");
+            try
             {
-                if (entry.contains("="))
+                List<String> fileLines = IOUtils.readLines(instLangFile);
+
+                for (String entry : fileLines)
                 {
-                    String[] parts = entry.split("=");
-                    GaltLangGenerator._fileEntries.add(new GaltLangEntry(parts[0].replace(".name", ""), parts[1]));
+                    if (entry.contains("="))
+                    {
+                        String[] parts = entry.split("=");
+                        GaltLangGenerator._fileEntries.add(new GaltLangEntry(parts[0].replace(".name", ""), parts[1]));
+                    }
                 }
             }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
