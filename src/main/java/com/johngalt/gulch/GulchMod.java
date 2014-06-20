@@ -25,7 +25,6 @@ public class GulchMod
     @SidedProxy(clientSide = References.CLIENTPROXYLOCATION, serverSide = References.COMMONPROXYLOCATION)
     public static CommonProxy proxy;
 
-    @SideOnly(Side.CLIENT)
     public static final Boolean generateLangFile = true;
 
     @Mod.Instance(References.MODID)
