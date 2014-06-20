@@ -18,17 +18,15 @@ public class GaltCommonBlock extends Block implements IGaltObject
     public GaltCommonBlock(Material material)
     {
         super(material);
-
+        this.setBlockName(GetGaltName());
+        GaltLangGenerator.AddEntry(this);
+        GaltBlocks.register(this);
+        this.setCreativeTab(GulchMod.getCreativeTab());
     }
 
     public GaltCommonBlock()
     {
         this(Material.rock);
-
-        this.setBlockName(GetGaltName());
-        GaltLangGenerator.AddEntry(this);
-        GaltBlocks.register(this);
-        this.setCreativeTab(GulchMod.getCreativeTab());
     }
 
     public String getUnwrappedUnlocalizedName()
@@ -39,8 +37,7 @@ public class GaltCommonBlock extends Block implements IGaltObject
     @Override
     public String getUnlocalizedName()
     {
-        String tmp = String.format("tile.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName());
-        return tmp;
+        return String.format("tile.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName());
     }
 
     @Override

@@ -2,10 +2,8 @@ package com.johngalt.gulch.lib;
 
 import com.johngalt.gulch.GulchMod;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class GaltLangGenerator
 {
     private static List<GaltLangEntry> _fileEntries = new ArrayList<GaltLangEntry>();
 
-    private static GaltLangGenerator instance = new GaltLangGenerator();
+    public static GaltLangGenerator instance = new GaltLangGenerator();
 
     private GaltLangGenerator()
     {
@@ -33,22 +31,57 @@ public class GaltLangGenerator
                     GaltLangGenerator._fileEntries.add(new GaltLangEntry(parts[0].replace(".name", ""), parts[1]));
                 }
             }
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
     }
 
+
     public static void GenerateLangFile()
     {
-        List<String> fileLines = new ArrayList<String>();
-
-        for (GaltLangEntry item : _fileEntries)
-        {
-            fileLines.add(item.CreateLangFileLine());
-        }
-
+        // /D:/Work/SampleModding/Forge/out/production/Forge/com/johngalt/gulch/GulchMod.class
         String path = GulchMod.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String runPath = path.replace("/com/johngalt/gulch/GulchMod.class", "/assets/gulch/lang/en_US.lang");
+        String sourcePath = path.replace("/Forge/out/production/Forge/com/johngalt/gulch/GulchMod.class", "/Gulch/src/main/resources/assets/gulch/lang/en_US.lang");
+
+        createLangFileAt(runPath);
+        createLangFileAt(sourcePath);
+    }
+
+    private static void createLangFileAt(String Path)
+    {
+        BufferedWriter writer = null;
+
+        try
+        {
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Path), "utf-8"));
+
+            for (GaltLangEntry entry : _fileEntries)
+            {
+                writer.write(entry.CreateLangFileLine());
+                writer.newLine();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (writer != null)
+                {
+                    writer.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
 

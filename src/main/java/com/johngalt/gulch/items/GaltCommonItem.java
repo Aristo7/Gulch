@@ -1,5 +1,6 @@
 package com.johngalt.gulch.items;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.References;
 import com.johngalt.gulch.lib.GaltLangGenerator;
 import com.johngalt.gulch.lib.IGaltObject;
@@ -21,6 +22,7 @@ public class GaltCommonItem extends Item implements IGaltObject
         this.setUnlocalizedName(GetGaltName());
         GaltLangGenerator.AddEntry(this);
         GaltItems.register(this);
+        this.setCreativeTab(GulchMod.getCreativeTab());
     }
 
     public String getUnwrappedUnlocalizedName()
@@ -31,8 +33,7 @@ public class GaltCommonItem extends Item implements IGaltObject
     @Override
     public String getUnlocalizedName()
     {
-        String tmp = String.format("item.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName());
-        return tmp;
+        return String.format("item.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName());
     }
 
     @Override

@@ -38,7 +38,6 @@ public class GulchMod
     {
         GaltItems.init();
         GaltBlocks.init();
-        GaltItems.RegisterItems();
         GaltEntities.RegisterEntities();
         proxy.registerRenderers();
     }

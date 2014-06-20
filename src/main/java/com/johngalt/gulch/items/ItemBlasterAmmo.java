@@ -12,31 +12,11 @@ import net.minecraft.util.IIcon;
 /**
  * Created on 6/14/2014.
  */
-public class ItemBlasterAmmo extends Item
+public class ItemBlasterAmmo extends GaltCommonItem
 {
-    @SideOnly(Side.CLIENT)
-    protected IIcon itemIcon;
-
     public ItemBlasterAmmo()
     {
         super();
-        setCreativeTab(GulchMod.getCreativeTab());
-        setUnlocalizedName(References.MODID + ".blaster_ammo");
         setMaxStackSize(64);
     }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon(References.MODID + ":" + getUnlocalizedName().substring(5));
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IIcon getIconFromDamage(int par1)
-    {
-        return itemIcon;
-    }
-
 }
