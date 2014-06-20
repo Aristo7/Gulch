@@ -7,6 +7,8 @@ package com.johngalt.gulch.blocks;
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.References;
 import com.johngalt.gulch.dimension.GulchTeleporter;
+import com.johngalt.gulch.lib.GaltLangGenerator;
+import com.johngalt.gulch.lib.IGaltObject;
 import com.johngalt.gulch.lib.Strings;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -17,27 +19,33 @@ import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-public class GulchPortalBlock extends BlockPortal
+public class GulchPortalBlock extends BlockPortal implements IGaltObject
 {
     public GulchPortalBlock()
     {
         super();
-        setBlockName(Strings.GulchPortalBlockName);
-        this.setCreativeTab(GulchMod.getCreativeTab());
 
-        GameRegistry.registerBlock(this, this.getUnwrappedUnlocalizedName(this.getUnlocalizedName()));
+        GameRegistry.registerBlock(this, this.getUnwrappedUnlocalizedName());
+        setBlockName(GetGaltName());
+        GaltLangGenerator.AddEntry(this);
+        setCreativeTab(GulchMod.getCreativeTab());
     }
 
-    public String getUnwrappedUnlocalizedName(String unlocalizedName)
+    @Override
+    public String GetGaltName()
     {
-        return unlocalizedName.substring(unlocalizedName.indexOf(".") + 1);
+        return this.getClass().getSimpleName();
+    }
+
+    public String getUnwrappedUnlocalizedName()
+    {
+        return super.getUnlocalizedName().substring(super.getUnlocalizedName().indexOf(".") + 1);
     }
 
     @Override
     public String getUnlocalizedName()
     {
-        return String.format("tile.%s%s", References.RESOURCESPREFIX,
-                getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
+        return String.format("tile.%s%s", References.RESOURCESPREFIX, getUnwrappedUnlocalizedName());
     }
 
     @Override

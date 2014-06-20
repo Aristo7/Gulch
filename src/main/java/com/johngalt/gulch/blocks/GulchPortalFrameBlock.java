@@ -3,6 +3,7 @@ package com.johngalt.gulch.blocks;
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.lib.Strings;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
@@ -13,13 +14,10 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
 {
     public GulchPortalFrameBlock()
     {
-        this.setBlockName(Strings.GulchPortalFrameBlockName);
+        super(Material.iron);
         this.setHardness(1f);
         this.setResistance(3f);
-        this.setCreativeTab(GulchMod.getCreativeTab());
         this.setStepSound(Block.soundTypeMetal);
-
-        GaltBlocks.register(this);
     }
 
     /*

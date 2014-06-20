@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
  */
 public class GaltItems
 {
+
     public static ItemBlasterRifle BlasterRifle;
     public static ItemBlasterAmmo BlasterAmmo;
 
@@ -22,14 +23,8 @@ public class GaltItems
 
     public static void register(GaltCommonItem item)
     {
-        GameRegistry.registerItem(item, item.getUnwrappedUnlocalizedName(item.getUnlocalizedName()));
+        GameRegistry.registerItem(item, item.getUnwrappedUnlocalizedName());
     }
 
 
-    public static void RegisterItems()
-    {
-        GameRegistry.registerItem(BlasterRifle, "Blaster Rifle");
-        GameRegistry.registerItem(BlasterAmmo, "Blaster Ammo");
-
-    }
 }

@@ -1,11 +1,9 @@
-item.gulch.blaster_ammo.name=Blaster Ammo
-item.gulch.blaster_rifle.name=Blaster Rifle
-tile.gulch:GaltBlock.name=Galt Ore
-tile.gulch:GaltInteractiveBlock.name=Galt Interactive
-tile.gulch:GaltContainerBlock.name=Galt Container
-tile.gulch:GulchPortalBlock.name=Gulch Portal
-tile.gulch:GulchPortalFrameBlock.name=Gulch Portal Frame
-
-item.gulch:GaltItem.name=Galt Item
-
-itemGroup.gulch=Gulch Tab
+item.gulch:GaltSimpleItem.name=Simple Item
+tile.gulch:GaltSimpleBlock.name=Simple Block
+tile.gulch:GaltContainerBlock.name=Container Block
+tile.gulch:GaltInteractiveBlock.name=Interactive Block
+itemGroup.GaltTab=Galt Tab
+item.gulch:ItemBlasterRifle.name=Blaster Rifle
+item.gulch:ItemBlasterAmmo.name=Blaster Ammo
+tile.gulch:GulchPortalFrameBlock.name=Gulch Portal Frame Block
+tile.gulch:GulchPortalBlock.name=Gulch Portal Block

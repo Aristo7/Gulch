@@ -54,7 +54,8 @@ public class GaltTileEntityContainer extends TileEntity implements IInventory
             if (itemStack.stackSize <= decrementAmount)
             {
                 setInventorySlotContents(slotIndex, null);
-            } else
+            }
+            else
             {
                 itemStack = itemStack.splitStack(decrementAmount);
                 if (itemStack.stackSize == 0)
