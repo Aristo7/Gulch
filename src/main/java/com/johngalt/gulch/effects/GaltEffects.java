@@ -2,7 +2,6 @@ package com.johngalt.gulch.effects;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.particle.EntityFlameFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -16,9 +15,9 @@ public class GaltEffects
 
     public static EntityFX spawnParticleAtHeldItem(GaltEffect par1Effect, EntityPlayer par3EntityPlayer, double par8, double par10, double par12)
     {
-        float zOffset = (float) Math.cos(Math.toRadians(par3EntityPlayer.rotationYaw+40))*0.25F;
-        float xOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationYaw+40)))*0.25F;
-        float yOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationPitch)))*0.25F;
+        float zOffset = (float) Math.cos(Math.toRadians(par3EntityPlayer.rotationYaw + 40)) * 0.25F;
+        float xOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationYaw + 40))) * 0.25F;
+        float yOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationPitch))) * 0.25F;
 
         //Z +S -N    X +E -W
         //for (int i = 0; i < 10; i++)
