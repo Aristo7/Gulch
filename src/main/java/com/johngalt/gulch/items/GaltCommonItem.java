@@ -1,9 +1,9 @@
 package com.johngalt.gulch.items;
 
 import com.johngalt.gulch.GulchMod;
-import com.johngalt.gulch.References;
 import com.johngalt.gulch.lib.GaltLangGenerator;
 import com.johngalt.gulch.lib.IGaltObject;
+import com.johngalt.gulch.lib.References;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;

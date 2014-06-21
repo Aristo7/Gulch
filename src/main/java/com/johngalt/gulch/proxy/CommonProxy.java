@@ -1,4 +1,4 @@
-package com.johngalt.gulch;
+package com.johngalt.gulch.proxy;
 
 import com.johngalt.gulch.tileentities.GaltTileEntity;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;

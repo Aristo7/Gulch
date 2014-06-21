@@ -20,7 +20,7 @@ public class GulchWorldProvider extends WorldProvider
 
     public IChunkProvider createChunkGenerator()
     {
-        return new GulchChunkProvider(worldObj, worldObj.getSeed(), true);
+        return new GulchChunkProvider(worldObj, worldObj.getSeed());
     }
 
     @Override

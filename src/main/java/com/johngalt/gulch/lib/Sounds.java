@@ -1,4 +1,4 @@
-package com.johngalt.gulch;
+package com.johngalt.gulch.lib;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;

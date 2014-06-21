@@ -1,8 +1,8 @@
 package com.johngalt.gulch.items;
 
-import com.johngalt.gulch.Sounds;
 import com.johngalt.gulch.effects.GaltEffects;
 import com.johngalt.gulch.entities.EntityBlasterBolt;
+import com.johngalt.gulch.lib.Sounds;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

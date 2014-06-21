@@ -1,6 +1,6 @@
 package com.johngalt.gulch.gui;
 
-import com.johngalt.gulch.References;
+import com.johngalt.gulch.lib.References;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;

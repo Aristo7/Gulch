@@ -1,6 +1,6 @@
 package com.johngalt.gulch.gui;
 
-import com.johngalt.gulch.References;
+import com.johngalt.gulch.lib.References;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 

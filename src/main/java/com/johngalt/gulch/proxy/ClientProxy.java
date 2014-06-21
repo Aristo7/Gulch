@@ -1,4 +1,4 @@
-package com.johngalt.gulch;
+package com.johngalt.gulch.proxy;
 
 import com.johngalt.gulch.entities.EntityBlasterBolt;
 import com.johngalt.gulch.renderers.RenderBlasterAmmo;
