@@ -6,5 +6,10 @@
 			[{
 				"name": "blaster_shot","stream": false
 			}]
-	}
+	},
+	"no_ammo":
+    {
+        "category": "master",
+        "sounds": ["no_ammo"]
+    }
 }

@@ -8,6 +8,7 @@ import com.johngalt.gulch.entities.GaltEntities;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.lib.GaltLangGenerator;
+import com.johngalt.gulch.recipes.GaltRecipes;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -15,8 +16,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.DimensionManager;
 
@@ -34,8 +33,8 @@ public class GulchMod
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
 
-    private static CreativeTabs tab            = new GaltTab(GaltTab.class.getSimpleName());
-    public static  int          gulchDimension = 66;
+    private static CreativeTabs tab = new GaltTab(GaltTab.class.getSimpleName());
+    public static int gulchDimension = 66;
     public static GulchWorldGen worldProvider;
 
     public static CreativeTabs getCreativeTab()
@@ -71,5 +70,7 @@ public class GulchMod
         {
             GaltLangGenerator.GenerateLangFile();
         }
+
+        GaltRecipes.RegisterRecipes();
     }
 }
