@@ -13,7 +13,7 @@ public class GaltEffects
     private static Minecraft mc = Minecraft.getMinecraft();
     private static World theWorld = mc.theWorld;
 
-    public static EntityFX spawnParticleAtHeldItem(GaltEffect par1Effect, EntityPlayer par3EntityPlayer, double par8, double par10, double par12)
+    public static EntityFX spawnParticleAtHeldItem(EffectEnum par1Effect, EntityPlayer par3EntityPlayer, double par8, double par10, double par12)
     {
         float zOffset = (float) Math.cos(Math.toRadians(par3EntityPlayer.rotationYaw + 40)) * 0.25F;
         float xOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationYaw + 40))) * 0.25F;
@@ -21,10 +21,10 @@ public class GaltEffects
 
         //Z +S -N    X +E -W
         //for (int i = 0; i < 10; i++)
-        return GaltEffects.spawnParticle(GaltEffects.GaltEffect.Flame, par3EntityPlayer.posX + xOffset, par3EntityPlayer.posY + 1.65F + yOffset, par3EntityPlayer.posZ + zOffset, par8, par10, par12);
+        return GaltEffects.spawnParticle(par1Effect, par3EntityPlayer.posX + xOffset, par3EntityPlayer.posY + 1.65F + yOffset, par3EntityPlayer.posZ + zOffset, par8, par10, par12);
     }
 
-    public static EntityFX spawnParticle(GaltEffect par1Effect, double par2X, double par4Y, double par6Z, double par8, double par10, double par12)
+    public static EntityFX spawnParticle(EffectEnum par1Effect, double par2X, double par4Y, double par6Z, double par8, double par10, double par12)
     {
         if (mc != null && mc.renderViewEntity != null && mc.effectRenderer != null)
         {
@@ -64,15 +64,15 @@ public class GaltEffects
                         return null;
                 }
 
-                mc.effectRenderer.addEffect((EntityFX) var21);
-                return (EntityFX) var21;
+                mc.effectRenderer.addEffect(var21);
+                return var21;
             }
         }
 
         return null;
     }
 
-    public static enum GaltEffect
+    public static enum EffectEnum
     {
         Flame,
         Poof

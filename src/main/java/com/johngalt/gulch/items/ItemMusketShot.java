@@ -1,11 +1,11 @@
 package com.johngalt.gulch.items;
 
 /**
- * Created on 6/14/2014.
+ * Created on 6/21/2014.
  */
-public class ItemBlasterAmmo extends GaltCommonItem
+public class ItemMusketShot extends GaltCommonItem
 {
-    public ItemBlasterAmmo()
+    public ItemMusketShot()
     {
         super();
         this.setMaxStackSize(64);

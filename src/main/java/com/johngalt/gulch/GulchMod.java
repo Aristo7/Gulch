@@ -10,6 +10,7 @@ import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.lib.GaltLangGenerator;
 import com.johngalt.gulch.lib.References;
 import com.johngalt.gulch.proxy.CommonProxy;
+import com.johngalt.gulch.recipes.GaltRecipes;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -71,5 +72,7 @@ public class GulchMod
         {
             GaltLangGenerator.GenerateLangFile();
         }
+
+        GaltRecipes.RegisterRecipes();
     }
 }

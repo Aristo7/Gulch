@@ -7,4 +7,6 @@ item.gulch:ItemBlasterRifle.name=Blaster Rifle
 item.gulch:ItemBlasterAmmo.name=Blaster Ammo
 tile.gulch:GulchPortalFrameBlock.name=Gulch Portal Frame Block
 tile.gulch:GulchPortalBlock.name=Gulch Portal Block
+item.gulch:ItemMusket.name=Musket
+item.gulch:ItemMusketShot.name=Musket Shot
 tile.gulch:GaltRoadBlock.name=Road Block

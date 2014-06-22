@@ -1,7 +1,5 @@
 package com.johngalt.gulch.blocks;
 
-import com.johngalt.gulch.GulchMod;
-import com.johngalt.gulch.lib.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
