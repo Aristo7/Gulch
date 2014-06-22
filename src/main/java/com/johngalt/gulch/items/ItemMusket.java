@@ -17,6 +17,10 @@ public class ItemMusket extends GaltCommonGun
         super(BulletEnum.MusketShot, 1, GaltSounds.SoundsEnum.musket_shot, GaltEffects.EffectEnum.Flame);
     }
 
+    /**
+     * Muskets require not only the bullot, but the paper wadding and gunpowder to reload. Mussel loading for the suck.
+     * @return returns the object list of usually itemstacks to be added to the recipe.
+     */
     @Override
     protected List<Object> GetAdditionalReloadRequirements()
     {

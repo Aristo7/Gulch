@@ -41,6 +41,13 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 
     }
 
+    /**
+     * For shooting the gun
+     * @param gun The gun being shot.
+     * @param world The world is a vampire.
+     * @param player player shooting the gun
+     * @return
+     */
     @Override
     public ItemStack onItemRightClick(ItemStack gun, World world, EntityPlayer player)
     {
@@ -64,6 +71,10 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         return gun;
     }
 
+
+    /**
+     * This method is where recipes for reloading get registered. Can be overwritten for more custom recipes.
+     */
     @Override
     public void RegisterRecipes()
     {
@@ -90,11 +101,22 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         }
     }
 
+    /**
+     * This is to be overwritten in derived clases if there are additional items needed for reloading the gun.
+     * @return The list of objects to add to the reload recipe.
+     */
     protected List<Object> GetAdditionalReloadRequirements()
     {
         return null;
     }
 
+
+    /**
+     * Gets the instance representing a bullet in the Enum.
+     * Enums are used rather than instances initially so order of item initiation doesn't matter.
+     * @param bullet The enum of the type of bullet
+     * @return the GaltCommonItem reference to the bullet.
+     */
     public static GaltCommonItem GetBulletInstance(BulletEnum bullet)
     {
         if (bullet == BulletEnum.BlasterBolt)
