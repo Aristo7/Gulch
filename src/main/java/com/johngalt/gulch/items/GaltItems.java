@@ -13,6 +13,8 @@ public class GaltItems
     public static ItemBlasterAmmo BlasterAmmo;
     public static ItemMusket Musket;
     public static ItemMusketShot MusketShot;
+    public static ItemWadding Wadding;
+    public static ItemGunPowder GunPowder;
 
     public static Item simpleItem;
 
@@ -23,6 +25,8 @@ public class GaltItems
         simpleItem = new GaltSimpleItem();
         Musket = new ItemMusket();
         MusketShot = new ItemMusketShot();
+        Wadding = new ItemWadding();
+        GunPowder = new ItemGunPowder();
     }
 
     public static void register(GaltCommonItem item)

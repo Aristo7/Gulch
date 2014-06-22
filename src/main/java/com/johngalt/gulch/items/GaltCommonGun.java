@@ -9,6 +9,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created on 6/20/2014.
  */
@@ -19,6 +23,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     private GaltEffects.EffectEnum _BarrelParticleEffect;
     private int _ClipSize;
 
+
     public GaltCommonGun(BulletEnum bulletType, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
     {
         super();
@@ -27,6 +32,8 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         _BulletType = bulletType;
         _ShotSound = shotSound;
         _BarrelParticleEffect = barrelParticleEffect;
+
+
         setMaxStackSize(1);
         this.setMaxDamage(_ClipSize + 1);
 
@@ -65,15 +72,27 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         {
             for (int numAmmo = dam; numAmmo > 0; numAmmo--)
             {
-                Object[] input = new Object[numAmmo + 1];
+                List<Object> input = new ArrayList<Object>();
+
                 for (int i = 0; i < numAmmo; i++)
-                    input[i] = new ItemStack(GaltCommonGun.GetBulletInstance(_BulletType), 1);
+                    input.add(new ItemStack(GaltCommonGun.GetBulletInstance(_BulletType), 1));
 
-                input[numAmmo] = new ItemStack(this, 1, dam);
+                input.add(new ItemStack(this, 1, dam));
 
-                GaltRecipes.RegisterRecipe(false, new ItemStack(this, 1, dam - numAmmo), input);
+                List<Object> additionalRequirements = GetAdditionalReloadRequirements();
+                if (additionalRequirements != null)
+                {
+                    input.addAll(GetAdditionalReloadRequirements());
+                }
+
+                GaltRecipes.RegisterRecipe(false, new ItemStack(this, 1, dam - numAmmo), input.toArray());
             }
         }
+    }
+
+    protected List<Object> GetAdditionalReloadRequirements()
+    {
+        return null;
     }
 
     public static GaltCommonItem GetBulletInstance(BulletEnum bullet)

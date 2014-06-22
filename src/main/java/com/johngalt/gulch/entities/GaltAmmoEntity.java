@@ -1,5 +1,6 @@
 package com.johngalt.gulch.entities;
 
+import com.johngalt.gulch.effects.GaltEffects;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
@@ -35,6 +36,8 @@ public class GaltAmmoEntity extends EntityThrowable
 
         super.onUpdate();
 
+        if (this.ticksExisted > 100) this.setDead();
+
         if (tickCount >= 0)
         {
             if (++tickCount > 1)
@@ -47,6 +50,8 @@ public class GaltAmmoEntity extends EntityThrowable
     @Override
     protected void onImpact(MovingObjectPosition movingObject)
     {
+        GaltEffects.spawnParticle(GaltEffects.EffectEnum.Poof, this.posX, this.posY, this.posZ, 0.0F, 0.0F, 0.0F);
+
         if (movingObject.entityHit != null)
         {
             movingObject.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) _DamageOnHit);

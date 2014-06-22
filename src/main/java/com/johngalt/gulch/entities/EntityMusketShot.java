@@ -1,7 +1,8 @@
 package com.johngalt.gulch.entities;
 
-import net.minecraft.entity.Entity;
+import com.johngalt.gulch.effects.GaltEffects;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 /**
@@ -17,6 +18,6 @@ public class EntityMusketShot extends GaltAmmoEntity
 
     public EntityMusketShot(World world, EntityPlayer player)
     {
-        super(world, player, (byte)20, 0.01F);
+        super(world, player, (byte) 20, 0.01F);
     }
 }

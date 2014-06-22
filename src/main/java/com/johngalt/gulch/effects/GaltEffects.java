@@ -19,8 +19,6 @@ public class GaltEffects
         float xOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationYaw + 40))) * 0.25F;
         float yOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationPitch))) * 0.25F;
 
-        //Z +S -N    X +E -W
-        //for (int i = 0; i < 10; i++)
         return GaltEffects.spawnParticle(par1Effect, par3EntityPlayer.posX + xOffset, par3EntityPlayer.posY + 1.65F + yOffset, par3EntityPlayer.posZ + zOffset, par8, par10, par12);
     }
 
