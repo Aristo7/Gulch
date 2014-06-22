@@ -11,6 +11,6 @@ public class ItemBlasterRifle extends GaltCommonGun
 {
     public ItemBlasterRifle()
     {
-        super(GaltEntities.BulletEnum.BlasterBolt, 5, GaltSounds.SoundsEnum.blaster_shot, GaltEffects.EffectEnum.Flame);
+        super(BulletEnum.BlasterBolt, 5, GaltSounds.SoundsEnum.blaster_shot, GaltEffects.EffectEnum.Flame);
     }
 }

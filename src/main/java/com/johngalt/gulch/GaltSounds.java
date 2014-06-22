@@ -16,7 +16,8 @@ public class GaltSounds
     public static enum SoundsEnum
     {
         blaster_shot,
-        no_ammo
+        no_ammo,
+        musket_shot
     }
 }
 

@@ -9,19 +9,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import static com.johngalt.gulch.items.GaltItems.BlasterAmmo;
-
 /**
  * Created on 6/20/2014.
  */
 public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 {
     private GaltSounds.SoundsEnum _ShotSound;
-    private GaltEntities.BulletEnum _BulletType;
+    private BulletEnum _BulletType;
     private GaltEffects.EffectEnum _BarrelParticleEffect;
     private int _ClipSize;
 
-    public GaltCommonGun(GaltEntities.BulletEnum bulletType, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
+    public GaltCommonGun(BulletEnum bulletType, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
     {
         super();
 
@@ -39,24 +37,21 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     @Override
     public ItemStack onItemRightClick(ItemStack gun, World world, EntityPlayer player)
     {
-        if (player.inventory.consumeInventoryItem(BlasterAmmo))
+        if (gun.getItemDamage() < _ClipSize)
         {
-            if (gun.getItemDamage() < _ClipSize)
+            GaltSounds.PlaySound(_ShotSound, world, player);
+            if (!world.isRemote)
             {
-                GaltSounds.PlaySound(_ShotSound, world, player);
-                if (!world.isRemote)
-                {
 
-                    world.spawnEntityInWorld(GaltEntities.getBulletInstance(_BulletType, world, player));
-                    GaltEffects.spawnParticleAtHeldItem(_BarrelParticleEffect, player, 0.0F, 0.0F, 0.0F);
+                world.spawnEntityInWorld(GaltEntities.getBulletInstance(_BulletType, world, player));
+                GaltEffects.spawnParticleAtHeldItem(_BarrelParticleEffect, player, 0.0F, 0.0F, 0.0F);
 
-                    gun.damageItem(1, player);
-                }
+                gun.damageItem(1, player);
             }
-            else
-            {
-                GaltSounds.PlaySound(GaltSounds.SoundsEnum.no_ammo, world, player);
-            }
+        }
+        else
+        {
+            GaltSounds.PlaySound(GaltSounds.SoundsEnum.no_ammo, world, player);
         }
 
         return gun;
@@ -65,25 +60,33 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     @Override
     public void RegisterRecipes()
     {
-        ItemStack damagedGun = new ItemStack(this, 1);
-        ItemStack repairedGun = new ItemStack(this, 1);
-        ItemStack ammoStack = new ItemStack(GaltItems.BlasterAmmo);
-
+        // register every combination of ammo reloading possible.
         for (int dam = _ClipSize; dam > 0; dam--)
         {
             for (int numAmmo = dam; numAmmo > 0; numAmmo--)
             {
                 Object[] input = new Object[numAmmo + 1];
                 for (int i = 0; i < numAmmo; i++)
-                    input[i] = ammoStack;
+                    input[i] = new ItemStack(GaltCommonGun.GetBulletInstance(_BulletType), 1);
 
-                damagedGun.setItemDamage(dam);
-                input[numAmmo] = damagedGun;
+                input[numAmmo] = new ItemStack(this, 1, dam);
 
-                repairedGun.setItemDamage(dam - numAmmo);
-
-                GaltRecipes.RegisterRecipe(false, repairedGun, input);
+                GaltRecipes.RegisterRecipe(false, new ItemStack(this, 1, dam - numAmmo), input);
             }
         }
+    }
+
+    public static GaltCommonItem GetBulletInstance(BulletEnum bullet)
+    {
+        if (bullet == BulletEnum.BlasterBolt)
+        {
+            return GaltItems.BlasterAmmo;
+        }
+        else if (bullet == BulletEnum.MusketShot)
+        {
+            return GaltItems.MusketShot;
+        }
+
+        return null;
     }
 }
