@@ -15,6 +15,8 @@ public class GaltBlocks
     public static Block portalBlock;
     public static Block portalFrame;
 
+    public static Block roadBlock;
+
     public static void init()
     {
         testBlock = new GaltSimpleBlock();
@@ -23,6 +25,8 @@ public class GaltBlocks
 
         portalBlock = new GulchPortalBlock();
         portalFrame = new GulchPortalFrameBlock();
+
+        roadBlock = new GaltRoadBlock();
     }
 
     public static void register(GaltCommonBlock block)

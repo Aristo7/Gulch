@@ -27,10 +27,12 @@ import java.util.Random;
 /**
  * Created by on 6/16/2014.
  */
+@SuppressWarnings("unchecked")
 public class GulchChunkProvider implements IChunkProvider
 {
     private World  worldObj;
     private Random random;
+    private int    layersFilled;
     private final Block[] cachedBlockIDs      = new Block[256];
     private final byte[]  cachedBlockMetadata = new byte[256];
     private final FlatGeneratorInfo flatWorldGenInfo;
@@ -45,6 +47,7 @@ public class GulchChunkProvider implements IChunkProvider
     {
         this.worldObj = world;
         this.random = new Random(randomSeed);
+        this.random.setSeed(this.worldObj.getSeed());
         this.flatWorldGenInfo = getGulchWorldGenerator();
 
         this.hasDecoration = this.flatWorldGenInfo.getWorldFeatures().containsKey("decoration");
@@ -64,12 +67,13 @@ public class GulchChunkProvider implements IChunkProvider
 
         while (iterator.hasNext())
         {
-            FlatLayerInfo flatlayerinfo = (FlatLayerInfo)iterator.next();
+            FlatLayerInfo flatlayerinfo = (FlatLayerInfo) iterator.next();
 
             for (int j = flatlayerinfo.getMinY(); j < flatlayerinfo.getMinY() + flatlayerinfo.getLayerCount(); ++j)
             {
+                this.layersFilled++;
                 this.cachedBlockIDs[j] = flatlayerinfo.func_151536_b();
-                this.cachedBlockMetadata[j] = (byte)flatlayerinfo.getFillBlockMeta();
+                this.cachedBlockMetadata[j] = (byte) flatlayerinfo.getFillBlockMeta();
             }
         }
     }
@@ -87,58 +91,93 @@ public class GulchChunkProvider implements IChunkProvider
     /**
      * loads or generates the chunk at the chunk location specified
      */
-    public Chunk loadChunk(int par1, int par2)
+    public Chunk loadChunk(int chunkX, int chunkZ)
     {
-        return this.provideChunk(par1, par2);
+        return this.provideChunk(chunkX, chunkZ);
     }
 
     /**
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
+     *
+     * @param chunkX chunk location, (multiply by 16 to get world coordinate)
+     * @param chunkZ chunk location, (multiply by 16 to get world coordinate)
      */
-    public Chunk provideChunk(int chunkX, int chunkY)
+    public Chunk provideChunk(int chunkX, int chunkZ)
     {
-        Chunk chunk = new Chunk(this.worldObj, chunkX, chunkY);
-        int l;
+        Chunk chunk = new Chunk(this.worldObj, chunkX, chunkZ);
+        int roadHeight = 60;
+        int maxBuildingHeight = 40;
+        int heightInThisChunk;
 
-        for (int k = 0; k < this.cachedBlockIDs.length; ++k)
+        // Place roads
+        if (chunkX % 4 == 0 || chunkZ % 4 == 0)
         {
-            Block block = this.cachedBlockIDs[k];
+            heightInThisChunk = roadHeight;
+        }
+        else
+        {
+            heightInThisChunk = roadHeight + this.random.nextInt(maxBuildingHeight);
+        }
 
-            if (block != null)
+        for (int layerY = 0; layerY < heightInThisChunk; ++layerY)
+        {
+            Block blockForThisLayer;
+            byte blockMetadataForThisLayer = 0;
+
+            if (layerY == 0)
             {
-                l = k >> 4;
-                ExtendedBlockStorage extendedblockstorage = chunk.getBlockStorageArray()[l];
+                blockForThisLayer = Blocks.bedrock;
+            }
+            else if (layerY < roadHeight - 1)
+            {
+                blockForThisLayer = GaltBlocks.testBlock;
+            }
+            else if (layerY == roadHeight - 1) // off by one due to arrays starting with zero
+            {
+                blockForThisLayer = GaltBlocks.roadBlock;
+            }
+            else
+            {
+                blockForThisLayer = GaltBlocks.testBlock;
+            }
 
-                if (extendedblockstorage == null)
-                {
-                    extendedblockstorage = new ExtendedBlockStorage(k, !this.worldObj.provider.hasNoSky);
-                    chunk.getBlockStorageArray()[l] = extendedblockstorage;
-                }
+            int chunkY = layerY >> 4; // divides by 16 and drops remainder
+            ExtendedBlockStorage extendedblockstorage = chunk.getBlockStorageArray()[chunkY];
 
-                for (int i1 = 0; i1 < 16; ++i1)
+            if (extendedblockstorage == null)
+            {
+                extendedblockstorage = new ExtendedBlockStorage(layerY, !this.worldObj.provider.hasNoSky);
+                chunk.getBlockStorageArray()[chunkY] = extendedblockstorage;
+            }
+
+            for (int xWithinChunk = 0; xWithinChunk < 16; ++xWithinChunk)
+            {
+                for (int zWithinChunk = 0; zWithinChunk < 16; ++zWithinChunk)
                 {
-                    for (int j1 = 0; j1 < 16; ++j1)
-                    {
-                        extendedblockstorage.func_150818_a(i1, k & 15, j1, block);
-                        extendedblockstorage.setExtBlockMetadata(i1, k & 15, j1, this.cachedBlockMetadata[k]);
-                    }
+                    int yWithinChunk = layerY & 15;
+
+                    // Set block of a particular type to (X,Y,Z) local to the chunk
+                    extendedblockstorage.func_150818_a(xWithinChunk, yWithinChunk, zWithinChunk, blockForThisLayer);
+                    extendedblockstorage.setExtBlockMetadata(xWithinChunk, yWithinChunk, zWithinChunk,
+                            blockMetadataForThisLayer);
                 }
             }
         }
 
         chunk.generateSkylightMap();
-        BiomeGenBase[] abiomegenbase = this.worldObj.getWorldChunkManager().loadBlockGeneratorData((BiomeGenBase[])null, chunkX * 16, chunkY * 16, 16, 16);
-        byte[] abyte = chunk.getBiomeArray();
+        BiomeGenBase[] biomeGenBases = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(
+                (BiomeGenBase[]) null, chunkX * 16, chunkZ * 16, 16, 16);
+        byte[] biomeArray = chunk.getBiomeArray();
 
-        for (l = 0; l < abyte.length; ++l)
+        for (int i = 0; i < biomeArray.length; ++i)
         {
-            abyte[l] = (byte)abiomegenbase[l].biomeID;
+            biomeArray[i] = (byte) biomeGenBases[i].biomeID;
         }
 
-        for ( MapGenStructure mapgenstructure : this.structureGenerators )
+        for (MapGenStructure mapgenstructure : this.structureGenerators)
         {
-            mapgenstructure.func_151539_a(this, this.worldObj, chunkX, chunkY, (Block[])null);
+            mapgenstructure.func_151539_a(this, this.worldObj, chunkX, chunkZ, (Block[]) null);
         }
 
         chunk.generateSkylightMap();
@@ -146,9 +185,9 @@ public class GulchChunkProvider implements IChunkProvider
     }
 
     /**
-     * Checks to see if a chunk exists at x, y
+     * Checks to see if a chunk exists at x, z
      */
-    public boolean chunkExists(int x, int y)
+    public boolean chunkExists(int x, int z)
     {
         return true;
     }
@@ -156,22 +195,21 @@ public class GulchChunkProvider implements IChunkProvider
     /**
      * Populates chunk with ores etc etc
      */
-    public void populate(IChunkProvider chunkProvider, int chunkX, int chunkY)
+    public void populate(IChunkProvider chunkProvider, int chunkX, int chunkZ)
     {
         int k = chunkX * 16;
-        int l = chunkY * 16;
+        int l = chunkZ * 16;
         BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16);
         boolean flag = false;
-        this.random.setSeed(this.worldObj.getSeed());
         long i1 = this.random.nextLong() / 2L * 2L + 1L;
         long j1 = this.random.nextLong() / 2L * 2L + 1L;
-        this.random.setSeed((long)chunkX * i1 + (long)chunkY * j1 ^ this.worldObj.getSeed());
+        this.random.setSeed((long) chunkX * i1 + (long) chunkZ * j1 ^ this.worldObj.getSeed());
         Iterator iterator = this.structureGenerators.iterator();
 
         while (iterator.hasNext())
         {
-            MapGenStructure mapgenstructure = (MapGenStructure)iterator.next();
-            boolean flag1 = mapgenstructure.generateStructuresInChunk(this.worldObj, this.random, chunkX, chunkY);
+            MapGenStructure mapgenstructure = (MapGenStructure) iterator.next();
+            boolean flag1 = mapgenstructure.generateStructuresInChunk(this.worldObj, this.random, chunkX, chunkZ);
 
             if (mapgenstructure instanceof MapGenVillage)
             {
@@ -233,7 +271,9 @@ public class GulchChunkProvider implements IChunkProvider
      * Save extra data not associated with any Chunk.  Not saved during autosave, only during world unload.  Currently
      * unimplemented.
      */
-    public void saveExtraData() {}
+    public void saveExtraData()
+    {
+    }
 
     /**
      * Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
@@ -276,7 +316,7 @@ public class GulchChunkProvider implements IChunkProvider
 
             while (iterator.hasNext())
             {
-                MapGenStructure mapgenstructure = (MapGenStructure)iterator.next();
+                MapGenStructure mapgenstructure = (MapGenStructure) iterator.next();
 
                 if (mapgenstructure instanceof MapGenStronghold)
                 {
@@ -299,7 +339,8 @@ public class GulchChunkProvider implements IChunkProvider
 
         while (iterator.hasNext())
         {
-            MapGenStructure mapgenstructure = (MapGenStructure)iterator.next();
-            mapgenstructure.func_151539_a(this, this.worldObj, par1, par2, (Block[])null);
+            MapGenStructure mapgenstructure = (MapGenStructure) iterator.next();
+            mapgenstructure.func_151539_a(this, this.worldObj, par1, par2, (Block[]) null);
         }
-    }}
+    }
+}
