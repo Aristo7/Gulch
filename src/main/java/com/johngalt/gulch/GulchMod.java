@@ -1,5 +1,6 @@
 package com.johngalt.gulch;
 
+import com.johngalt.gulch.biome.GulchBiomes;
 import com.johngalt.gulch.blocks.GaltBlocks;
 import com.johngalt.gulch.creativetab.GaltTab;
 import com.johngalt.gulch.dimension.GulchWorldGen;
@@ -53,6 +54,8 @@ public class GulchMod
         GaltBlocks.init();
         GaltEntities.RegisterEntities();
         proxy.registerRenderers();
+
+        GulchBiomes.registerBiomes();
     }
 
     @Mod.EventHandler
