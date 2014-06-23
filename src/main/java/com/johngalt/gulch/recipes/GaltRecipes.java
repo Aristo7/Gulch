@@ -2,6 +2,7 @@ package com.johngalt.gulch.recipes;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,11 @@ import java.util.List;
 public class GaltRecipes
 {
     private static List<IGaltRecipes> _RecipesObjects = new ArrayList<IGaltRecipes>();
+
+    public static void RegisterRecipe(IRecipe recipe)
+    {
+        GameRegistry.addRecipe(recipe);
+    }
 
     public static void RegisterRecipe(boolean shaped, ItemStack output, Object... inputParams)
     {

@@ -1,8 +1,6 @@
 package com.johngalt.gulch.entities;
 
-import com.johngalt.gulch.effects.GaltEffects;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 /**
