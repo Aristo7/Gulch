@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -43,8 +42,9 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 
     /**
      * For shooting the gun
-     * @param gun The gun being shot.
-     * @param world The world is a vampire.
+     *
+     * @param gun    The gun being shot.
+     * @param world  The world is a vampire.
      * @param player player shooting the gun
      * @return
      */
@@ -103,6 +103,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 
     /**
      * This is to be overwritten in derived clases if there are additional items needed for reloading the gun.
+     *
      * @return The list of objects to add to the reload recipe.
      */
     protected List<Object> GetAdditionalReloadRequirements()
@@ -114,6 +115,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     /**
      * Gets the instance representing a bullet in the Enum.
      * Enums are used rather than instances initially so order of item initiation doesn't matter.
+     *
      * @param bullet The enum of the type of bullet
      * @return the GaltCommonItem reference to the bullet.
      */
