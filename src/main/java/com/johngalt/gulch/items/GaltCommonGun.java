@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,17 +19,17 @@ import java.util.List;
 public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 {
     private GaltSounds.SoundsEnum _ShotSound;
-    private BulletEnum _BulletType;
+    private List<BulletEnum> _DefaultBulletTypes;
     private GaltEffects.EffectEnum _BarrelParticleEffect;
     private int _ClipSize;
 
 
-    public GaltCommonGun(BulletEnum bulletType, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
+    public GaltCommonGun(List<BulletEnum> bulletTypes, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
     {
         super();
 
         _ClipSize = clipSize;
-        _BulletType = bulletType;
+        _DefaultBulletTypes = bulletTypes;
         _ShotSound = shotSound;
         _BarrelParticleEffect = barrelParticleEffect;
 
@@ -38,6 +39,11 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 
         GaltRecipes.DeclareRecipes(this);
 
+    }
+
+    public GaltCommonGun(BulletEnum bulletTypes, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
+    {
+        this(Arrays.asList(new BulletEnum[]{bulletTypes}), clipSize, shotSound, barrelParticleEffect);
     }
 
     /**
@@ -57,7 +63,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
             if (!world.isRemote)
             {
 
-                world.spawnEntityInWorld(GaltEntities.getBulletInstance(_BulletType, world, player));
+                world.spawnEntityInWorld(GaltEntities.getBulletInstance(this, world, player));
                 GaltEffects.spawnParticleAtHeldItem(_BarrelParticleEffect, player, 0.0F, 0.0F, 0.0F);
 
                 gun.damageItem(1, player);
@@ -79,24 +85,27 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     public void RegisterRecipes()
     {
         // register every combination of ammo reloading possible.
-        for (int dam = _ClipSize; dam > 0; dam--)
+        for (BulletEnum bullet : _DefaultBulletTypes)
         {
-            for (int numAmmo = dam; numAmmo > 0; numAmmo--)
+            for (int dam = _ClipSize; dam > 0; dam--)
             {
-                List<Object> input = new ArrayList<Object>();
-
-                for (int i = 0; i < numAmmo; i++)
-                    input.add(new ItemStack(GaltCommonGun.GetBulletInstance(_BulletType), 1));
-
-                input.add(new ItemStack(this, 1, dam));
-
-                List<Object> additionalRequirements = GetAdditionalReloadRequirements();
-                if (additionalRequirements != null)
+                for (int numAmmo = dam; numAmmo > 0; numAmmo--)
                 {
-                    input.addAll(GetAdditionalReloadRequirements());
-                }
+                    List<Object> input = new ArrayList<Object>();
 
-                GaltRecipes.RegisterRecipe(false, new ItemStack(this, 1, dam - numAmmo), input.toArray());
+                    for (int i = 0; i < numAmmo; i++)
+                        input.add(new ItemStack(GaltCommonGun.GetBulletInstance(bullet), 1));
+
+                    input.add(new ItemStack(this, 1, dam));
+
+                    List<Object> additionalRequirements = GetAdditionalReloadRequirements(bullet);
+                    if (additionalRequirements != null)
+                    {
+                        input.addAll(additionalRequirements);
+                    }
+
+                    GaltRecipes.RegisterRecipe(false, new ItemStack(this, 1, dam - numAmmo), input.toArray());
+                }
             }
         }
     }
@@ -106,7 +115,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
      *
      * @return The list of objects to add to the reload recipe.
      */
-    protected List<Object> GetAdditionalReloadRequirements()
+    protected List<Object> GetAdditionalReloadRequirements(BulletEnum bullet)
     {
         return null;
     }
@@ -128,6 +137,10 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         else if (bullet == BulletEnum.MusketShot)
         {
             return GaltItems.MusketShot;
+        }
+        else if (bullet == BulletEnum.PaperCartridge)
+        {
+            return GaltItems.PaperCartridge;
         }
 
         return null;

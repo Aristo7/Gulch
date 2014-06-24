@@ -16,6 +16,6 @@ public class EntityMusketShot extends GaltAmmoEntity
 
     public EntityMusketShot(World world, EntityPlayer player)
     {
-        super(world, player, (byte) 20, 0.01F);
+        super(world, player, (byte) 21, 0.01F);
     }
 }

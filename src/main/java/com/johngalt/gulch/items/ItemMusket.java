@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,20 +16,29 @@ public class ItemMusket extends GaltCommonGun
 {
     public ItemMusket()
     {
-        super(BulletEnum.MusketShot, 1, GaltSounds.SoundsEnum.musket_shot, GaltEffects.EffectEnum.Flame);
+        super(Arrays.asList(new BulletEnum[]{BulletEnum.MusketShot, BulletEnum.PaperCartridge}), 1, GaltSounds.SoundsEnum.musket_shot, GaltEffects.EffectEnum.Flame);
     }
 
     /**
-     * Muskets require not only the bullot, but the paper wadding and gunpowder to reload. Mussel loading for the suck.
-     *
+     * Muskets require not only the bullet, but the paper wadding and gunpowder to reload. Mussel loading for the suck.
+     * Paper cartridges don't need these additional requirements.
      * @return returns the object list of usually itemstacks to be added to the recipe.
      */
     @Override
-    protected List<Object> GetAdditionalReloadRequirements()
+    protected List<Object> GetAdditionalReloadRequirements(BulletEnum bullet)
     {
-        List<Object> additional = new ArrayList<Object>();
-        additional.add(new ItemStack(GaltItems.Wadding, 1));
-        additional.add(new ItemStack(Items.gunpowder, 1));
-        return additional;
+        if (bullet.equals(BulletEnum.MusketShot))
+        {
+            List<Object> additional = new ArrayList<Object>();
+            additional.add(new ItemStack(GaltItems.Wadding, 1));
+            additional.add(new ItemStack(Items.gunpowder, 1));
+            return additional;
+        }
+        else
+        {
+            return null;
+        }
     }
+
+
 }

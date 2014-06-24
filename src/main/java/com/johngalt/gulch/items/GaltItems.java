@@ -15,9 +15,13 @@ public class GaltItems
     public static ItemMusketShot MusketShot;
     public static ItemWadding Wadding;
     public static ItemIngotLead IngotLead;
-
+    public static ItemPaperCartridge PaperCartridge;
     public static Item simpleItem;
+    public static ItemGunPowder GunPowder;
 
+    /**
+     * Initiates all the item instances.
+     */
     public static void init()
     {
         BlasterRifle = new ItemBlasterRifle();
@@ -27,8 +31,14 @@ public class GaltItems
         MusketShot = new ItemMusketShot();
         Wadding = new ItemWadding();
         IngotLead = new ItemIngotLead();
+        PaperCartridge = new ItemPaperCartridge();
+        GunPowder = new ItemGunPowder();
     }
 
+    /**
+     * Used in common objects to register items
+     * @param item The item instance to register.
+     */
     public static void register(GaltCommonItem item)
     {
         GameRegistry.registerItem(item, item.getUnwrappedUnlocalizedName());
