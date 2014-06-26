@@ -1,7 +1,7 @@
 package com.johngalt.gulch.dimension;
 
 import com.johngalt.gulch.biome.GulchBiomes;
-import com.johngalt.gulch.blocks.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;

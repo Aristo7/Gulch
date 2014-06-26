@@ -1,6 +1,6 @@
 package com.johngalt.gulch.biome;
 
-import com.johngalt.gulch.blocks.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltBlocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 

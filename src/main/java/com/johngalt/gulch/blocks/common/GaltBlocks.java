@@ -1,5 +1,6 @@
-package com.johngalt.gulch.blocks;
+package com.johngalt.gulch.blocks.common;
 
+import com.johngalt.gulch.blocks.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 
@@ -17,6 +18,8 @@ public class GaltBlocks
 
     public static Block roadBlock;
 
+    public static Block water;
+
     public static void init()
     {
         testBlock = new GaltSimpleBlock();
@@ -27,6 +30,8 @@ public class GaltBlocks
         portalFrame = new GulchPortalFrameBlock();
 
         roadBlock = new GaltRoadBlock();
+
+        water = new GaltWaterMultiBlockStorage();
     }
 
     public static void register(GaltCommonBlock block)

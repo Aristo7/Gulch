@@ -1,6 +1,7 @@
 package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.GulchMod;
+import com.johngalt.gulch.blocks.common.GaltCommonContainer;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +16,9 @@ public class GaltContainerBlock extends GaltCommonContainer
     /**
      * See TestTileBlock
      */
-    protected GaltContainerBlock()
+    public GaltContainerBlock()
     {
         super(Material.rock);
-
 
     }
 

@@ -5,6 +5,7 @@ package com.johngalt.gulch.blocks;
  */
 
 import com.johngalt.gulch.GulchMod;
+import com.johngalt.gulch.blocks.common.GaltBlocks;
 import com.johngalt.gulch.dimension.GulchTeleporter;
 import com.johngalt.gulch.lib.GaltLangGenerator;
 import com.johngalt.gulch.lib.IGaltObject;
@@ -48,11 +49,11 @@ public class GulchPortalBlock extends BlockPortal implements IGaltObject
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
     {
-        if ((par5Entity.ridingEntity == null) && (par5Entity.riddenByEntity == null) && ((par5Entity instanceof EntityPlayerMP)))
+        if ((entity.ridingEntity == null) && (entity.riddenByEntity == null) && ((entity instanceof EntityPlayerMP)))
         {
-            EntityPlayerMP player = (EntityPlayerMP) par5Entity;
+            EntityPlayerMP player = (EntityPlayerMP) entity;
 
             MinecraftServer mServer = MinecraftServer.getServer();
 

@@ -1,4 +1,4 @@
-package com.johngalt.gulch.blocks;
+package com.johngalt.gulch.blocks.common;
 
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.lib.GaltLangGenerator;
@@ -6,27 +6,21 @@ import com.johngalt.gulch.lib.IGaltObject;
 import com.johngalt.gulch.lib.References;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
 /**
  * Created on 6/14/2014.
  */
-public class GaltCommonBlock extends Block implements IGaltObject
+public abstract class GaltCommonContainer extends BlockContainer implements IGaltObject
 {
-    public GaltCommonBlock(Material material)
+    protected GaltCommonContainer(Material material)
     {
         super(material);
         this.setBlockName(GetGaltName());
         GaltLangGenerator.AddEntry(this);
-        GaltBlocks.register(this);
         this.setCreativeTab(GulchMod.getCreativeTab());
-    }
-
-    public GaltCommonBlock()
-    {
-        this(Material.rock);
     }
 
     public String getUnwrappedUnlocalizedName()

@@ -1,7 +1,7 @@
 package com.johngalt.gulch;
 
 import com.johngalt.gulch.biome.GulchBiomes;
-import com.johngalt.gulch.blocks.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltBlocks;
 import com.johngalt.gulch.creativetab.GaltTab;
 import com.johngalt.gulch.dimension.GulchWorldGen;
 import com.johngalt.gulch.dimension.GulchWorldProvider;

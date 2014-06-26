@@ -4,7 +4,7 @@ package com.johngalt.gulch.dimension;
  * Created by on 6/16/2014.
  */
 
-import com.johngalt.gulch.blocks.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltBlocks;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
