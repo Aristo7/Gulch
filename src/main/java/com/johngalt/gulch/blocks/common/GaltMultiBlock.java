@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 public class GaltMultiBlock extends GaltCommonBlock
 {
     private Definition[] description;
+    private static int updateClientsFlag = 2;
 
     /**
      * Constructor
@@ -63,43 +64,59 @@ public class GaltMultiBlock extends GaltCommonBlock
         int meta;
     }
 
+    /**
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @param neighbor this is the block that was removed!
+     */
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor)
     {
-        // why is neighbor air???
-        //if (!isBlockInList(neighbor)) return;
+        boolean isComplete = false;
+        Direction foundDirection = null;
+        Definition foundOriginPoint = null;
 
-        if (isComplete(world, x, y, z, this.description[0], Direction.North))
+        for (Direction dir : Direction.AllDirections)
         {
-            markAllBlocks(world, x, y, z, this.description[0], Direction.North, 15);
+            for (Definition def : this.description)
+            {
+                if (isComplete(world, x, y, z, def, dir))
+                {
+                    isComplete = true;
+                    foundDirection = dir;
+                    foundOriginPoint = def;
+                    break;
+                }
+            }
+
+            if (isComplete)
+                break;
+        }
+
+        if (isComplete)
+        {
+            markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, 15);
         }
         else
         {
-            markAllBlocks(world, x, y, z, this.description[0], Direction.North, 0);
+            // reset back to default metadata - the structure is not complete
+            world.setBlockMetadataWithNotify(x, y, z, 0, updateClientsFlag);
         }
     }
 
     private void markAllBlocks(World world, int x, int y, int z, Definition ref, Direction dir, int newMeta)
     {
-        int updateClientsFlag = 2;
         for (Definition d : this.description)
         {
-            world.setBlock(
-                    x + (d.dx - ref.dx) * dir.multiplierX,
-                    y + (d.dy - ref.dy) * dir.multiplierY,
-                    z + (d.dz - ref.dz) * dir.multiplierZ, d.block, newMeta, updateClientsFlag);
-        }
-    }
+            Vector result = dir.apply(new Vector(x, y, z), new Vector(d.dx - ref.dx, d.dy - ref.dy, d.dz - ref.dz));
 
-    private boolean isBlockInList(Block neighbor)
-    {
-        for (Definition d : this.description)
-        {
-            if (d.block == neighbor)
-                return true;
+            if (world.getBlock(result.x, result.y, result.z) == d.block)
+            {
+                world.setBlock(result.x, result.y, result.z, d.block, newMeta, updateClientsFlag);
+            }
         }
-
-        return false;
     }
 
     /**
@@ -115,10 +132,11 @@ public class GaltMultiBlock extends GaltCommonBlock
     {
         for (Definition d : this.description)
         {
-            if (world.getBlock(
-                    x + (d.dx - ref.dx) * dir.multiplierX,
-                    y + (d.dy - ref.dy) * dir.multiplierY,
-                    z + (d.dz - ref.dz) * dir.multiplierZ) != d.block)
+            Vector result = dir.apply(new Vector(x, y, z), new Vector(d.dx - ref.dx, d.dy - ref.dy, d.dz - ref.dz));
+
+            // check both block and its expected meta
+            if (world.getBlock(result.x, result.y, result.z) != d.block ||
+                    world.getBlockMetadata(result.x, result.y, result.z) != d.meta)
             {
                 return false;
             }
@@ -130,21 +148,60 @@ public class GaltMultiBlock extends GaltCommonBlock
 
 class Direction
 {
-    public int multiplierX;
-    public int multiplierY;
-    public int multiplierZ;
+    public int     multiplier;
+    public boolean swapCoords;
 
-    public Direction(int x, int y, int z)
+    public Direction(int multiplier, boolean swapCoords)
     {
-        this.multiplierX = x;
-        this.multiplierY = y;
-        this.multiplierZ = z;
+        this.multiplier = multiplier;
+        this.swapCoords = swapCoords;
     }
 
-    public static Direction North = new Direction(1, 1, 1);
-    public static Direction South = new Direction(-1, 1, 1);
-    public static Direction West  = new Direction(1, 1, 1);
-    public static Direction East  = new Direction(1, 1, -1);
+    // rotates into various directions: North/South/West/East
+    public Vector apply(Vector start, Vector ref)
+    {
+        Vector newVector = new Vector();
+
+        if (this.swapCoords == false)
+        {
+            newVector.x = start.x + ref.x * this.multiplier;
+            newVector.y = start.y + ref.y;
+            newVector.z = start.z + ref.z * this.multiplier;
+        }
+        else
+        {
+            // swapping delta x with delta z
+            newVector.x = start.x + ref.z * this.multiplier;
+            newVector.y = start.y + ref.y;
+            newVector.z = start.z + ref.x * this.multiplier;
+        }
+
+        return newVector;
+    }
+
+    public static Direction North = new Direction(1, false);
+    public static Direction South = new Direction(-1, false);
+    public static Direction West  = new Direction(1, true);
+    public static Direction East  = new Direction(-1, true);
 
     public static Direction[] AllDirections = new Direction[]{North, South, East, West};
+}
+
+class Vector
+{
+    public Vector()
+    {
+        x = 0;
+        y = 0;
+        z = 0;
+    }
+
+    public Vector(int x, int y, int z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public int x, y, z;
 }

@@ -19,7 +19,6 @@ public class GaltWaterMultiBlockStorage extends GaltMultiBlock
     {
         super(Material.rock);
 
-        /*
         describe(new Definition[]{
                 new Definition(0, 0, 0, this),
                 new Definition(0, 1, 0, this),
@@ -28,11 +27,6 @@ public class GaltWaterMultiBlockStorage extends GaltMultiBlock
                 new Definition(1, 0, 0, this),
                 new Definition(-1, 0, 0, this),
                 new Definition(0, 0, 1, this)});
-                */
-
-        describe(new Definition[]{
-                new Definition(0, 0, 0, this),
-                new Definition(0, 1, 0, this)});
     }
 
     /**
