@@ -135,8 +135,7 @@ public class GaltMultiBlock extends GaltCommonBlock
             Vector result = dir.apply(new Vector(x, y, z), new Vector(d.dx - ref.dx, d.dy - ref.dy, d.dz - ref.dz));
 
             // check both block and its expected meta
-            if (world.getBlock(result.x, result.y, result.z) != d.block ||
-                    world.getBlockMetadata(result.x, result.y, result.z) != d.meta)
+            if (world.getBlock(result.x, result.y, result.z) != d.block)
             {
                 return false;
             }
