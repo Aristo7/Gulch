@@ -136,6 +136,7 @@ public class GaltMoldMaker extends GaltCommonContainer
 
             if (tileentityfurnace != null)
             {
+                // initiate gui
                 player.func_146101_a(tileentityfurnace);
             }
 
