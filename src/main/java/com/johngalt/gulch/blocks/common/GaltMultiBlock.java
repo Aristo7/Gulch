@@ -4,13 +4,17 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 /**
  * Created by on 6/25/2014.
  */
 public class GaltMultiBlock extends GaltCommonBlock
 {
     private Definition[] description;
-    private static int updateClientsFlag = 2;
+
+    public static int updateClientsFlag = 2;
+    public static MultiBlockManager registrationManager = new MultiBlockManager();
 
     /**
      * Constructor
@@ -102,12 +106,14 @@ public class GaltMultiBlock extends GaltCommonBlock
         else
         {
             // reset back to default metadata - the structure is not complete
-            world.setBlockMetadataWithNotify(x, y, z, 0, updateClientsFlag);
+            registrationManager.findAndRemoveStructure(world, x, y, z);
         }
     }
 
     private void markAllBlocks(World world, int x, int y, int z, Definition ref, Direction dir, int newMeta)
     {
+        ArrayList<Definition> registration = new ArrayList<Definition>();
+
         for (Definition d : this.description)
         {
             Vector result = dir.apply(new Vector(x, y, z), new Vector(d.dx - ref.dx, d.dy - ref.dy, d.dz - ref.dz));
@@ -115,8 +121,11 @@ public class GaltMultiBlock extends GaltCommonBlock
             if (world.getBlock(result.x, result.y, result.z) == d.block)
             {
                 world.setBlock(result.x, result.y, result.z, d.block, newMeta, updateClientsFlag);
+                registration.add(new Definition(result.x, result.y, result.z, d.block));
             }
         }
+
+        registrationManager.registerStructure(world, registration);
     }
 
     /**
