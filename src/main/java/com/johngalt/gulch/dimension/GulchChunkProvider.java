@@ -30,17 +30,17 @@ import java.util.Random;
 @SuppressWarnings("unchecked")
 public class GulchChunkProvider implements IChunkProvider
 {
-    private World  worldObj;
+    private World worldObj;
     private Random random;
-    private int    layersFilled;
-    private final Block[] cachedBlockIDs      = new Block[256];
-    private final byte[]  cachedBlockMetadata = new byte[256];
+    private int layersFilled;
+    private final Block[] cachedBlockIDs = new Block[256];
+    private final byte[] cachedBlockMetadata = new byte[256];
     private final FlatGeneratorInfo flatWorldGenInfo;
     private final List<MapGenStructure> structureGenerators = new ArrayList<MapGenStructure>();
-    private final boolean       hasDecoration;
-    private final boolean       hasDungeons;
-    private       WorldGenLakes waterLakeGenerator;
-    private       WorldGenLakes lavaLakeGenerator;
+    private final boolean hasDecoration;
+    private final boolean hasDungeons;
+    private WorldGenLakes waterLakeGenerator;
+    private WorldGenLakes lavaLakeGenerator;
     private static final String __OBFID = "CL_00000391";
 
     public GulchChunkProvider(World world, long randomSeed)
@@ -159,15 +159,13 @@ public class GulchChunkProvider implements IChunkProvider
 
                     // Set block of a particular type to (X,Y,Z) local to the chunk
                     extendedblockstorage.func_150818_a(xWithinChunk, yWithinChunk, zWithinChunk, blockForThisLayer);
-                    extendedblockstorage.setExtBlockMetadata(xWithinChunk, yWithinChunk, zWithinChunk,
-                            blockMetadataForThisLayer);
+                    extendedblockstorage.setExtBlockMetadata(xWithinChunk, yWithinChunk, zWithinChunk, blockMetadataForThisLayer);
                 }
             }
         }
 
         chunk.generateSkylightMap();
-        BiomeGenBase[] biomeGenBases = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(
-                (BiomeGenBase[]) null, chunkX * 16, chunkZ * 16, 16, 16);
+        BiomeGenBase[] biomeGenBases = this.worldObj.getWorldChunkManager().loadBlockGeneratorData((BiomeGenBase[]) null, chunkX * 16, chunkZ * 16, 16, 16);
         byte[] biomeArray = chunk.getBiomeArray();
 
         for (int i = 0; i < biomeArray.length; ++i)

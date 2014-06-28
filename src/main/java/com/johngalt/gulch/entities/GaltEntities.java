@@ -1,7 +1,9 @@
 package com.johngalt.gulch.entities;
 
 import com.johngalt.gulch.GulchMod;
-import com.johngalt.gulch.items.*;
+import com.johngalt.gulch.items.GaltCommonGun;
+import com.johngalt.gulch.items.ItemBlasterRifle;
+import com.johngalt.gulch.items.ItemMusket;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

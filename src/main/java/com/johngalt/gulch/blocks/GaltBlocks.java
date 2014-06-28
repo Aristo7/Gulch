@@ -17,7 +17,8 @@ public class GaltBlocks
 
     public static Block roadBlock;
 
-    public static GaltMoldMaker MoldMaker;
+    public static Block GaltMachineIdle;
+    public static Block GaltMachineActive;
 
     public static void init()
     {
@@ -30,7 +31,8 @@ public class GaltBlocks
 
         roadBlock = new GaltRoadBlock();
 
-        MoldMaker = new GaltMoldMaker(false);
+        GaltMachineActive = new GaltMachineBlock(true).setLightLevel(0.625F);
+        GaltMachineIdle = new GaltMachineBlock(false);
     }
 
     public static void register(GaltCommonBlock block)

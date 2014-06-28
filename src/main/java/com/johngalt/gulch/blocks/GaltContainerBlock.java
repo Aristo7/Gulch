@@ -34,6 +34,7 @@ public class GaltContainerBlock extends GaltCommonContainer
         return new GaltTileEntityContainer();
     }
 
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par1, float par2, float par3, float par4)
     {
         entityPlayer.openGui(GulchMod.instance, 1, world, x, y, z);

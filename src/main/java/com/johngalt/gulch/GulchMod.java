@@ -49,10 +49,12 @@ public class GulchMod
     {
         worldProvider = new GulchWorldGen();
 
+
         GaltItems.init();
         GaltBlocks.init();
         GaltEntities.RegisterEntities();
         proxy.registerRenderers();
+        proxy.registerTileEntities();
     }
 
     @Mod.EventHandler

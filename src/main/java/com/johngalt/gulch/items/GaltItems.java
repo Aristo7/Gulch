@@ -37,6 +37,7 @@ public class GaltItems
 
     /**
      * Used in common objects to register items
+     *
      * @param item The item instance to register.
      */
     public static void register(GaltCommonItem item)

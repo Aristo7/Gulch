@@ -14,3 +14,6 @@ item.gulch:ItemWadding.name=Wadding
 item.gulch:ItemIngotLead.name=Ingot Lead
 item.gulch:ItemPaperCartridge.name=Paper Cartridge
 item.gulch:ItemGunPowder.name=Gun Powder
+tile.gulch:GaltMachineBlockOn.name=Machine Block On
+tile.gulch:GaltMachineBlockOff.name=Machine Block Off
+tile.gulch:GaltProcessorBlock.name=Processor Block

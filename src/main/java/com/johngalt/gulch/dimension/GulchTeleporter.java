@@ -61,7 +61,8 @@ public class GulchTeleporter extends Teleporter
                 this.makePortal(par1Entity);
                 this.placeInExistingPortal(par1Entity, par2, par4, par6, par8);
             }
-        } else
+        }
+        else
         {
             int i = MathHelper.floor_double(par1Entity.posX);
             int j = MathHelper.floor_double(par1Entity.posY) - 1;
@@ -117,7 +118,8 @@ public class GulchTeleporter extends Teleporter
             k = portalposition.posZ;
             portalposition.lastUpdateTime = this.worldServerInstance.getTotalWorldTime();
             flag = false;
-        } else
+        }
+        else
         {
             for (k1 = l - short1; k1 <= l + short1; ++k1)
             {
@@ -156,8 +158,7 @@ public class GulchTeleporter extends Teleporter
         {
             if (flag)
             {
-                this.destinationCoordinateCache.add(j1,
-                        new PortalPosition(i, j, k, this.worldServerInstance.getTotalWorldTime()));
+                this.destinationCoordinateCache.add(j1, new PortalPosition(i, j, k, this.worldServerInstance.getTotalWorldTime()));
                 this.destinationCoordinateKeys.add(j1);
             }
 
@@ -195,10 +196,8 @@ public class GulchTeleporter extends Teleporter
                 int j3 = Direction.offsetZ[j2];
                 int k3 = Direction.offsetX[l2];
                 int l3 = Direction.offsetZ[l2];
-                boolean flag1 = !this.worldServerInstance.isAirBlock(i + i3 + k3, j,
-                        k + j3 + l3) || !this.worldServerInstance.isAirBlock(i + i3 + k3, j + 1, k + j3 + l3);
-                boolean flag2 = !this.worldServerInstance.isAirBlock(i + i3, j,
-                        k + j3) || !this.worldServerInstance.isAirBlock(i + i3, j + 1, k + j3);
+                boolean flag1 = !this.worldServerInstance.isAirBlock(i + i3 + k3, j, k + j3 + l3) || !this.worldServerInstance.isAirBlock(i + i3 + k3, j + 1, k + j3 + l3);
+                boolean flag2 = !this.worldServerInstance.isAirBlock(i + i3, j, k + j3) || !this.worldServerInstance.isAirBlock(i + i3, j + 1, k + j3);
 
                 if (flag1 && flag2)
                 {
@@ -212,10 +211,8 @@ public class GulchTeleporter extends Teleporter
                     d8 -= (double) k3;
                     int i4 = k - l3;
                     d4 -= (double) l3;
-                    flag1 = !this.worldServerInstance.isAirBlock(k1 + i3 + k3, j,
-                            i4 + j3 + l3) || !this.worldServerInstance.isAirBlock(k1 + i3 + k3, j + 1, i4 + j3 + l3);
-                    flag2 = !this.worldServerInstance.isAirBlock(k1 + i3, j,
-                            i4 + j3) || !this.worldServerInstance.isAirBlock(k1 + i3, j + 1, i4 + j3);
+                    flag1 = !this.worldServerInstance.isAirBlock(k1 + i3 + k3, j, i4 + j3 + l3) || !this.worldServerInstance.isAirBlock(k1 + i3 + k3, j + 1, i4 + j3 + l3);
+                    flag2 = !this.worldServerInstance.isAirBlock(k1 + i3, j, i4 + j3) || !this.worldServerInstance.isAirBlock(k1 + i3, j + 1, i4 + j3);
                 }
 
                 float f1 = 0.5F;
@@ -224,10 +221,12 @@ public class GulchTeleporter extends Teleporter
                 if (!flag1 && flag2)
                 {
                     f1 = 1.0F;
-                } else if (flag1 && !flag2)
+                }
+                else if (flag1 && !flag2)
                 {
                     f1 = 0.0F;
-                } else if (flag1 && flag2)
+                }
+                else if (flag1 && flag2)
                 {
                     f2 = 0.0F;
                 }
@@ -243,15 +242,18 @@ public class GulchTeleporter extends Teleporter
                 {
                     f3 = 1.0F;
                     f4 = 1.0F;
-                } else if (j2 == Direction.rotateOpposite[k2])
+                }
+                else if (j2 == Direction.rotateOpposite[k2])
                 {
                     f3 = -1.0F;
                     f4 = -1.0F;
-                } else if (j2 == Direction.rotateRight[k2])
+                }
+                else if (j2 == Direction.rotateRight[k2])
                 {
                     f5 = 1.0F;
                     f6 = -1.0F;
-                } else
+                }
+                else
                 {
                     f5 = -1.0F;
                     f6 = 1.0F;
@@ -262,14 +264,16 @@ public class GulchTeleporter extends Teleporter
                 par1Entity.motionX = d10 * (double) f3 + d11 * (double) f6;
                 par1Entity.motionZ = d10 * (double) f5 + d11 * (double) f4;
                 par1Entity.rotationYaw = par8 - (float) (k2 * 90) + (float) (j2 * 90);
-            } else
+            }
+            else
             {
                 par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = 0.0D;
             }
 
             par1Entity.setLocationAndAngles(d8, d9, d4, par1Entity.rotationYaw, par1Entity.rotationPitch);
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -343,9 +347,7 @@ public class GulchTeleporter extends Teleporter
                                         j4 = k2 + l3;
                                         int l4 = j2 + (i4 - 1) * k3 - j3 * l2;
 
-                                        if (l3 < 0 && !this.worldServerInstance.getBlock(k4, j4,
-                                                l4).getMaterial().isSolid() || l3 >= 0 && !this.worldServerInstance.isAirBlock(
-                                                k4, j4, l4))
+                                        if (l3 < 0 && !this.worldServerInstance.getBlock(k4, j4, l4).getMaterial().isSolid() || l3 >= 0 && !this.worldServerInstance.isAirBlock(k4, j4, l4))
                                         {
                                             continue label274;
                                         }
@@ -403,9 +405,7 @@ public class GulchTeleporter extends Teleporter
                                         k4 = k2 + i4;
                                         j4 = j2 + (j3 - 1) * k3;
 
-                                        if (i4 < 0 && !this.worldServerInstance.getBlock(l3, k4,
-                                                j4).getMaterial().isSolid() || i4 >= 0 && !this.worldServerInstance.isAirBlock(
-                                                l3, k4, j4))
+                                        if (i4 < 0 && !this.worldServerInstance.getBlock(l3, k4, j4).getMaterial().isSolid() || i4 >= 0 && !this.worldServerInstance.isAirBlock(l3, k4, j4))
                                         {
                                             continue label222;
                                         }
@@ -484,8 +484,7 @@ public class GulchTeleporter extends Teleporter
                     j3 = j5 + l2;
                     i4 = j2 + (i3 - 1) * l5;
                     flag = i3 == 0 || i3 == 3 || l2 == -1 || l2 == 3;
-                    this.worldServerInstance.setBlock(k3, j3, i4,
-                            flag ? GaltBlocks.portalFrame : GaltBlocks.portalBlock, 0, 2);
+                    this.worldServerInstance.setBlock(k3, j3, i4, flag ? GaltBlocks.portalFrame : GaltBlocks.portalBlock, 0, 2);
                 }
             }
 
@@ -496,8 +495,7 @@ public class GulchTeleporter extends Teleporter
                     k3 = i5 + (i3 - 1) * k5;
                     j3 = j5 + l2;
                     i4 = j2 + (i3 - 1) * l5;
-                    this.worldServerInstance.notifyBlocksOfNeighborChange(k3, j3, i4,
-                            this.worldServerInstance.getBlock(k3, j3, i4));
+                    this.worldServerInstance.notifyBlocksOfNeighborChange(k3, j3, i4, this.worldServerInstance.getBlock(k3, j3, i4));
                 }
             }
         }

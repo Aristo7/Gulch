@@ -22,6 +22,7 @@ public class ItemMusket extends GaltCommonGun
     /**
      * Muskets require not only the bullet, but the paper wadding and gunpowder to reload. Mussel loading for the suck.
      * Paper cartridges don't need these additional requirements.
+     *
      * @return returns the object list of usually itemstacks to be added to the recipe.
      */
     @Override

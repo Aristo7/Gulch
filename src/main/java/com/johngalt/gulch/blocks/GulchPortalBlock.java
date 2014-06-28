@@ -64,14 +64,12 @@ public class GulchPortalBlock extends BlockPortal implements IGaltObject
             {
                 player.timeUntilPortal = 10;
 
-                player.mcServer.getConfigurationManager().transferPlayerToDimension(player, GulchMod.gulchDimension,
-                        new GulchTeleporter(mServer.worldServerForDimension(GulchMod.gulchDimension)));
+                player.mcServer.getConfigurationManager().transferPlayerToDimension(player, GulchMod.gulchDimension, new GulchTeleporter(mServer.worldServerForDimension(GulchMod.gulchDimension)));
             }
             else
             {
                 player.timeUntilPortal = 10;
-                player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0,
-                        new GulchTeleporter(mServer.worldServerForDimension(1)));
+                player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0, new GulchTeleporter(mServer.worldServerForDimension(1)));
             }
         }
     }
@@ -82,14 +80,12 @@ public class GulchPortalBlock extends BlockPortal implements IGaltObject
         byte b0 = 0;
         byte b1 = 0;
 
-        if (par1World.getBlock(par2 - 1, par3, par4) == GaltBlocks.portalFrame || par1World.getBlock(par2 + 1, par3,
-                par4) == GaltBlocks.portalFrame)
+        if (par1World.getBlock(par2 - 1, par3, par4) == GaltBlocks.portalFrame || par1World.getBlock(par2 + 1, par3, par4) == GaltBlocks.portalFrame)
         {
             b0 = 1;
         }
 
-        if (par1World.getBlock(par2, par3, par4 - 1) == GaltBlocks.portalFrame || par1World.getBlock(par2, par3,
-                par4 + 1) == GaltBlocks.portalFrame)
+        if (par1World.getBlock(par2, par3, par4 - 1) == GaltBlocks.portalFrame || par1World.getBlock(par2, par3, par4 + 1) == GaltBlocks.portalFrame)
         {
             b1 = 1;
         }

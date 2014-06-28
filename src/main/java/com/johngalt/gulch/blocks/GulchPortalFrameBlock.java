@@ -27,27 +27,7 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
         // Any block in the frame may be the last to have been placed, so use a general logic to check the frame
         // Assume +Y is UP!
 
-        FramePosition[] emptyFrame = {
-                new FramePosition(0, 0, 0, GaltBlocks.portalFrame),
-                new FramePosition(0, 1, 0, GaltBlocks.portalFrame),
-                new FramePosition(0, 2, 0, GaltBlocks.portalFrame),
-                new FramePosition(0, 3, 0, GaltBlocks.portalFrame),
-                new FramePosition(0, 4, 0, GaltBlocks.portalFrame),
-                new FramePosition(1, 0, 0, GaltBlocks.portalFrame),
-                new FramePosition(1, 1, 0, Blocks.air),
-                new FramePosition(1, 2, 0, Blocks.air),
-                new FramePosition(1, 3, 0, Blocks.air),
-                new FramePosition(1, 4, 0, GaltBlocks.portalFrame),
-                new FramePosition(2, 0, 0, GaltBlocks.portalFrame),
-                new FramePosition(2, 1, 0, Blocks.air),
-                new FramePosition(2, 2, 0, Blocks.air),
-                new FramePosition(2, 3, 0, Blocks.air),
-                new FramePosition(2, 4, 0, GaltBlocks.portalFrame),
-                new FramePosition(3, 0, 0, GaltBlocks.portalFrame),
-                new FramePosition(3, 1, 0, GaltBlocks.portalFrame),
-                new FramePosition(3, 2, 0, GaltBlocks.portalFrame),
-                new FramePosition(3, 3, 0, GaltBlocks.portalFrame),
-                new FramePosition(3, 4, 0, GaltBlocks.portalFrame)};
+        FramePosition[] emptyFrame = {new FramePosition(0, 0, 0, GaltBlocks.portalFrame), new FramePosition(0, 1, 0, GaltBlocks.portalFrame), new FramePosition(0, 2, 0, GaltBlocks.portalFrame), new FramePosition(0, 3, 0, GaltBlocks.portalFrame), new FramePosition(0, 4, 0, GaltBlocks.portalFrame), new FramePosition(1, 0, 0, GaltBlocks.portalFrame), new FramePosition(1, 1, 0, Blocks.air), new FramePosition(1, 2, 0, Blocks.air), new FramePosition(1, 3, 0, Blocks.air), new FramePosition(1, 4, 0, GaltBlocks.portalFrame), new FramePosition(2, 0, 0, GaltBlocks.portalFrame), new FramePosition(2, 1, 0, Blocks.air), new FramePosition(2, 2, 0, Blocks.air), new FramePosition(2, 3, 0, Blocks.air), new FramePosition(2, 4, 0, GaltBlocks.portalFrame), new FramePosition(3, 0, 0, GaltBlocks.portalFrame), new FramePosition(3, 1, 0, GaltBlocks.portalFrame), new FramePosition(3, 2, 0, GaltBlocks.portalFrame), new FramePosition(3, 3, 0, GaltBlocks.portalFrame), new FramePosition(3, 4, 0, GaltBlocks.portalFrame)};
 
         for (int offsetx = -3; offsetx <= 3; offsetx++)
             for (int offsety = -4; offsety <= 4; offsety++)
@@ -61,8 +41,7 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
     /*
     Checks frame validity. Offset XYZ is the location of the current block in the frame you wish to check from.
      */
-    public static boolean isFrameCorrect(World world, FramePosition[] frame, int x, int y, int z,
-                                         int offsetX, int offsetY, int offsetZ)
+    public static boolean isFrameCorrect(World world, FramePosition[] frame, int x, int y, int z, int offsetX, int offsetY, int offsetZ)
     {
         boolean frameCorrect = true;
         for (FramePosition i : frame)
@@ -80,8 +59,7 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
             {
                 for (int dx = 1; dx <= 2; ++dx)
                     for (int dy = 1; dy <= 3; ++dy)
-                        world.setBlock(x + dx - offsetX, y + dy - offsetY, z - offsetZ,
-                                GaltBlocks.portalBlock);
+                        world.setBlock(x + dx - offsetX, y + dy - offsetY, z - offsetZ, GaltBlocks.portalBlock);
             }
             return frameCorrect;
         }
@@ -104,8 +82,7 @@ public class GulchPortalFrameBlock extends GaltCommonBlock
             {
                 for (int dz = 1; dz <= 2; ++dz)
                     for (int dy = 1; dy <= 3; ++dy)
-                        world.setBlock(x - offsetX, y + dy - offsetY, z + dz - offsetZ,
-                                GaltBlocks.portalBlock);
+                        world.setBlock(x - offsetX, y + dy - offsetY, z + dz - offsetZ, GaltBlocks.portalBlock);
             }
         }
 

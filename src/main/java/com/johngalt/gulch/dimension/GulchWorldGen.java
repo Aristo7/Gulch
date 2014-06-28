@@ -16,8 +16,7 @@ import java.util.Random;
 
 public class GulchWorldGen implements IWorldGenerator
 {
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator,
-                         IChunkProvider chunkProvider)
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
     {
         switch (world.provider.dimensionId)
         {
@@ -45,8 +44,7 @@ public class GulchWorldGen implements IWorldGenerator
         int Xcoord = x + random.nextInt(16);
         int Ycoord = 10 + random.nextInt(128);
         int Zcoord = z + random.nextInt(16);
-        (new WorldGenMinable(GaltBlocks.testBlock, 1, 15, Blocks.netherrack)).generate(world, random, Xcoord, Ycoord,
-                Zcoord);
+        (new WorldGenMinable(GaltBlocks.testBlock, 1, 15, Blocks.netherrack)).generate(world, random, Xcoord, Ycoord, Zcoord);
     }
 
     /**
@@ -65,8 +63,7 @@ public class GulchWorldGen implements IWorldGenerator
      * @param minY           An int for the minimum Y-Coordinate height at which this block may spawn
      * @param maxY           An int for the maximum Y-Coordinate height at which this block may spawn
      */
-    public void addOreSpawn(Block block, World world, Random random, int blockXPos, int blockZPos, int maxX, int maxZ,
-                            int maxVeinSize, int chancesToSpawn, int minY, int maxY)
+    public void addOreSpawn(Block block, World world, Random random, int blockXPos, int blockZPos, int maxX, int maxZ, int maxVeinSize, int chancesToSpawn, int minY, int maxY)
     {
         assert maxY > minY : "The maximum Y must be greater than the Minimum Y";
         assert maxX > 0 && maxX <= 16 : "addOreSpawn: The Maximum X must be greater than 0 and less than 16";

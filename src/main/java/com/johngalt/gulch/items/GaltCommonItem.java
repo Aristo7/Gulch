@@ -34,6 +34,7 @@ public class GaltCommonItem extends Item implements IGaltObject
 
     /**
      * Registers this ore with the ore dictionary
+     *
      * @param oreDictName This is the name in the dictionary given to this ore.
      */
     protected void RegisterWithOreDictionary(String oreDictName)
@@ -44,6 +45,7 @@ public class GaltCommonItem extends Item implements IGaltObject
 
     /**
      * Gets the Ore Dictionary name for this item. Requires RegisterWithOreDictionary to have been ran.
+     *
      * @return The ore dictionary name.
      */
     public String GetOreDictName()
@@ -70,6 +72,7 @@ public class GaltCommonItem extends Item implements IGaltObject
 
     /**
      * What the poopinickle is this for??
+     *
      * @param itemStack
      * @return
      */
@@ -81,6 +84,7 @@ public class GaltCommonItem extends Item implements IGaltObject
 
     /**
      * Function override to assign the icon/texture to the item.
+     *
      * @param iconRegister used to register the icon ( iconRegister.registerIcon(name) )
      */
     @Override

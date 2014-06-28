@@ -18,7 +18,23 @@ public abstract class GaltCommonContainer extends BlockContainer implements IGal
     protected GaltCommonContainer(Material material)
     {
         super(material);
-        this.setBlockName(GetGaltName());
+        initializeContainer(GetGaltName());
+    }
+
+    protected GaltCommonContainer(Material material, boolean customInitialization)
+    {
+        super(material);
+
+        if (customInitialization)
+        {
+            initializeContainer(GetGaltName());
+        }
+    }
+
+    protected void initializeContainer(String customBlockName)
+    {
+        this.setBlockName(customBlockName);
+        GaltBlocks.register(this);
         GaltLangGenerator.AddEntry(this);
         this.setCreativeTab(GulchMod.getCreativeTab());
     }

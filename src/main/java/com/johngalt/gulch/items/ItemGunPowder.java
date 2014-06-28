@@ -24,16 +24,13 @@ public class ItemGunPowder extends GaltCommonItem implements IGaltRecipes
     @Override
     public void RegisterRecipes()
     {
-        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ItemStack(this, 16),
-                new Object[] {"sand", Items.coal, Items.lava_bucket });
+        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ItemStack(this, 16), new Object[]{"sand", Items.coal, Items.lava_bucket});
         GaltRecipes.RegisterRecipe(recipe);
 
-        ShapelessOreRecipe recipe2 = new ShapelessOreRecipe(new ItemStack(this, 16),
-                new Object[] {"sand", "dustCoal", Items.lava_bucket });
+        ShapelessOreRecipe recipe2 = new ShapelessOreRecipe(new ItemStack(this, 16), new Object[]{"sand", "dustCoal", Items.lava_bucket});
         GaltRecipes.RegisterRecipe(recipe2);
 
-        ShapelessOreRecipe recipe3 = new ShapelessOreRecipe(new ItemStack(this, 16),
-                new Object[] {"sand", "charcoal", Items.lava_bucket });
+        ShapelessOreRecipe recipe3 = new ShapelessOreRecipe(new ItemStack(this, 16), new Object[]{"sand", "charcoal", Items.lava_bucket});
         GaltRecipes.RegisterRecipe(recipe3);
     }
 }

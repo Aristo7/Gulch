@@ -20,6 +20,7 @@ public class GaltRecipes
 
     /**
      * Registers a recipe with the game manager
+     *
      * @param recipe An IRecipe instance, including ore dictionary's Shaped/ShapelessOreRecipe
      */
     public static void RegisterRecipe(IRecipe recipe)
@@ -29,8 +30,9 @@ public class GaltRecipes
 
     /**
      * Registers a recipe with the game manager.
-     * @param shaped true if shaped, false otherwise.
-     * @param output This product you get from the crafting
+     *
+     * @param shaped      true if shaped, false otherwise.
+     * @param output      This product you get from the crafting
      * @param inputParams The needed materials to make the output.
      */
     public static void RegisterRecipe(boolean shaped, ItemStack output, Object... inputParams)
