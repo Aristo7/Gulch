@@ -7,12 +7,19 @@ import net.minecraft.tileentity.TileEntity;
  */
 public class GaltTileEntity extends TileEntity
 {
+    protected String _LocalizedName;
+
     public GaltTileEntity()
     {
         super();
     }
 
     int tick = 0;
+
+    public void setGuiDisplayName(String displayName)
+    {
+        _LocalizedName = displayName;
+    }
 
     @Override
     public void updateEntity()

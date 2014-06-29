@@ -5,18 +5,19 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
+import java.util.List;
+
 
 /**
  * Created on 6/27/2014.
  */
-public class GaltContainerMachine extends Container
+public class GaltContainerMachine extends GaltCommonContainer
 {
     private GaltTileEntityMachine _MachineTileEntity;
 
@@ -26,23 +27,21 @@ public class GaltContainerMachine extends Container
 
     public GaltContainerMachine(InventoryPlayer inventory, GaltTileEntityMachine tileentity)
     {
+        super(inventory, true);
         _MachineTileEntity = tileentity;
 
-        this.addSlotToContainer(new Slot(tileentity, 0, 56, 35));
-        this.addSlotToContainer(new Slot(tileentity, 1, 8, 62));
-        this.addSlotToContainer(new SlotFurnace(inventory.player, tileentity, 2, 116, 35));
+        List<int[]> machineslots = tileentity.GetSlotsForContainer();
 
-        for (int row = 0; row < 3; row++)
+        for (int[] slot : machineslots)
         {
-            for (int col = 0; col < 9; col++)
+            if (slot[3] == 0)
             {
-                this.addSlotToContainer(new Slot(inventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
+                this.addSlotToContainer(new Slot(tileentity, slot[0], slot[1], slot[2]));
             }
-        }
-
-        for (int col = 0; col < 9; col++)
-        {
-            this.addSlotToContainer(new Slot(inventory, col, 8 + col * 18, 142));
+            else
+            {
+                this.addSlotToContainer(new SlotFurnace(inventory.player, tileentity, slot[0], slot[1], slot[2]));
+            }
         }
     }
 
@@ -60,9 +59,9 @@ public class GaltContainerMachine extends Container
     {
         super.detectAndSendChanges();
 
-        for (int i = 0; i < this.crafters.size(); i++)
+        for (Object crafter : this.crafters)
         {
-            ICrafting crafting = (ICrafting) this.crafters.get(i);
+            ICrafting crafting = (ICrafting) crafter;
 
             if (_LastCookTime != _MachineTileEntity.CookTime)
             {
@@ -85,10 +84,10 @@ public class GaltContainerMachine extends Container
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void updateProgressBar(int slot, int newValue)
+    public void updateProgressBar(int status, int newValue)
     {
 
-        _MachineTileEntity.SetStatuses(slot, newValue);
+        _MachineTileEntity.SetStatuses(status, newValue);
     }
 
 
@@ -99,17 +98,17 @@ public class GaltContainerMachine extends Container
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(EntityPlayer player, int slotID)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(par2);
+        Slot slot = (Slot) this.inventorySlots.get(slotID);
 
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (par2 == 2)
+            if (slotID < _MachineTileEntity.getSizeInventory())
             {
                 if (!this.mergeItemStack(itemstack1, 3, 39, true))
                 {
@@ -118,7 +117,7 @@ public class GaltContainerMachine extends Container
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
-            else if (par2 != 1 && par2 != 0)
+            else if (slotID > _MachineTileEntity.getSizeInventory())
             {
                 if (FurnaceRecipes.smelting().getSmeltingResult(itemstack1) != null)
                 {
@@ -127,21 +126,21 @@ public class GaltContainerMachine extends Container
                         return null;
                     }
                 }
-                else if (GaltTileEntityMachine.IsItemFuel(itemstack1))
+                else if (_MachineTileEntity.IsItemFuel(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false))
                     {
                         return null;
                     }
                 }
-                else if (par2 >= 3 && par2 < 30)
+                else if (slotID >= 3 && slotID < 30)
                 {
                     if (!this.mergeItemStack(itemstack1, 30, 39, false))
                     {
                         return null;
                     }
                 }
-                else if (par2 >= 30 && par2 < 39 && !this.mergeItemStack(itemstack1, 3, 30, false))
+                else if (slotID >= 30 && slotID < 39 && !this.mergeItemStack(itemstack1, 3, 30, false))
                 {
                     return null;
                 }
@@ -153,7 +152,7 @@ public class GaltContainerMachine extends Container
 
             if (itemstack1.stackSize == 0)
             {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             }
             else
             {
@@ -165,7 +164,7 @@ public class GaltContainerMachine extends Container
                 return null;
             }
 
-            slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+            slot.onPickupFromSlot(player, itemstack1);
         }
 
         return itemstack;

@@ -1,44 +1,78 @@
 package com.johngalt.gulch.tileentities;
 
-import com.johngalt.gulch.blocks.GaltBlocks;
 import com.johngalt.gulch.blocks.GaltMachineBlock;
-import com.johngalt.gulch.items.GaltItems;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created on 6/27/2014.
  */
-public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInventory
+public abstract class GaltTileEntityMachine extends GaltTileEntity implements ISidedInventory
 {
-    private String _LocalizedName;
+
 
     private static final int[] _SlotsTopDestination = new int[]{0};
     private static final int[] _SlotsBottomDestination = new int[]{2, 1};
     private static final int[] _SlotsSideDestination = new int[]{1};
 
-    private ItemStack[] _Slots = new ItemStack[3];
+    private boolean _UseRegisteredFuel = false;
+
+    public List<MachineSlot> Slots = new ArrayList<MachineSlot>();
+
+    public MachineRecipeList RecipeList;
 
     private int _FurnaceSpeed = 150;
     public int BurnTime;
     public int CurrentItemBurnTime;
     public int CookTime;
 
-    public void setGuiDisplayName(String displayName)
+    public GaltTileEntityMachine()
     {
-        _LocalizedName = displayName;
+        super();
+
+        Slots = new ArrayList<MachineSlot>();
+        RecipeList = new MachineRecipeList();
     }
 
+    public GaltTileEntityMachine(List<MachineSlot> slots, MachineRecipeList recipeList)
+    {
+        super();
+
+        List<Integer> ids = new ArrayList<Integer>();
+        for (MachineSlot slot : slots)
+        {
+            if (!ids.contains(slot.ID))
+            {
+                ids.add(slot.ID);
+            }
+            else
+            {
+                throw new ExceptionInInitializerError("Machine slots must have unique IDs.");
+            }
+        }
+
+        Slots = slots;
+
+        RecipeList = recipeList;
+    }
+
+    /**
+     * This allows the machine to use fuels registered with minecraft.
+     */
+    public void AllowRegisteredFuel()
+    {
+        _UseRegisteredFuel = true;
+    }
 
     public String getInventoryName()
     {
@@ -55,7 +89,7 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
 
     public boolean hasCustomInventoryName()
     {
-        return _LocalizedName == null ? false : true;
+        return _LocalizedName != null;
     }
 
     @Override
@@ -91,25 +125,20 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack item)
+    public boolean isItemValidForSlot(int index, ItemStack item)
     {
-        switch (slot)
-        {
-            case 2:
-                return false;
-            case 1:
-                return IsItemFuel(item);
-            default:
-                return true;
-        }
+        MachineSlot slot = GetSlotByID(index);
+
+        return slot.CanBeSlotted(item);
+
     }
 
-    public static boolean IsItemFuel(ItemStack item)
+    public boolean IsItemFuel(ItemStack item)
     {
         return getItemBurnTime(item) > 0;
     }
 
-    private static int getItemBurnTime(ItemStack itemstack)
+    private int getItemBurnTime(ItemStack itemstack)
     {
         if (itemstack == null)
         {
@@ -117,19 +146,16 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
         }
         else
         {
-            Item item = itemstack.getItem();
+            int amount = RecipeList.GetFuelBurnAmount(itemstack);
 
-            if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air)
+            if (_UseRegisteredFuel && amount == 0)
             {
-                Block block = Block.getBlockFromItem(item);
-
-                if (block == GaltBlocks.portalBlock) return 15000;
+                return GameRegistry.getFuelValue(itemstack);
             }
-
-            if (item == GaltItems.GunPowder) return 800;
-            else if (item == Items.coal) return 400;
-
-            return GameRegistry.getFuelValue(itemstack);
+            else
+            {
+                return amount;
+            }
         }
     }
 
@@ -148,19 +174,28 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
         {
             if (BurnTime == 0 && canSmelt())
             {
-                CurrentItemBurnTime = BurnTime = getItemBurnTime(_Slots[1]);
-
-                if (isBurning())
+                Iterator itr = GetItemsInSlotWithType(ComponentType.Fuel).iterator();
+                while (itr.hasNext())
                 {
-                    stateChanged = true;
-
-                    if (_Slots[1] != null)
+                    Object nextItem = itr.next();
+                    if (nextItem != null)
                     {
-                        _Slots[1].stackSize--;
 
-                        if (_Slots[1].stackSize == 0)
+                        ItemStack item = (ItemStack) nextItem;
+                        CurrentItemBurnTime = BurnTime = getItemBurnTime(item);
+
+                        if (isBurning())
                         {
-                            _Slots[1] = _Slots[1].getItem().getContainerItem(_Slots[1]);
+                            stateChanged = true;
+
+                            item.stackSize--;
+
+                            if (item.stackSize == 0)
+                            {
+                                item = item.getItem().getContainerItem(item); // keep buckets
+                            }
+
+                            break; //if valid fuel is found, no need to look at other fuel
                         }
                     }
                 }
@@ -197,60 +232,142 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
         }
     }
 
+    private List<ItemStack> GetItemsInSlotWithType(ComponentType slotType)
+    {
+        List<ItemStack> items = new ArrayList<ItemStack>();
+
+        for (MachineSlot slot : Slots)
+        {
+            if (slot.SlotType == slotType)
+            {
+                items.add(slot.SlotItem);
+            }
+        }
+
+        return items;
+    }
+
+    private List<MachineSlot> GetSlotsWithType(ComponentType slotType)
+    {
+        List<MachineSlot> items = new ArrayList<MachineSlot>();
+
+        for (MachineSlot slot : Slots)
+        {
+            if (slot.SlotType == slotType)
+            {
+                items.add(slot);
+            }
+        }
+
+        return items;
+    }
+
     private void smeltItem()
     {
-        if (canSmelt())
+        MachineRecipeList.MachineRecipe recipe = RecipeList.GetSmeltingRecipe(Slots);
+
+        if (recipe != null)
         {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(_Slots[0]);
+            consumeRecipe(recipe);
+        }
+    }
 
-            if (_Slots[2] == null)
+    private void consumeRecipe(MachineRecipeList.MachineRecipe recipe)
+    {
+        removeItemsFromSlots(recipe.GetAllItemsOfType(ComponentType.Input), ComponentType.Input);
+        removeItemsFromSlots(recipe.GetAllItemsOfType(ComponentType.Fuel), ComponentType.Input);
+        removeItemsFromSlots(recipe.GetAllItemsOfType(ComponentType.RequiredItems), ComponentType.Input);
+        addItemsToSlots(recipe.GetAllItemsOfType(ComponentType.Output), ComponentType.Output);
+    }
+
+    private void addItemsToSlots(List<ItemStack> items, ComponentType slotType)
+    {
+        List<ItemStack> slotItems = GetItemsInSlotWithType(slotType);
+
+        // Iterate through the items to see if they are already in output lots. Add to existing stacks if they are.
+        Iterator<ItemStack> itr = items.iterator();
+        while (itr.hasNext())
+        {
+            ItemStack item = itr.next();
+            for (ItemStack slottedItem : slotItems)
             {
-                _Slots[2] = itemstack;
+                // if found already in output and there is room, dump some of the stack to the existing stack in slot
+                if (item.isItemEqual(slottedItem) && slottedItem.stackSize < slottedItem.getMaxStackSize())
+                {
+                    if (item.stackSize + slottedItem.stackSize > slottedItem.getMaxStackSize())
+                    {
+                        int amountToMove = slottedItem.getMaxStackSize() - slottedItem.stackSize;
+                        slottedItem.stackSize = slottedItem.getMaxStackSize();
+
+                        item.stackSize -= amountToMove;
+                    }
+                    else
+                    {
+                        slottedItem.stackSize += item.stackSize;
+                        itr.remove();
+                        break;
+                    }
+                }
             }
-            else if (_Slots[2].isItemEqual(itemstack))
-            {
-                _Slots[2].stackSize += itemstack.stackSize;
-            }
+        }
 
-            _Slots[0].stackSize--;
-
-            if (_Slots[0].stackSize <= 0)
+        // Put the remaining into empty slots
+        List<MachineSlot> slots = GetSlotsWithType(slotType);
+        for (ItemStack item : items)
+        {
+            for (MachineSlot slot : slots)
             {
-                _Slots[0] = null;
+                if (slot.SlotItem == null)
+                {
+                    slot.SlotItem = item;
+                    break;
+                }
             }
         }
     }
 
+    private void removeItemsFromSlots(List<ItemStack> items, ComponentType slotType)
+    {
+        List<MachineSlot> slotItems = GetSlotsWithType(slotType);
+
+        // Iterate through the items and remove from slots
+        Iterator<ItemStack> itr = items.iterator();
+        while (itr.hasNext())
+        {
+            ItemStack item = itr.next();
+            for (MachineSlot slot : slotItems)
+            {
+                // if found check size. Either remove entire stack or partial
+                if (slot.SlotItem != null && item.isItemEqual(slot.SlotItem))
+                {
+                    if (item.stackSize >= slot.SlotItem.stackSize)
+                    {
+                        int amountToMove = slot.SlotItem.stackSize;
+                        slot.SlotItem = null;
+                        item.stackSize -= amountToMove;
+
+                        if (item.stackSize == 0)
+                        {
+                            itr.remove();
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        slot.SlotItem.stackSize -= item.stackSize;
+                        itr.remove();
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
+
     private boolean canSmelt()
     {
-        if (_Slots[0] == null)
-        {
-            return false;
-        }
-        else
-        {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(_Slots[0]);
-
-
-            if (itemstack == null)
-            {
-                return false;
-            }
-            if (_Slots[2] == null)
-            {
-                return true;
-            }
-            if (!_Slots[2].isItemEqual(itemstack))
-            {
-                return false;
-            }
-
-            int result = _Slots[2].stackSize = itemstack.stackSize;
-
-            return result <= getInventoryStackLimit() && result <= itemstack.getMaxStackSize();
-
-
-        }
+        return RecipeList.CanSmelt(Slots);
     }
 
     public boolean isBurning()
@@ -260,34 +377,56 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
 
     public int getSizeInventory()
     {
-        return _Slots.length;
+        return Slots.size();
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot)
+    public ItemStack getStackInSlot(int index)
     {
-        return _Slots[slot];
+        MachineSlot slot = GetSlotByID(index);
+        if (slot != null && slot.SlotItem != null)
+        {
+            return slot.SlotItem;
+        }
+
+        return null;
+    }
+
+    public MachineSlot GetSlotByID(int index)
+    {
+        for (MachineSlot slot : Slots)
+        {
+            if (slot.ID == index)
+            {
+                return slot;
+            }
+        }
+
+        return null;
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int amount)
+    public ItemStack decrStackSize(int index, int amount)
     {
-        if (_Slots[slot] != null)
+        // find slot
+        MachineSlot slot = GetSlotByID(index);
+
+        if (slot != null && slot.SlotItem != null)
         {
             ItemStack itemstack;
 
-            if (_Slots[slot].stackSize <= amount)
+            if (slot.SlotItem.stackSize <= amount)
             {
-                itemstack = _Slots[slot];
-                _Slots[slot] = null;
+                itemstack = slot.SlotItem;
+                slot.SlotItem = null;
             }
             else
             {
-                itemstack = _Slots[slot].splitStack(amount);
+                itemstack = slot.SlotItem.splitStack(amount);
 
-                if (_Slots[slot].stackSize <= 0)
+                if (slot.SlotItem.stackSize <= 0)
                 {
-                    _Slots[slot] = null;
+                    slot.SlotItem = null;
                 }
             }
 
@@ -298,12 +437,14 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (_Slots[slot] != null && _Slots[slot].stackSize > 0)
+        MachineSlot slot = GetSlotByID(index);
+
+        if (slot.SlotItem != null && slot.SlotItem.stackSize > 0)
         {
-            ItemStack itemstack = _Slots[slot];
-            _Slots[slot] = null;
+            ItemStack itemstack = slot.SlotItem;
+            slot.SlotItem = null;
             return itemstack;
         }
 
@@ -311,9 +452,10 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
     }
 
     @Override
-    public void setInventorySlotContents(int slot, ItemStack itemstack)
+    public void setInventorySlotContents(int index, ItemStack itemstack)
     {
-        _Slots[slot] = itemstack;
+        MachineSlot slot = GetSlotByID(index);
+        slot.SlotItem = itemstack;
 
         if (itemstack != null && itemstack.stackSize > getInventoryStackLimit())
         {
@@ -344,14 +486,7 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
     @Override
     public boolean canExtractItem(int slot, ItemStack item, int side)
     {
-        if (side != 0 || slot != 1 || item.getItem() == Items.bucket)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return side != 0 || slot != 1 || item.getItem() == Items.bucket;
     }
 
     public int GetBurnTimeRemainingScaled(int scale)
@@ -369,9 +504,9 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
         return CookTime * scale / _FurnaceSpeed;
     }
 
-    public void SetStatuses(int slot, int newValue)
+    public void SetStatuses(int status, int newValue)
     {
-        switch (slot)
+        switch (status)
         {
             case 0:
                 CookTime = newValue;
@@ -391,16 +526,15 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
         super.readFromNBT(nbt);
 
         NBTTagList list = nbt.getTagList("Items", 10);
-        _Slots = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < list.tagCount(); i++)
         {
-            NBTTagCompound compound = (NBTTagCompound) list.getCompoundTagAt(i);
+            NBTTagCompound compound = list.getCompoundTagAt(i);
             byte b = compound.getByte("Slot");
 
-            if (b >= 0 && b < _Slots.length)
+            if (b >= 0 && b < Slots.size())
             {
-                _Slots[b] = ItemStack.loadItemStackFromNBT(compound);
+                setInventorySlotContents(b, ItemStack.loadItemStackFromNBT(compound));
             }
         }
 
@@ -425,13 +559,13 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
 
         NBTTagList list = new NBTTagList();
 
-        for (int i = 0; i < _Slots.length; i++)
+        for (MachineSlot slot : Slots)
         {
-            if (_Slots[i] != null)
+            if (slot.SlotItem != null)
             {
                 NBTTagCompound compound = new NBTTagCompound();
-                compound.setByte("Slot", (byte) i);
-                _Slots[i].writeToNBT(compound);
+                compound.setByte("Slot", (byte) slot.ID);
+                slot.SlotItem.writeToNBT(compound);
                 list.appendTag(compound);
             }
         }
@@ -443,4 +577,377 @@ public class GaltTileEntityMachine extends GaltTileEntity implements ISidedInven
             nbt.setString("CustomName", _LocalizedName);
         }
     }
+
+    /**
+     * Get the GUI cordinates for this TE. Puts 4 numbers: slotID, x, y, and furnace out put indicator (1=furnace, 0 otherwise)
+     *
+     * @return Returns the for int array: slotID, x, y, and furnace out put indicator (1=furnace, 0 otherwise)
+     */
+    public List<int[]> GetSlotsForContainer()
+    {
+        List<int[]> slotCoord = new ArrayList<int[]>();
+        for (MachineSlot slot : Slots)
+        {
+            slotCoord.add(new int[]{
+                    slot.ID, slot._GUIPosX, slot._GUIPosY,
+                    (slot.SlotType == ComponentType.Output ? 1 : 0)
+            });
+        }
+        return slotCoord;
+    }
+
+    public enum ComponentType
+    {
+        Input,
+        Output,
+        RequiredItems,
+        Fuel
+    }
+
+
+    /**
+     * Class used to store information about the tile slots
+     */
+    public class MachineSlot
+    {
+        public int ID;
+        private boolean _Filtered = false;
+        private List<ItemStack> _FilteredItems;
+        public ComponentType SlotType;
+        public ItemStack SlotItem;
+        private int _GUIPosX;
+        private int _GUIPosY;
+
+        public MachineSlot(int id, ComponentType slotType, int guiPosX, int guiPosY)
+        {
+            ID = id;
+            SlotType = slotType;
+
+            _GUIPosX = guiPosX;
+            _GUIPosY = guiPosY;
+        }
+
+        public MachineSlot(int id, ComponentType slotType, int guiPosX, int guiPosY, ItemStack[] filteredItems)
+        {
+            this(id, slotType, guiPosX, guiPosY);
+
+            if (filteredItems != null && filteredItems.length > 0)
+            {
+                _Filtered = true;
+                _FilteredItems = Arrays.asList(filteredItems);
+            }
+        }
+
+        public boolean CanBeSlotted(ItemStack itemStack)
+        {
+            if (SlotType == ComponentType.Output) return false;
+
+            if (!_Filtered) return true;
+
+            for (ItemStack item : _FilteredItems)
+            {
+                if (itemStack.isItemEqual(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    /**
+     * This stores the entire list of recipes a galt machine can use, as well as a list of fuels if the recipe burns fuel constantly.
+     */
+    protected class MachineRecipeList
+    {
+        private List<MachineRecipe> _Recipes;
+        private List<MachineFuel> _Fuel;
+
+        public MachineRecipeList()
+        {
+            _Recipes = new ArrayList<MachineRecipe>();
+        }
+
+        public void AddRecipe(MachineRecipe recipe)
+        {
+            _Recipes.add(recipe);
+        }
+
+        public boolean CanSmelt(List<MachineSlot> slots)
+        {
+
+            // loop through the recipes and see if one matches the slots' contents.
+            for (MachineRecipe recipe : _Recipes)
+            {
+                if (recipe.CanSmelt(slots))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public MachineRecipe GetSmeltingRecipe(List<MachineSlot> slots)
+        {
+            for (MachineRecipe recipe : _Recipes)
+            {
+                if (recipe.CanSmelt(slots))
+                {
+                    return recipe;
+                }
+            }
+
+            return null;
+        }
+
+        public void CalculateAndAddOreDictionaryEntries()
+        {
+            /// TODO
+        }
+
+        public void AddRecipe(ItemStack[] inputs, ItemStack[] fuel, ItemStack[] required, ItemStack[] output)
+        {
+            _Recipes.add(new MachineRecipe(inputs, fuel, required, output));
+        }
+
+        public boolean IsFuel(ItemStack item)
+        {
+            for (MachineFuel fuels : _Fuel)
+            {
+                if (fuels.FuelItem.isItemEqual(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int GetFuelBurnAmount(ItemStack item)
+        {
+            for (MachineFuel fuel : _Fuel)
+            {
+                if (fuel.FuelItem.isItemEqual(item))
+                {
+                    return fuel.BurnValue;
+                }
+            }
+
+            return 0;
+        }
+
+
+        /**
+         * This is a basic container to store fuels and their burn values
+         */
+        protected class MachineFuel
+        {
+            public ItemStack FuelItem;
+            public int BurnValue;
+
+            public MachineFuel(ItemStack fuelItem, int burnValue)
+            {
+                FuelItem = fuelItem;
+                BurnValue = burnValue;
+            }
+        }
+
+        /**
+         * This stores a complete recipe that a galt machine can use.
+         */
+        protected class MachineRecipe
+        {
+            private List<RecipeComponent> _RecipeComponents;
+
+            public MachineRecipe()
+            {
+                _RecipeComponents = new ArrayList<RecipeComponent>();
+            }
+
+            public MachineRecipe(ItemStack[] inputs, ItemStack[] fuel, ItemStack[] required, ItemStack[] output)
+            {
+                _RecipeComponents = new ArrayList<RecipeComponent>();
+
+                AddComponentRange(inputs, ComponentType.Input);
+                AddComponentRange(fuel, ComponentType.Fuel);
+                AddComponentRange(required, ComponentType.RequiredItems);
+                AddComponentRange(output, ComponentType.Output);
+            }
+
+            public void AddComponent(ItemStack itemStack, ComponentType type)
+            {
+                _RecipeComponents.add(new RecipeComponent(itemStack, type));
+            }
+
+            public void AddComponentRange(ItemStack[] items, ComponentType type)
+            {
+                for (ItemStack item : items)
+                {
+                    AddComponent(item, type);
+                }
+            }
+
+            public boolean CanSmelt(List<MachineSlot> slots)
+            {
+                // Seperate out recipe comp types
+                List<ItemStack> recipeinputs = new ArrayList<ItemStack>();
+                List<ItemStack> recipefuel = new ArrayList<ItemStack>();
+                List<ItemStack> reciperequired = new ArrayList<ItemStack>();
+                List<ItemStack> recipeoutput = new ArrayList<ItemStack>(); // used later when checking for space to put output
+
+                for (RecipeComponent component : _RecipeComponents)
+                {
+                    if (component.Type == ComponentType.Input)
+                    {
+                        recipeinputs.add(component.Component);
+                    }
+                    else if (component.Type == ComponentType.Fuel)
+                    {
+                        recipefuel.add(component.Component);
+                    }
+                    else if (component.Type == ComponentType.RequiredItems)
+                    {
+                        reciperequired.add(component.Component);
+                    }
+                    else if (component.Type == ComponentType.Output)
+                    {
+                        recipeoutput.add(component.Component);
+                    }
+                }
+
+                // seperate out slot types
+                List<ItemStack> slotinputs = new ArrayList<ItemStack>();
+                List<ItemStack> slotfuel = new ArrayList<ItemStack>();
+                List<ItemStack> slotrequired = new ArrayList<ItemStack>();
+
+                for (MachineSlot slot : slots)
+                {
+                    if (slot.SlotItem != null) //only pull filled slots
+                    {
+                        if (slot.SlotType == ComponentType.Input)
+                        {
+                            slotinputs.add(slot.SlotItem);
+                        }
+                        else if (slot.SlotType == ComponentType.Fuel)
+                        {
+                            slotfuel.add(slot.SlotItem);
+                        }
+                        else if (slot.SlotType == ComponentType.RequiredItems)
+                        {
+                            slotrequired.add(slot.SlotItem);
+                        }
+                    }
+                }
+
+                // quick check to see if recipes match
+                if (slotinputs.size() != recipeinputs.size()) return false;
+                if (slotfuel.size() < recipefuel.size()) return false;
+                if (slotrequired.size() != reciperequired.size()) return false;
+
+                // in depth check
+                if (compareItemStacks(recipeinputs, slotinputs)) return false;
+                if (compareItemStacks(recipefuel, slotfuel)) return false;
+                if (compareItemStacks(reciperequired, slotrequired)) return false;
+
+                // obtain the output slots for analysis
+                List<MachineSlot> outputSlots = new ArrayList<MachineSlot>();
+                for (MachineSlot slot : slots)
+                {
+                    if (slot.SlotType == ComponentType.Output)
+                    {
+                        outputSlots.add(slot);
+                    }
+                }
+
+                // check to see if items in output are same type and have room
+                Iterator<ItemStack> itr = recipeoutput.iterator();
+                while (itr.hasNext())
+                {
+                    ItemStack item = itr.next();
+                    for (MachineSlot slot : outputSlots)
+                    {
+                        if (slot.SlotItem != null)
+                        {
+                            if (item.isItemEqual(slot.SlotItem) && item.stackSize + slot.SlotItem.stackSize < item.getMaxStackSize())
+                            {
+                                itr.remove();
+                            }
+                        }
+                    }
+                }
+
+                // if more slots for output are needed, check to see how many empty slots are left.
+                int neededOutput = recipeoutput.size();
+                if (neededOutput > 0)
+                {
+                    for (MachineSlot slot : outputSlots)
+                    {
+                        if (slot.SlotItem == null)
+                        {
+                            neededOutput--;
+                        }
+                    }
+
+                    if (neededOutput > 0) return false;
+                }
+
+                return true;
+            }
+
+            private boolean compareItemStacks(List<ItemStack> recipeinputs, List<ItemStack> slotinputs)
+            {
+                for (ItemStack recipeItem : recipeinputs)
+                {
+                    boolean found = false;
+
+                    for (ItemStack slotItem : slotinputs)
+                    {
+                        if (recipeItem.isItemEqual(slotItem) && slotItem.stackSize >= recipeItem.stackSize)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) return true;
+                }
+                return false;
+            }
+
+            public List<ItemStack> GetAllItemsOfType(ComponentType componentType)
+            {
+                List<ItemStack> items = new ArrayList<ItemStack>();
+                for (RecipeComponent component : _RecipeComponents)
+                {
+                    if (component.Type == componentType)
+                    {
+                        items.add(component.Component);
+                    }
+                }
+
+                return items;
+            }
+
+            /**
+             * it is one component of a recipe, whether it's an input, output, fuel or required item.
+             */
+            protected class RecipeComponent
+            {
+                public ItemStack Component;
+                public ComponentType Type;
+
+                public RecipeComponent(ItemStack component, ComponentType type)
+                {
+                    Component = component;
+                    Type = type;
+                }
+            }
+        }
+    }
 }
+
+
+
+

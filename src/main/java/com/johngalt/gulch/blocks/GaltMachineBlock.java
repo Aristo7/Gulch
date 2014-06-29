@@ -3,6 +3,7 @@ package com.johngalt.gulch.blocks;
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.lib.References;
+import com.johngalt.gulch.tileentities.GaltTileEntity;
 import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -26,11 +27,12 @@ import java.util.Random;
 /**
  * Created on 6/27/2014.
  */
-public class GaltMachineBlock extends GaltCommonContainer
+public abstract class GaltMachineBlock extends GaltCommonContainer
 {
     private final boolean _IsActive;
-
     private static boolean _KeepInventory;
+
+    private int _GuiID;
 
     private final Random _Random = new Random();
 
@@ -41,14 +43,20 @@ public class GaltMachineBlock extends GaltCommonContainer
     @SideOnly(Side.CLIENT)
     private IIcon _IconBottom;
 
-    public GaltMachineBlock(boolean isActive)
+    public GaltMachineBlock(boolean isActive, int guiID)
     {
         super(Material.iron, false);
 
         _IsActive = isActive;
+        _GuiID = guiID;
 
         this.initializeContainer(GetGaltName() + (_IsActive ? "On" : "Off"));
         this.setHardness(3.5F);
+    }
+
+    public GaltMachineBlock(boolean isActive)
+    {
+        this(isActive, GuiHandler.GUI_ID_MACHINEBLOCK);
     }
 
     @SideOnly(Side.CLIENT)
@@ -75,11 +83,6 @@ public class GaltMachineBlock extends GaltCommonContainer
             default:
                 return side == facing ? _IconFront : this.blockIcon;
         }
-    }
-
-    public Item getItemDropped(World world, int x, int y, int z)
-    {
-        return Item.getItemFromBlock(GaltBlocks.GaltMachineIdle);
     }
 
     @Override
@@ -127,17 +130,14 @@ public class GaltMachineBlock extends GaltCommonContainer
     {
         if (!world.isRemote)
         {
-            FMLNetworkHandler.openGui(player, GulchMod.instance, GuiHandler.GUI_ID_MACHINEBLOCK, world, x, y, z);
+            FMLNetworkHandler.openGui(player, GulchMod.instance, _GuiID, world, x, y, z);
         }
 
         return true;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1, int var2)
-    {
-        return new GaltTileEntityMachine();
-    }
+    public abstract TileEntity createNewTileEntity(World var1, int var2);
 
     @SideOnly(Side.CLIENT)
     @Override
@@ -182,26 +182,25 @@ public class GaltMachineBlock extends GaltCommonContainer
     {
         int playerFacingCordinal = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.F) + 0.5D) & 3;
 
-        if (playerFacingCordinal == 0)
+        switch (playerFacingCordinal)
         {
-            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-        }
-        else if (playerFacingCordinal == 1)
-        {
-            world.setBlockMetadataWithNotify(x, y, z, 5, 2);
-        }
-        else if (playerFacingCordinal == 2)
-        {
-            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-        }
-        else if (playerFacingCordinal == 3)
-        {
-            world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+            case 0:
+                world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+                break;
+            case 1:
+                world.setBlockMetadataWithNotify(x, y, z, 5, 2);
+                break;
+            case 2:
+                world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+                break;
+            case 3:
+                world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+                break;
         }
 
         if (itemBlock.hasDisplayName())
         {
-            ((GaltTileEntityMachine) world.getTileEntity(x, y, z)).setGuiDisplayName(itemBlock.getDisplayName());
+            ((GaltTileEntity) world.getTileEntity(x, y, z)).setGuiDisplayName(itemBlock.getDisplayName());
         }
 
 
@@ -209,12 +208,24 @@ public class GaltMachineBlock extends GaltCommonContainer
 
     public static void updateMachineBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord)
     {
+        updateMachineBlockState(active, worldObj, xCoord, yCoord, zCoord, null, null);
+    }
+
+    public static void updateMachineBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord, Block activeBlock, Block inactiveBlock)
+    {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 
         TileEntity tileentity = worldObj.getTileEntity(xCoord, yCoord, zCoord);
         _KeepInventory = true;
 
-        worldObj.setBlock(xCoord, yCoord, zCoord, active ? GaltBlocks.GaltMachineActive : GaltBlocks.GaltMachineIdle);
+        if (activeBlock != null && inactiveBlock != null)
+        {
+            worldObj.setBlock(xCoord, yCoord, zCoord, active ? activeBlock : inactiveBlock);
+        }
+//        else
+//        {
+////            worldObj.setBlock(xCoord, yCoord, zCoord, this);
+//        }
 
         _KeepInventory = false;
 
@@ -280,8 +291,6 @@ public class GaltMachineBlock extends GaltCommonContainer
     }
 
     @Override
-    public Item getItemDropped(int slot, Random random, int j)
-    {
-        return Item.getItemFromBlock(GaltBlocks.GaltMachineIdle);
-    }
+    public abstract Item getItemDropped(int slot, Random random, int j);
+
 }
