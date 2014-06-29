@@ -1,5 +1,6 @@
 package com.johngalt.gulch.tileentities;
 
+import com.johngalt.gulch.items.GaltItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,8 @@ public class GaltTileEntityFurnace extends GaltTileEntityMachine
                 null,
                 new ItemStack[]{new ItemStack(Items.iron_ingot, 3)}
         );
+
+        this.RecipeList.AddFuel(new ItemStack(GaltItems.GunPowder, 1), 100);
 
         this.AllowRegisteredFuel();
     }

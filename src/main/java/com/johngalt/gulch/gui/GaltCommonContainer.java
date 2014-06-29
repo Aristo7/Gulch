@@ -22,13 +22,13 @@ public abstract class GaltCommonContainer extends Container
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    this.addSlotToContainer(new Slot(inventory, col + row * 9 + 9 /*+ startInventorySlots*/, 8 + col * 18, 84 + row * 18));
+                    this.addSlotToContainer(new Slot(inventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
                 }
             }
 
             for (int col = 0; col < 9; col++)
             {
-                this.addSlotToContainer(new Slot(inventory, col /*+ startInventorySlots*/, 8 + col * 18, 142));
+                this.addSlotToContainer(new Slot(inventory, col, 8 + col * 18, 142));
             }
         }
     }

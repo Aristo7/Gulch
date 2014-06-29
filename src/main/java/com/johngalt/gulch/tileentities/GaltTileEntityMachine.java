@@ -174,10 +174,8 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         {
             if (BurnTime == 0 && canSmelt())
             {
-                Iterator itr = GetItemsInSlotWithType(ComponentType.Fuel).iterator();
-                while (itr.hasNext())
+                for (Object nextItem : GetItemsInSlotWithType(ComponentType.Fuel))
                 {
-                    Object nextItem = itr.next();
                     if (nextItem != null)
                     {
 
@@ -292,7 +290,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
             for (ItemStack slottedItem : slotItems)
             {
                 // if found already in output and there is room, dump some of the stack to the existing stack in slot
-                if (item.isItemEqual(slottedItem) && slottedItem.stackSize < slottedItem.getMaxStackSize())
+                if (slottedItem != null && item.isItemEqual(slottedItem) && slottedItem.stackSize < slottedItem.getMaxStackSize())
                 {
                     if (item.stackSize + slottedItem.stackSize > slottedItem.getMaxStackSize())
                     {
@@ -596,6 +594,21 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         return slotCoord;
     }
 
+    public int[] GetSlotIDsForType(ComponentType componentType)
+    {
+        List<MachineSlot> slots = GetSlotsWithType(componentType);
+        int[] slotIDs = new int[slots.size()];
+
+        int counter = 0;
+        for (MachineSlot slot : slots)
+        {
+            slotIDs[counter] = slot.ID;
+            counter++;
+        }
+
+        return slotIDs;
+    }
+
     public enum ComponentType
     {
         Input,
@@ -620,7 +633,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
         public MachineSlot(int id, ComponentType slotType, int guiPosX, int guiPosY)
         {
-            ID = id;
+            ID = id + 100; //to not conflict with other slots later
             SlotType = slotType;
 
             _GUIPosX = guiPosX;
@@ -667,6 +680,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         public MachineRecipeList()
         {
             _Recipes = new ArrayList<MachineRecipe>();
+            _Fuel = new ArrayList<MachineFuel>();
         }
 
         public void AddRecipe(MachineRecipe recipe)
@@ -723,6 +737,11 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
             }
 
             return false;
+        }
+
+        public void AddFuel(ItemStack item, int burnValue)
+        {
+            _Fuel.add(new MachineFuel(item, burnValue));
         }
 
         public int GetFuelBurnAmount(ItemStack item)
@@ -783,10 +802,11 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
             public void AddComponentRange(ItemStack[] items, ComponentType type)
             {
-                for (ItemStack item : items)
-                {
-                    AddComponent(item, type);
-                }
+                if (items != null)
+                    for (ItemStack item : items)
+                    {
+                        AddComponent(item, type);
+                    }
             }
 
             public boolean CanSmelt(List<MachineSlot> slots)
