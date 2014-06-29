@@ -1,5 +1,6 @@
 package com.johngalt.gulch.blocks.common;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class MultiBlockManager
         multiblocks = new ArrayList<StructureInWorld>();
     }
 
-    public void registerStructure(World world, ArrayList<GaltMultiBlock.Definition> registration)
+    public void registerStructure(World world, ArrayList<GaltMultiBlock.Definition> registration, TileEntity entity)
     {
-        multiblocks.add(new StructureInWorld(world, registration));
+        multiblocks.add(new StructureInWorld(world, registration, entity));
     }
 
     /**
@@ -31,54 +32,52 @@ public class MultiBlockManager
      */
     public void findAndRemoveStructure(World world, int x, int y, int z)
     {
-        StructureInWorld removeThis = null;
+        StructureInWorld removeThis = findStructure(world, x, y, z);
 
+        if (removeThis != null)
+        {
+            for (GaltMultiBlock.Definition def : removeThis.definition)
+            {
+                if (world.getBlock(def.dx, def.dy, def.dz) == def.block)
+                {
+                    world.setBlock(def.dx, def.dy, def.dz, def.block, 0, GaltMultiBlock.updateClientsFlag);
+                }
+            }
+
+            this.multiblocks.remove(removeThis);
+        }
+    }
+
+    public StructureInWorld findStructure(World world, int x, int y, int z)
+    {
         for (StructureInWorld structure : this.multiblocks)
         {
             if (structure.world != world) continue;
-
-            boolean removeMe = false;
 
             for (GaltMultiBlock.Definition def : structure.definition)
             {
                 if (def.dx == x && def.dy == y && def.dz == z)
                 {
-                    // this is the one to remove!
-                    removeMe = true;
-                    break;
+                    // this is the one!
+                    return structure;
                 }
-            }
-
-            if (removeMe)
-            {
-                for (GaltMultiBlock.Definition def : structure.definition)
-                {
-                    if (world.getBlock(def.dx, def.dy, def.dz) == def.block)
-                    {
-                        world.setBlock(def.dx, def.dy, def.dz, def.block, 0, GaltMultiBlock.updateClientsFlag);
-                    }
-                }
-
-                removeThis = structure;
-                break; // all done here
             }
         }
 
-        if (removeThis != null)
-        {
-            this.multiblocks.remove(removeThis);
-        }
+        return null;
     }
-}
 
-class StructureInWorld
-{
-    public StructureInWorld(World world, ArrayList<GaltMultiBlock.Definition> definition)
+    public static class StructureInWorld
     {
-        this.world = world;
-        this.definition = definition;
-    }
+        public StructureInWorld(World world, ArrayList<GaltMultiBlock.Definition> definition, TileEntity entity)
+        {
+            this.world = world;
+            this.definition = definition;
+            this.commonEntity = entity;
+        }
 
-    public ArrayList<GaltMultiBlock.Definition> definition;
-    public World world;
+        public ArrayList<GaltMultiBlock.Definition> definition;
+        public World world;
+        public TileEntity commonEntity;
+    }
 }

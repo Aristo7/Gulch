@@ -2,6 +2,7 @@ package com.johngalt.gulch.blocks.common;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 /**
  * Created by on 6/25/2014.
  */
-public class GaltMultiBlock extends GaltCommonBlock
+public abstract class GaltMultiBlock extends GaltCommonContainer
 {
     private Definition[] description;
 
-    public static int updateClientsFlag = 2;
+    public static int               updateClientsFlag   = 2;
     public static MultiBlockManager registrationManager = new MultiBlockManager();
 
     /**
@@ -113,6 +114,7 @@ public class GaltMultiBlock extends GaltCommonBlock
     private void markAllBlocks(World world, int x, int y, int z, Definition ref, Direction dir, int newMeta)
     {
         ArrayList<Definition> registration = new ArrayList<Definition>();
+        boolean isThisNewStructure = false;
 
         for (Definition d : this.description)
         {
@@ -120,12 +122,32 @@ public class GaltMultiBlock extends GaltCommonBlock
 
             if (world.getBlock(result.x, result.y, result.z) == d.block)
             {
-                world.setBlock(result.x, result.y, result.z, d.block, newMeta, updateClientsFlag);
-                registration.add(new Definition(result.x, result.y, result.z, d.block));
+                if (world.getBlockMetadata(result.x, result.y, result.z) != newMeta)
+                {
+                    world.setBlock(result.x, result.y, result.z, d.block, newMeta, updateClientsFlag);
+                    registration.add(new Definition(result.x, result.y, result.z, d.block));
+
+                    isThisNewStructure = true;
+                }
             }
         }
 
-        registrationManager.registerStructure(world, registration);
+        if (isThisNewStructure)
+        {
+            TileEntity tile = world.getTileEntity(x, y, z);
+            assert tile != null;
+            registrationManager.registerStructure(world, registration, tile);
+        }
+    }
+
+    /**
+     * Override to customize
+     *
+     * @return
+     */
+    public TileEntity getCommonTileEntity()
+    {
+        return null;
     }
 
     /**

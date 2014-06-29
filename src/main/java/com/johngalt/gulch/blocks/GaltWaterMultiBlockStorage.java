@@ -1,12 +1,19 @@
 package com.johngalt.gulch.blocks;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.common.GaltMultiBlock;
+import com.johngalt.gulch.blocks.common.MultiBlockManager;
+import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.lib.References;
+import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 
 /**
  * Created by on 6/25/2014.
@@ -14,6 +21,8 @@ import net.minecraft.util.IIcon;
 public class GaltWaterMultiBlockStorage extends GaltMultiBlock
 {
     private IIcon structureCompleteIcon;
+    private int metaNotActivated = 0;
+    private int metaActivated = 15;
 
     public GaltWaterMultiBlockStorage()
     {
@@ -36,7 +45,7 @@ public class GaltWaterMultiBlockStorage extends GaltMultiBlock
     @Override
     public IIcon getIcon(int side, int meta)
     {
-        if (meta == 15)
+        if (meta == metaActivated)
             return this.structureCompleteIcon;
         else
             return this.blockIcon;
@@ -49,5 +58,39 @@ public class GaltWaterMultiBlockStorage extends GaltMultiBlock
         super.registerBlockIcons(iconRegister);
 
         this.structureCompleteIcon = iconRegister.registerIcon(References.RESOURCESPREFIX + getUnwrappedUnlocalizedName() + "completed");
+    }
+
+    @Override
+    public boolean hasTileEntity(int meta)
+    {
+        // doesn't have GUI until the structure is set
+        if (meta == metaActivated)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World var1, int meta)
+    {
+        if (meta == metaActivated)
+            return new GaltTileEntityContainer();
+        else
+            return null;
+    }
+
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par1, float par2, float par3, float par4)
+    {
+        if (world.getBlockMetadata(x, y, z) == metaActivated)
+        {
+            MultiBlockManager.StructureInWorld structure = GaltMultiBlock.registrationManager.findStructure(world, x, y, z);
+            if (structure != null)
+            {
+                entityPlayer.openGui(GulchMod.instance, GuiHandler.GuiWaterMultiBlock, world, x, y, z);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

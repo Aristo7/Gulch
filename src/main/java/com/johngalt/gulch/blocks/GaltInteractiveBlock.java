@@ -2,6 +2,7 @@ package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.common.GaltCommonBlock;
+import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.tileentities.GaltTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,7 +38,7 @@ public class GaltInteractiveBlock extends GaltCommonBlock
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par1, float par2, float par3, float par4)
     {
-        entityPlayer.openGui(GulchMod.instance, 0, world, x, y, z);
+        entityPlayer.openGui(GulchMod.instance, GuiHandler.GuiTest, world, x, y, z);
         return true;
     }
 }
