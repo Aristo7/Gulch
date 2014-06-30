@@ -1,5 +1,6 @@
 package com.johngalt.gulch.blocks;
 
+import com.johngalt.gulch.blocks.common.GaltCommonBlock;
 import net.minecraft.block.Block;
 
 /**

@@ -1,5 +1,7 @@
 package com.johngalt.gulch.blocks;
 
+import com.johngalt.gulch.blocks.common.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltCommonBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;

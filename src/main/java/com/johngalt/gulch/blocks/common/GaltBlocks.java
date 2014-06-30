@@ -1,5 +1,6 @@
-package com.johngalt.gulch.blocks;
+package com.johngalt.gulch.blocks.common;
 
+import com.johngalt.gulch.blocks.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 
@@ -23,6 +24,8 @@ public class GaltBlocks
     public static GaltMoldStationBlock MoldStationActive;
     public static GaltMoldStationBlock MoldStationIdle;
 
+    public static Block water;
+
     public static void init()
     {
         testBlock = new GaltSimpleBlock();
@@ -39,6 +42,8 @@ public class GaltBlocks
 
         MoldStationActive = new GaltMoldStationBlock(true);
         MoldStationIdle = new GaltMoldStationBlock(false);
+
+        water = new GaltWaterMultiBlockStorage();
     }
 
     public static void register(GaltCommonBlock block)

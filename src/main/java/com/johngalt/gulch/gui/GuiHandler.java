@@ -1,5 +1,7 @@
 package com.johngalt.gulch.gui;
 
+import com.johngalt.gulch.blocks.common.GaltMultiBlock;
+import com.johngalt.gulch.blocks.common.MultiBlockManager;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
 import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -14,6 +16,9 @@ public class GuiHandler implements IGuiHandler
 {
     public static final int GUI_ID_MACHINEBLOCK = 3;
 
+    public static final int GuiTest = 0;
+    public static final int GuiWaterMultiBlock = 1;
+
     public GuiHandler()
     {
     }
@@ -26,13 +31,25 @@ public class GuiHandler implements IGuiHandler
         {
             switch (ID)
             {
-                case 1:
-                    // Create an Object of our TE, so we can give that to our inventory.
-                    GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
-                    return new GaltInventoryContainer(player.inventory, tileEntityTestContainer);
                 case GUI_ID_MACHINEBLOCK:
                     if (tileentity instanceof GaltTileEntityMachine)
                         return new GaltContainerMachine(player.inventory, (GaltTileEntityMachine) tileentity);
+                case GuiWaterMultiBlock:
+                    // Create an Object of our TE, so we can give that to our inventory.
+
+                    TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
+                    if (tileEntity == null)
+                    {
+                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
+                        return new GaltInventoryContainer(player.inventory, tileEntityTestContainer);
+                    }
+                    else
+                    {
+                        if (tileEntity instanceof GaltTileEntityContainer)
+                            return new GaltInventoryContainer(player.inventory, (GaltTileEntityContainer) tileEntity);
+                        else
+                            return null;
+                    }
             }
         }
         return null;
@@ -48,14 +65,39 @@ public class GuiHandler implements IGuiHandler
             {
                 case 0:
                     return new GaltGUI();
-                case 1:
-                    if (tileentity instanceof GaltTileEntityContainer)
-                        return new GuiInventory(player.inventory, (GaltTileEntityContainer) tileentity);
                 case GUI_ID_MACHINEBLOCK:
                     if (tileentity instanceof GaltTileEntityMachine)
                         return new GaltGuiMachine(player.inventory, (GaltTileEntityMachine) tileentity);
+                case GuiWaterMultiBlock:
+                    // Create an Object of our TE, so we can give that to our GUI.
+
+                    TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
+                    if (tileEntity == null)
+                    {
+                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y,
+                                z);
+                        return new GuiInventory(player.inventory, tileEntityTestContainer);
+                    }
+                    else
+                    {
+                        if (tileEntity instanceof GaltTileEntityContainer)
+                            return new GaltInventoryContainer(player.inventory, (GaltTileEntityContainer) tileEntity);
+                        else
+                            return null;
+                    }
             }
         }
+        return null;
+    }
+
+    private TileEntity getEntityFromStructure(World world, int x, int y, int z)
+    {
+        MultiBlockManager.StructureInWorld structure = GaltMultiBlock.registrationManager.findStructure(world, x, y, z);
+        if (structure != null)
+        {
+            return structure.commonEntity;
+        }
+
         return null;
     }
 }
