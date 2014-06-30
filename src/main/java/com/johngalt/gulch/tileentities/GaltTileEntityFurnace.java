@@ -1,5 +1,6 @@
 package com.johngalt.gulch.tileentities;
 
+import com.johngalt.gulch.blocks.GaltBlocks;
 import com.johngalt.gulch.items.GaltItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -13,7 +14,7 @@ public class GaltTileEntityFurnace extends GaltTileEntityMachine
 {
     public GaltTileEntityFurnace()
     {
-        super();
+        super(GaltBlocks.GaltFurnaceActive, GaltBlocks.GaltFurnaceIdle);
 
         this.Slots.add(new MachineSlot(0, ComponentType.Input, 56, 35, new ItemStack[]{new ItemStack(Blocks.iron_ore)}));
         this.Slots.add(new MachineSlot(1, ComponentType.Fuel, 8, 62));

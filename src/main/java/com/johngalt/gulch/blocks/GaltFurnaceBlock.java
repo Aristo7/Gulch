@@ -18,7 +18,7 @@ public class GaltFurnaceBlock extends GaltMachineBlock
 
     public GaltFurnaceBlock(boolean isActive)
     {
-        super(isActive, GuiHandler.GUI_ID_MACHINEBLOCK);
+        super(isActive, GuiHandler.GUI_ID_MACHINEBLOCK );
 
         if (!isActive)
         {

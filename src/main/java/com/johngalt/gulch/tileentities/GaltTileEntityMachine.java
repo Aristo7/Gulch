@@ -8,6 +8,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +20,8 @@ import java.util.List;
  */
 public abstract class GaltTileEntityMachine extends GaltTileEntity implements ISidedInventory
 {
-
+    private GaltMachineBlock _ActiveBlock;
+    private GaltMachineBlock _InactiveBlock;
 
     private static final int[] _SlotsTopDestination = new int[]{0};
     private static final int[] _SlotsBottomDestination = new int[]{2, 1};
@@ -44,6 +46,14 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         RecipeList = new MachineRecipeList();
     }
 
+    public GaltTileEntityMachine(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
+    {
+        this();
+
+        setActiveInactiveBlocks(activeBlock, inactiveBlock);
+    }
+
+
     public GaltTileEntityMachine(List<MachineSlot> slots, MachineRecipeList recipeList)
     {
         super();
@@ -66,6 +76,19 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         RecipeList = recipeList;
 
 
+    }
+
+    public GaltTileEntityMachine(List<MachineSlot> slots, MachineRecipeList recipeList, GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
+    {
+        this(slots, recipeList);
+
+        setActiveInactiveBlocks(activeBlock, inactiveBlock);
+    }
+
+    private void setActiveInactiveBlocks(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
+    {
+        _ActiveBlock = activeBlock;
+        _InactiveBlock = inactiveBlock;
     }
 
     /**
@@ -222,7 +245,8 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
             {
                 stateChanged = true;
 
-                GaltMachineBlock.updateMachineBlockState(BurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+                if (_InactiveBlock != null && _ActiveBlock != null)
+                    updateMachineBlockState(BurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
             }
         }
 
@@ -231,6 +255,27 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
             this.markDirty();
         }
     }
+
+    private void updateMachineBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord)
+    {
+        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+
+        GaltMachineBlock.SkipBreakEvent = true;
+
+        if (_ActiveBlock != null && _InactiveBlock != null)
+        {
+            worldObj.setBlock(xCoord, yCoord, zCoord, active ? _ActiveBlock : _InactiveBlock);
+        }
+
+        GaltMachineBlock.SkipBreakEvent = false;
+
+        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
+
+
+        this.validate(); // force update
+        worldObj.setTileEntity(xCoord, yCoord, zCoord, this);
+    }
+
 
     private List<ItemStack> GetItemsInSlotWithType(ComponentType slotType)
     {
@@ -280,9 +325,12 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         addItemsToSlots(recipe.GetAllItemsOfType(ComponentType.Output), ComponentType.Output);
     }
 
-    private void addItemsToSlots(List<ItemStack> items, ComponentType slotType)
+    private void addItemsToSlots(List<ItemStack> itemstacks, ComponentType slotType)
     {
         List<ItemStack> slotItems = GetItemsInSlotWithType(slotType);
+        List<ItemStack> items = new ArrayList<ItemStack>(itemstacks.size());
+        for (ItemStack item : itemstacks)
+            items.add(item.copy());
 
         // Iterate through the items to see if they are already in output lots. Add to existing stacks if they are.
         Iterator<ItemStack> itr = items.iterator();
@@ -610,6 +658,21 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
         return slotIDs;
     }
+
+    public List<ItemStack> GetItemsstacksInSlots()
+    {
+        List<ItemStack> items = new ArrayList<ItemStack>();
+        for (MachineSlot slot : Slots)
+        {
+            if (slot.SlotItem != null)
+            {
+                items.add(slot.SlotItem);
+            }
+        }
+
+        return items;
+    }
+
 
     public enum ComponentType
     {

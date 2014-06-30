@@ -30,7 +30,7 @@ import java.util.Random;
 public abstract class GaltMachineBlock extends GaltCommonContainer
 {
     private final boolean _IsActive;
-    private static boolean _KeepInventory;
+    public static boolean SkipBreakEvent;
 
     private int _GuiID;
 
@@ -52,6 +52,8 @@ public abstract class GaltMachineBlock extends GaltCommonContainer
 
         this.initializeContainer(GetGaltName() + (_IsActive ? "On" : "Off"));
         this.setHardness(3.5F);
+
+
     }
 
     public GaltMachineBlock(boolean isActive)
@@ -206,51 +208,18 @@ public abstract class GaltMachineBlock extends GaltCommonContainer
 
     }
 
-    public static void updateMachineBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord)
-    {
-        updateMachineBlockState(active, worldObj, xCoord, yCoord, zCoord, null, null);
-    }
-
-    public static void updateMachineBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord, Block activeBlock, Block inactiveBlock)
-    {
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-
-        TileEntity tileentity = worldObj.getTileEntity(xCoord, yCoord, zCoord);
-        _KeepInventory = true;
-
-        if (activeBlock != null && inactiveBlock != null)
-        {
-            worldObj.setBlock(xCoord, yCoord, zCoord, active ? activeBlock : inactiveBlock);
-        }
-//        else
-//        {
-////            worldObj.setBlock(xCoord, yCoord, zCoord, this);
-//        }
-
-        _KeepInventory = false;
-
-        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
-
-        if (tileentity != null)
-        {
-            tileentity.validate();
-            worldObj.setTileEntity(xCoord, yCoord, zCoord, tileentity);
-        }
-    }
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block oldBlock, int oldMetadata)
     {
-        if (!_KeepInventory)
+        if (!SkipBreakEvent)
         {
             GaltTileEntityMachine tileentity = (GaltTileEntityMachine) world.getTileEntity(x, y, z);
 
             if (tileentity != null)
             {
-                for (int i1 = 0; i1 < tileentity.getSizeInventory(); ++i1)
+                for (ItemStack itemstack : tileentity.GetItemsstacksInSlots())
                 {
-                    ItemStack itemstack = tileentity.getStackInSlot(i1);
-
                     if (itemstack != null)
                     {
                         float f = _Random.nextFloat() * 0.8F + 0.1F;

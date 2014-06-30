@@ -142,9 +142,12 @@ public class GaltContainerMachine extends GaltCommonContainer
                         return null;
                     }
                 }
-                else if (slotID >= 0 && slotID < 9 && !this.mergeItemStack(itemstack1, 9, 36, false))
+                else if (slotID >= 0 && slotID < 9)
                 {
-                    return null;
+                    if (!this.mergeItemStack(itemstack1, 9, 36, false))
+                    {
+                        return null;
+                    }
                 }
                 else if (!this.mergeItemStack(itemstack1, 3, 39, false))
                 {
@@ -180,7 +183,7 @@ public class GaltContainerMachine extends GaltCommonContainer
 
         for (int slotid : slotIDs)
         {
-            if (this.mergeItemStack(itemstack, slotid, slotid, false))
+            if (this.mergeItemStack(itemstack, slotid, slotid + 1, false))
                 return true;
         }
 
@@ -191,14 +194,14 @@ public class GaltContainerMachine extends GaltCommonContainer
      * merges provided ItemStack with the first avaliable one in the container/player inventory
      */
     @Override
-    protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4)
+    protected boolean mergeItemStack(ItemStack par1ItemStack, int fromIndex, int toIndexPlus1, boolean startFromEnd)
     {
         boolean flag1 = false;
-        int k = par2;
+        int k = fromIndex;
 
-        if (par4)
+        if (startFromEnd)
         {
-            k = par3 - 1;
+            k = toIndexPlus1 - 1;
         }
 
         Slot slot;
@@ -206,9 +209,9 @@ public class GaltContainerMachine extends GaltCommonContainer
 
         if (par1ItemStack.isStackable())
         {
-            while (par1ItemStack.stackSize > 0 && (!par4 && k < par3 || par4 && k >= par2))
+            while (par1ItemStack.stackSize > 0 && (!startFromEnd && k < toIndexPlus1 || startFromEnd && k >= fromIndex))
             {
-                slot = getSlotFromIndex(k);
+                slot = getSlotFromSlotIndex(k); //getSlotFromIndex(k);
                 itemstack1 = slot.getStack();
 
                 if (itemstack1 != null && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1))
@@ -231,7 +234,7 @@ public class GaltContainerMachine extends GaltCommonContainer
                     }
                 }
 
-                if (par4)
+                if (startFromEnd)
                 {
                     --k;
                 }
@@ -244,18 +247,18 @@ public class GaltContainerMachine extends GaltCommonContainer
 
         if (par1ItemStack.stackSize > 0)
         {
-            if (par4)
+            if (startFromEnd)
             {
-                k = par3 - 1;
+                k = toIndexPlus1 - 1;
             }
             else
             {
-                k = par2;
+                k = fromIndex;
             }
 
-            while (!par4 && k < par3 || par4 && k >= par2)
+            while (!startFromEnd && k < toIndexPlus1 || startFromEnd && k >= fromIndex)
             {
-                slot = getSlotFromIndex(k);
+                slot = getSlotFromSlotIndex(k);
                 itemstack1 = slot.getStack();
 
                 if (itemstack1 == null)
@@ -267,7 +270,7 @@ public class GaltContainerMachine extends GaltCommonContainer
                     break;
                 }
 
-                if (par4)
+                if (startFromEnd)
                 {
                     --k;
                 }
@@ -281,7 +284,7 @@ public class GaltContainerMachine extends GaltCommonContainer
         return flag1;
     }
 
-    private Slot getSlotFromIndex(int k)
+    private Slot getSlotFromSlotIndex(int k)
     {
         for (Object slot : this.inventorySlots)
         {
@@ -293,6 +296,16 @@ public class GaltContainerMachine extends GaltCommonContainer
                 }
             }
         }
+
+        return null;
+    }
+
+    private Slot getSlotFromIndex(int k)
+    {
+        Object slot = inventorySlots.get(k);
+        if (slot instanceof Slot)
+            return (Slot) slot;
+
 
         return null;
     }
