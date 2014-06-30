@@ -4,6 +4,7 @@ import com.johngalt.gulch.items.GaltItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * Created on 6/29/2014.
@@ -29,4 +30,5 @@ public class GaltTileEntityFurnace extends GaltTileEntityMachine
 
         this.AllowRegisteredFuel();
     }
+
 }

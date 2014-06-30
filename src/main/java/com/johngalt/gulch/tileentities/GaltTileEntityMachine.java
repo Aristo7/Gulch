@@ -64,6 +64,8 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         Slots = slots;
 
         RecipeList = recipeList;
+
+
     }
 
     /**
@@ -530,7 +532,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
             NBTTagCompound compound = list.getCompoundTagAt(i);
             byte b = compound.getByte("Slot");
 
-            if (b >= 0 && b < Slots.size())
+            if (GetSlotByID(b) != null)
             {
                 setInventorySlotContents(b, ItemStack.loadItemStackFromNBT(compound));
             }
