@@ -1,6 +1,7 @@
 package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.GulchMod;
+import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.lib.References;
 import com.johngalt.gulch.tileentities.GaltTileEntity;
@@ -27,7 +28,7 @@ import java.util.Random;
 /**
  * Created on 6/27/2014.
  */
-public abstract class GaltMachineBlock extends GaltCommonContainer
+public abstract class GaltMachineBlock extends GaltCommonBlockContainer
 {
     private final boolean _IsActive;
     public static boolean SkipBreakEvent;

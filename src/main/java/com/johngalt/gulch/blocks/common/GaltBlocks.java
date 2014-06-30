@@ -30,7 +30,7 @@ public class GaltBlocks
     {
         testBlock = new GaltSimpleBlock();
         testInteractiveBlock = new GaltInteractiveBlock();
-        testContainerBlock = new GaltContainerBlock();
+        testContainerBlock = new GaltBlockContainerBlock();
 
         portalBlock = new GulchPortalBlock();
         portalFrame = new GulchPortalFrameBlock();
@@ -43,7 +43,7 @@ public class GaltBlocks
         MoldStationActive = new GaltMoldStationBlock(true);
         MoldStationIdle = new GaltMoldStationBlock(false);
 
-        water = new GaltWaterMultiBlockStorage();
+        water = new GaltWaterMultiBlockStorageBlock();
     }
 
     public static void register(GaltCommonBlock block)
@@ -51,7 +51,7 @@ public class GaltBlocks
         GameRegistry.registerBlock(block, block.getUnwrappedUnlocalizedName());
     }
 
-    public static void register(GaltCommonContainer block)
+    public static void register(GaltCommonBlockContainer block)
     {
         GameRegistry.registerBlock(block, block.getUnwrappedUnlocalizedName());
     }

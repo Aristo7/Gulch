@@ -1,6 +1,6 @@
 package com.johngalt.gulch.gui;
 
-import com.johngalt.gulch.blocks.common.GaltMultiBlock;
+import com.johngalt.gulch.blocks.common.GaltMultiBlockBlock;
 import com.johngalt.gulch.blocks.common.MultiBlockManager;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
 import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
@@ -74,8 +74,7 @@ public class GuiHandler implements IGuiHandler
                     TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
                     if (tileEntity == null)
                     {
-                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y,
-                                z);
+                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
                         return new GuiInventory(player.inventory, tileEntityTestContainer);
                     }
                     else
@@ -92,7 +91,7 @@ public class GuiHandler implements IGuiHandler
 
     private TileEntity getEntityFromStructure(World world, int x, int y, int z)
     {
-        MultiBlockManager.StructureInWorld structure = GaltMultiBlock.registrationManager.findStructure(world, x, y, z);
+        MultiBlockManager.StructureInWorld structure = GaltMultiBlockBlock.registrationManager.findStructure(world, x, y, z);
         if (structure != null)
         {
             return structure.commonEntity;

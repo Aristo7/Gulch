@@ -37,7 +37,6 @@ public abstract class GaltCommonBlockContainer extends BlockContainer implements
         GaltBlocks.register(this);
         GaltLangGenerator.AddEntry(this);
         this.setCreativeTab(GulchMod.getCreativeTab());
-        GaltBlocks.register(this);
     }
 
     public String getUnwrappedUnlocalizedName()

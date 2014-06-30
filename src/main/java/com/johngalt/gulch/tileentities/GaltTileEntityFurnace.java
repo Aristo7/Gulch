@@ -1,11 +1,10 @@
 package com.johngalt.gulch.tileentities;
 
-import com.johngalt.gulch.blocks.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltBlocks;
 import com.johngalt.gulch.items.GaltItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * Created on 6/29/2014.

@@ -17,7 +17,7 @@ public class MultiBlockManager
         multiblocks = new ArrayList<StructureInWorld>();
     }
 
-    public void registerStructure(World world, ArrayList<GaltMultiBlock.Definition> registration, TileEntity entity)
+    public void registerStructure(World world, ArrayList<GaltMultiBlockBlock.Definition> registration, TileEntity entity)
     {
         multiblocks.add(new StructureInWorld(world, registration, entity));
     }
@@ -36,11 +36,11 @@ public class MultiBlockManager
 
         if (removeThis != null)
         {
-            for (GaltMultiBlock.Definition def : removeThis.definition)
+            for (GaltMultiBlockBlock.Definition def : removeThis.definition)
             {
                 if (world.getBlock(def.dx, def.dy, def.dz) == def.block)
                 {
-                    world.setBlock(def.dx, def.dy, def.dz, def.block, 0, GaltMultiBlock.updateClientsFlag);
+                    world.setBlock(def.dx, def.dy, def.dz, def.block, 0, GaltMultiBlockBlock.updateClientsFlag);
                 }
             }
 
@@ -54,7 +54,7 @@ public class MultiBlockManager
         {
             if (structure.world != world) continue;
 
-            for (GaltMultiBlock.Definition def : structure.definition)
+            for (GaltMultiBlockBlock.Definition def : structure.definition)
             {
                 if (def.dx == x && def.dy == y && def.dz == z)
                 {
@@ -69,14 +69,14 @@ public class MultiBlockManager
 
     public static class StructureInWorld
     {
-        public StructureInWorld(World world, ArrayList<GaltMultiBlock.Definition> definition, TileEntity entity)
+        public StructureInWorld(World world, ArrayList<GaltMultiBlockBlock.Definition> definition, TileEntity entity)
         {
             this.world = world;
             this.definition = definition;
             this.commonEntity = entity;
         }
 
-        public ArrayList<GaltMultiBlock.Definition> definition;
+        public ArrayList<GaltMultiBlockBlock.Definition> definition;
         public World world;
         public TileEntity commonEntity;
     }
