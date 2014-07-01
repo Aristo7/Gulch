@@ -1,5 +1,6 @@
 package com.johngalt.gulch.tileentities;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.GaltMachineBlock;
 import com.johngalt.gulch.gui.GaltContainerMachine;
 import com.johngalt.gulch.gui.GaltGuiMachine;
@@ -49,6 +50,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
         Slots = new ArrayList<MachineSlot>();
         RecipeList = new MachineRecipeList();
+        registerTileEntity();
     }
 
     public GaltTileEntityMachine(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
@@ -56,6 +58,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         this();
 
         setActiveInactiveBlocks(activeBlock, inactiveBlock);
+
     }
 
 
@@ -77,10 +80,8 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         }
 
         Slots = slots;
-
         RecipeList = recipeList;
-
-
+        registerTileEntity();
     }
 
     public GaltTileEntityMachine(List<MachineSlot> slots, MachineRecipeList recipeList, GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
@@ -88,6 +89,11 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         this(slots, recipeList);
 
         setActiveInactiveBlocks(activeBlock, inactiveBlock);
+    }
+
+    private void registerTileEntity()
+    {
+        GulchMod.proxy.registerTileEntity(this.getClass(), this.getClass().getSimpleName());
     }
 
     private void setActiveInactiveBlocks(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)

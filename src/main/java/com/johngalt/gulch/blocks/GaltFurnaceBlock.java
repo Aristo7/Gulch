@@ -11,29 +11,29 @@ import java.util.Random;
 /**
  * Created on 6/28/2014.
  */
-public class GaltFurnaceBlock extends GaltMachineBlock
-{
-    private static Block _DroppedBlockItem;
-
-    public GaltFurnaceBlock(boolean isActive)
+    public class GaltFurnaceBlock extends GaltMachineBlock
     {
-        super(isActive);
+        private static Block _DroppedBlockItem;
 
-        if (!isActive)
+        public GaltFurnaceBlock(boolean isActive)
         {
-            _DroppedBlockItem = this;
+            super(isActive);
+
+            if (!isActive)
+            {
+                _DroppedBlockItem = this;
+            }
+        }
+
+        @Override
+        public TileEntity createNewTileEntity(World world, int var2)
+        {
+            return new GaltTileEntityFurnace();
+        }
+
+        @Override
+        public Item getItemDropped(int slot, Random random, int j)
+        {
+            return Item.getItemFromBlock(_DroppedBlockItem == null ? this : _DroppedBlockItem);
         }
     }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int var2)
-    {
-        return new GaltTileEntityFurnace();
-    }
-
-    @Override
-    public Item getItemDropped(int slot, Random random, int j)
-    {
-        return Item.getItemFromBlock(_DroppedBlockItem == null ? this : _DroppedBlockItem);
-    }
-}
