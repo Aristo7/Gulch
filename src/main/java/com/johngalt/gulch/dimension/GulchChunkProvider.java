@@ -22,7 +22,7 @@ import java.util.Random;
 @SuppressWarnings("unchecked")
 public class GulchChunkProvider implements IChunkProvider
 {
-    private World  worldObj;
+    private World worldObj;
     private Random random;
 
     public GulchChunkProvider(World world, long randomSeed)

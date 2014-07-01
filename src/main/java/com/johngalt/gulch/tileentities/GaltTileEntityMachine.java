@@ -1,8 +1,11 @@
 package com.johngalt.gulch.tileentities;
 
 import com.johngalt.gulch.blocks.GaltMachineBlock;
+import com.johngalt.gulch.gui.GaltContainerMachine;
+import com.johngalt.gulch.gui.GaltGuiMachine;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -32,6 +35,8 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
     public List<MachineSlot> Slots = new ArrayList<MachineSlot>();
 
     public MachineRecipeList RecipeList;
+
+    private String _GuiName;
 
     private int _FurnaceSpeed = 150;
     public int BurnTime;
@@ -90,6 +95,29 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         _ActiveBlock = activeBlock;
         _InactiveBlock = inactiveBlock;
     }
+
+    public void SetGuiName(String guiNameFileNameWithExt)
+    {
+        _GuiName = guiNameFileNameWithExt;
+    }
+
+    public GaltGuiMachine CreateGUIInstance(InventoryPlayer inv)
+    {
+        if (_GuiName != null)
+        {
+            return new GaltGuiMachine(inv, this, _GuiName);
+        }
+        else
+        {
+            return new GaltGuiMachine(inv, this, this.getClass().getSimpleName().replace("TileEntity", "Gui") + ".png");
+        }
+    }
+
+    public GaltContainerMachine GetContainer(InventoryPlayer inv)
+    {
+        return new GaltContainerMachine(inv, this);
+    }
+
 
     /**
      * This allows the machine to use fuels registered with minecraft.

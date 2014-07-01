@@ -33,7 +33,7 @@ public class GuiHandler implements IGuiHandler
             {
                 case GUI_ID_MACHINEBLOCK:
                     if (tileentity instanceof GaltTileEntityMachine)
-                        return new GaltContainerMachine(player.inventory, (GaltTileEntityMachine) tileentity);
+                        return ((GaltTileEntityMachine) tileentity).GetContainer(player.inventory); //new GaltContainerMachine(player.inventory, (GaltTileEntityMachine) tileentity);
                 case GuiWaterMultiBlock:
                     // Create an Object of our TE, so we can give that to our inventory.
 
@@ -67,7 +67,7 @@ public class GuiHandler implements IGuiHandler
                     return new GaltGUI();
                 case GUI_ID_MACHINEBLOCK:
                     if (tileentity instanceof GaltTileEntityMachine)
-                        return new GaltGuiMachine(player.inventory, (GaltTileEntityMachine) tileentity);
+                        return ((GaltTileEntityMachine) tileentity).CreateGUIInstance(player.inventory);
                 case GuiWaterMultiBlock:
                     // Create an Object of our TE, so we can give that to our GUI.
 

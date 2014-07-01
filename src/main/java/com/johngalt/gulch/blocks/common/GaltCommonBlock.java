@@ -17,7 +17,7 @@ public class GaltCommonBlock extends Block implements IGaltObject
 {
     public GaltCommonBlock(Material material)
     {
-        super( material);
+        super(material);
         this.setBlockName(GetGaltName());
         GaltLangGenerator.AddEntry(this);
         GaltBlocks.register(this);

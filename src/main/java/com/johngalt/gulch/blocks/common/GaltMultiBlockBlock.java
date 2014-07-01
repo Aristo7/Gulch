@@ -14,7 +14,7 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
 {
     private Definition[] description;
 
-    public static int               updateClientsFlag   = 2;
+    public static int updateClientsFlag = 2;
     public static MultiBlockManager registrationManager = new MultiBlockManager();
 
     /**
@@ -178,7 +178,7 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
 
 class Direction
 {
-    public int     multiplier;
+    public int multiplier;
     public boolean swapCoords;
 
     public Direction(int multiplier, boolean swapCoords)
@@ -211,8 +211,8 @@ class Direction
 
     public static Direction North = new Direction(1, false);
     public static Direction South = new Direction(-1, false);
-    public static Direction West  = new Direction(1, true);
-    public static Direction East  = new Direction(-1, true);
+    public static Direction West = new Direction(1, true);
+    public static Direction East = new Direction(-1, true);
 
     public static Direction[] AllDirections = new Direction[]{North, South, East, West};
 }

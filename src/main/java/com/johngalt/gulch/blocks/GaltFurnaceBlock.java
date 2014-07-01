@@ -1,6 +1,5 @@
 package com.johngalt.gulch.blocks;
 
-import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.tileentities.GaltTileEntityFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,7 +17,7 @@ public class GaltFurnaceBlock extends GaltMachineBlock
 
     public GaltFurnaceBlock(boolean isActive)
     {
-        super(isActive, GuiHandler.GUI_ID_MACHINEBLOCK );
+        super(isActive);
 
         if (!isActive)
         {

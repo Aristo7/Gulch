@@ -29,6 +29,8 @@ public class GaltTileEntityFurnace extends GaltTileEntityMachine
         this.RecipeList.AddFuel(new ItemStack(GaltItems.GunPowder, 1), 100);
 
         this.AllowRegisteredFuel();
+
+        this.setGuiDisplayName("Galt Furnace");
     }
 
 }

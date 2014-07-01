@@ -7,7 +7,7 @@ import net.minecraft.world.biome.BiomeGenBase;
  */
 public class GulchBiomes
 {
-    public static final BiomeGenBase roadBiome     = new GulchRoadBiome(66);
+    public static final BiomeGenBase roadBiome = new GulchRoadBiome(66);
     public static final BiomeGenBase buildingBiome = new GulchBuildingBiome(76);
 
     public static void registerBiomes()

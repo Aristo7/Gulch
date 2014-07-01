@@ -14,16 +14,18 @@ import org.lwjgl.opengl.GL11;
  */
 public class GaltGuiMachine extends GuiContainer
 {
-    public static final ResourceLocation Background = new ResourceLocation(References.RESOURCESPREFIX + "textures/gui/GaltGuiMachine.png");
+    public ResourceLocation Background;
 
     private GaltTileEntityMachine _MachineTileEntity;
 
 
-    public GaltGuiMachine(InventoryPlayer inventory, GaltTileEntityMachine tileentity)
+    public GaltGuiMachine(InventoryPlayer inventory, GaltTileEntityMachine tileentity, String filenameWithExt)
     {
         super(new GaltContainerMachine(inventory, tileentity));
 
         _MachineTileEntity = tileentity;
+
+        Background = new ResourceLocation(References.RESOURCESPREFIX + "textures/gui/" + filenameWithExt);
 
         this.xSize = 176;
         this.ySize = 166;
@@ -40,11 +42,11 @@ public class GaltGuiMachine extends GuiContainer
         }
         else
         {
-            name = I18n.format("Machine Block", new Object[0]);
+            name = I18n.format("Machine Block");
         }
 
         this.fontRendererObj.drawString(name, getCenterXForWord(name), 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), getRightXForWord("inventory"), this.ySize - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(I18n.format("Inventory"), getRightXForWord("Inventory"), this.ySize - 96 + 2, 4210752);
     }
 
     private int getCenterXForWord(String word)
