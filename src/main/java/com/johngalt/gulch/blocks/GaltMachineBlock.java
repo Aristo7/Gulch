@@ -89,46 +89,6 @@ public abstract class GaltMachineBlock extends GaltCommonBlockContainer
     }
 
     @Override
-    public void onBlockAdded(World world, int x, int y, int z)
-    {
-        super.onBlockAdded(world, x, y, z);
-        setDefaultDirection(world, x, y, z);
-    }
-
-    private void setDefaultDirection(World world, int x, int y, int z)
-    {
-        if (!world.isRemote)
-        {
-            Block bz1 = world.getBlock(x, y, z - 1);
-            Block bzn1 = world.getBlock(x, y, z + 1);
-            Block bx1 = world.getBlock(x - 1, y, z);
-            Block bxn1 = world.getBlock(x + 1, y, z);
-
-            byte facing = 3;
-
-            // func_149730_j = isOpaque
-            if (bz1.func_149730_j() && !bzn1.func_149730_j())
-            {
-                facing = 3;
-            }
-            else if (bzn1.func_149730_j() && !bz1.func_149730_j())
-            {
-                facing = 1;
-            }
-            else if (bx1.func_149730_j() && !bxn1.func_149730_j())
-            {
-                facing = 5;
-            }
-            else if (bxn1.func_149730_j() && !bx1.func_149730_j())
-            {
-                facing = 4;
-            }
-
-            world.setBlockMetadataWithNotify(x, y, z, facing, 2);
-        }
-    }
-
-    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
     {
         if (!world.isRemote)

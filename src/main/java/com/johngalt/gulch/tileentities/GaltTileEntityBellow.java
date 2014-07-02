@@ -7,4 +7,5 @@ import net.minecraft.tileentity.TileEntity;
  */
 public class GaltTileEntityBellow extends TileEntity
 {
+
 }

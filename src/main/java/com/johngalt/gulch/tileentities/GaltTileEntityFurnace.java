@@ -32,5 +32,4 @@ public class GaltTileEntityFurnace extends GaltTileEntityMachine
 
         this.setGuiDisplayName("Galt Furnace");
     }
-
 }

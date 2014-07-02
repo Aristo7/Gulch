@@ -53,7 +53,7 @@ public class GulchMod
         GaltItems.init();
         GaltBlocks.init();
         GaltEntities.RegisterEntities();
-        proxy.registerRenderers();
+        proxy.RegisterRenderers();
         proxy.registerTileEntities();
 
         GulchBiomes.registerBiomes();

@@ -50,7 +50,6 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
         Slots = new ArrayList<MachineSlot>();
         RecipeList = new MachineRecipeList();
-        registerTileEntity();
     }
 
     public GaltTileEntityMachine(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
@@ -81,7 +80,6 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
         Slots = slots;
         RecipeList = recipeList;
-        registerTileEntity();
     }
 
     public GaltTileEntityMachine(List<MachineSlot> slots, MachineRecipeList recipeList, GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
@@ -91,10 +89,6 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
         setActiveInactiveBlocks(activeBlock, inactiveBlock);
     }
 
-    private void registerTileEntity()
-    {
-        GulchMod.proxy.registerTileEntity(this.getClass(), this.getClass().getSimpleName());
-    }
 
     private void setActiveInactiveBlocks(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
     {

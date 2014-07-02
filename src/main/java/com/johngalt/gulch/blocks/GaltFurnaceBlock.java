@@ -1,5 +1,6 @@
 package com.johngalt.gulch.blocks;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.tileentities.GaltTileEntityFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -23,6 +24,8 @@ public class GaltFurnaceBlock extends GaltMachineBlock
         {
             _DroppedBlockItem = this;
         }
+
+        GulchMod.proxy.registerTileEntity(GaltTileEntityFurnace.class, GaltTileEntityFurnace.class.getSimpleName());
     }
 
     @Override

@@ -2,8 +2,6 @@ package com.johngalt.gulch.proxy;
 
 import com.johngalt.gulch.tileentities.GaltTileEntity;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
-import com.johngalt.gulch.tileentities.GaltTileEntityFurnace;
-import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.tileentity.TileEntity;
 
@@ -17,7 +15,7 @@ public class CommonProxy
 {
     private List<RegisterEntry> _TilesToRegister = new ArrayList<RegisterEntry>();
 
-    public void registerRenderers()
+    public void RegisterRenderers()
     {
 
     }
@@ -33,6 +31,10 @@ public class CommonProxy
 
     public void registerTileEntity(Class<? extends TileEntity> aClass, String simpleName)
     {
+        for (RegisterEntry entry : _TilesToRegister)
+            if (entry.TheClass == aClass)
+                return;
+
         _TilesToRegister.add(new RegisterEntry(aClass, simpleName));
     }
 
