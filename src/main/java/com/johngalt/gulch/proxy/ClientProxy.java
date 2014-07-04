@@ -10,7 +10,6 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 /**
@@ -22,10 +21,12 @@ public class ClientProxy extends CommonProxy
     public void RegisterRenderers()
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityBlasterBolt.class, new RenderBlasterAmmo());
-        TileEntitySpecialRenderer renderer = new GaltBellowRenderer();
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntity.class, renderer);
 
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GaltBlocks.BellowBlock), new GaltBellowItemRenderer(renderer, new TileEntity()));
+
+        TileEntitySpecialRenderer renderer = new GaltBellowRenderer();
+        ClientRegistry.bindTileEntitySpecialRenderer(GaltTileEntityBellow.class, renderer);
+
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GaltBlocks.BellowBlock), new GaltBellowItemRenderer(renderer, new GaltTileEntityBellow()));
     }
 
     public void RegisterTileEntitySpecialRenderer()

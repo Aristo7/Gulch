@@ -1,18 +1,22 @@
 package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
+import com.johngalt.gulch.tileentities.GaltTileEntityBellow;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 /**
  * Created on 7/1/2014.
  */
-public class GaltBellowBlock extends GaltCommonBlockContainer
+public class GaltRenderedBlock extends GaltCommonBlockContainer
 {
 
 
-    public GaltBellowBlock(Material material)
+    public GaltRenderedBlock(Material material)
     {
         super(material);
 
@@ -46,6 +50,21 @@ public class GaltBellowBlock extends GaltCommonBlockContainer
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return new TileEntity();
+        return new GaltTileEntityBellow();
+    }
+
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemBlock)
+    {
+        TileEntity entity = world.getTileEntity(x, y, z);
+
+        if (entity instanceof GaltTileEntityBellow)
+        {
+            int dir = (MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3) % 4;
+            ((GaltTileEntityBellow) entity).SetDirection((short)dir);
+        }
+
+
     }
 }

@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 /**
@@ -69,7 +71,8 @@ public abstract class GaltCommonBlockContainer extends BlockContainer implements
     public void onBlockAdded(World world, int x, int y, int z)
     {
         super.onBlockAdded(world, x, y, z);
-        setDefaultDirection(world, x, y, z);
+
+
     }
 
     protected void setDefaultDirection(World world, int x, int y, int z)
