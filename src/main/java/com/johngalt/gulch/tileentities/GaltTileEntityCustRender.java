@@ -9,11 +9,11 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created on 7/1/2014.
  */
-public class GaltTileEntityBellow extends TileEntity
+public class GaltTileEntityCustRender extends TileEntity
 {
     private short _Direction;
 
-    public GaltTileEntityBellow()
+    public GaltTileEntityCustRender()
     {
         super();
     }

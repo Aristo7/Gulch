@@ -1,8 +1,8 @@
 package com.johngalt.gulch.renderers;
 
 import com.johngalt.gulch.lib.References;
-import com.johngalt.gulch.model.GaltModelBellow;
-import com.johngalt.gulch.tileentities.GaltTileEntityBellow;
+import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -11,23 +11,26 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created on 7/1/2014.
  */
-public class GaltBellowRenderer extends TileEntitySpecialRenderer
+public class GaltBlockRenderer extends TileEntitySpecialRenderer
 {
-    private static ResourceLocation _Texture = new ResourceLocation(References.RESOURCESPREFIX + "textures/blocks/GaltModelBellow.png");
-    private GaltModelBellow _BellowModel;
+    private static ResourceLocation _Texture;// = new ResourceLocation(References.RESOURCESPREFIX + "textures/blocks/GaltModelBellow.png");
+    private ModelBase _Model;
 
-    public GaltBellowRenderer()
+    public GaltBlockRenderer(ModelBase model, String gulchTextureLocation)
     {
-        _BellowModel = new GaltModelBellow();
+        _Model = model;
+        _Texture = new ResourceLocation(References.RESOURCESPREFIX + gulchTextureLocation); //"textures/blocks/GaltModelBellow.png");
+
+
     }
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f)
     {
         short direction = 0;
-        if (tileEntity instanceof GaltTileEntityBellow)
+        if (tileEntity instanceof GaltTileEntityCustRender)
         {
-            direction = ((GaltTileEntityBellow) tileEntity).GetDirection();
+            direction = ((GaltTileEntityCustRender) tileEntity).GetDirection();
         }
 
         GL11.glPushMatrix();
@@ -55,7 +58,7 @@ public class GaltBellowRenderer extends TileEntitySpecialRenderer
             this.bindTexture(_Texture);
 
             GL11.glPushMatrix();
-            _BellowModel.renderModel(0.0625F);
+            _Model.render(null, 0, 0, 0, 0, 0, 0.0625F);
             GL11.glPopMatrix();
         }
 

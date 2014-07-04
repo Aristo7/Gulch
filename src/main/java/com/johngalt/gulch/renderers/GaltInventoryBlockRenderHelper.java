@@ -9,12 +9,12 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created on 7/1/2014.
  */
-public class GaltBellowItemRenderer implements IItemRenderer
+public class GaltInventoryBlockRenderHelper implements IItemRenderer
 {
     private TileEntitySpecialRenderer _Renderer;
     private TileEntity _Entity;
 
-    public GaltBellowItemRenderer(TileEntitySpecialRenderer renderer, TileEntity entity)
+    public GaltInventoryBlockRenderHelper(TileEntitySpecialRenderer renderer, TileEntity entity)
     {
         _Entity = entity;
         _Renderer = renderer;
