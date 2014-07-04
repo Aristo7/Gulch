@@ -1,8 +1,8 @@
 package com.johngalt.gulch.proxy;
 
 import com.johngalt.gulch.tileentities.GaltTileEntity;
-import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
+import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.tileentity.TileEntity;
 

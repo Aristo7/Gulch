@@ -17,6 +17,7 @@ public class EntityMobHandler
         registerMob(ExampleMob.class, "Example Mob");
     }
 
+    @SuppressWarnings("unchecked")
     public static void registerMob(Class<? extends Entity> mobClass, String mobName)
     {
         int entityId = EntityRegistry.findGlobalUniqueEntityId();

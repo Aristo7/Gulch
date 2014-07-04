@@ -1,6 +1,5 @@
 package com.johngalt.gulch.blocks.common;
 
-import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
 import com.johngalt.gulch.proxy.ClientProxy;
 import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
 import net.minecraft.block.material.Material;
