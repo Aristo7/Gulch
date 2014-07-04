@@ -50,13 +50,14 @@ public class GulchMod
     public static void preInit(FMLPreInitializationEvent event)
     {
         worldProvider = new GulchWorldGen();
-
         GaltItems.init();
         GaltBlocks.init();
+
         GaltEntities.RegisterEntities();
         EntityMobHandler.register();
         proxy.RegisterRenderers();
         proxy.registerTileEntities();
+
 
         GulchBiomes.registerBiomes();
     }
@@ -64,6 +65,7 @@ public class GulchMod
     @Mod.EventHandler
     public static void init(FMLInitializationEvent event)
     {
+        proxy.RegisterRenderers();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }
 

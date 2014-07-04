@@ -261,38 +261,6 @@ public class GaltModelBellow extends ModelBase
         Shape4e2.render(f5);
     }
 
-    public void renderModel(float f5)
-    {
-        Shape1.render(f5);
-        Shape22.render(f5);
-        a3.render(f5);
-        a4.render(f5);
-        Shape2a5.render(f5);
-        Shape2a6.render(f5);
-        Shape1a7.render(f5);
-        Shape2a8.render(f5);
-        Shape2a9.render(f5);
-        Shape2aa1.render(f5);
-        Shape2aa2.render(f5);
-        Shape2aa3.render(f5);
-        Shape2aa4.render(f5);
-        Shape3a5a5.render(f5);
-        Shape4aa6.render(f5);
-        Shape4aa7.render(f5);
-        Shape4aa8.render(f5);
-        Shape4aa9.render(f5);
-        Shape4o1.render(f5);
-        Shape4oo2.render(f5);
-        Shape4o3.render(f5);
-        Shape4o4.render(f5);
-        Shape4o5.render(f5);
-        Shape4o6.render(f5);
-        Shape4o7.render(f5);
-        Shape4o8.render(f5);
-        Shape4o9.render(f5);
-        Shape4e1.render(f5);
-        Shape4e2.render(f5);
-    }
 
     private void setRotation(ModelRenderer model, float x, float y, float z)
     {
@@ -301,10 +269,5 @@ public class GaltModelBellow extends ModelBase
         model.rotateAngleZ = z;
     }
 
-    @Override
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
-        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    }
 
 }
