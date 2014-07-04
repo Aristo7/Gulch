@@ -26,15 +26,9 @@ public abstract class GaltRenderedBlock extends GaltCommonBlockContainer
         _GulchTextureLocation = gulchTextureLocation;
         _Model = model;
 
+        this.setBlockTextureName("");
+
         ClientProxy.RegisterRenderedBlock(this);
-
-//        this.setHardness(2.0F);
-//        this.setResistance(5.0F);
-//
-//        this.setBlockTextureName("");
-//
-//        this.setBlockBounds(0, 0, .0625F, 1, 0.75F, 0.9375F);
-
     }
 
     public String GetTextureLocation()
@@ -67,10 +61,6 @@ public abstract class GaltRenderedBlock extends GaltCommonBlockContainer
 
     @Override
     public abstract TileEntity createNewTileEntity(World var1, int var2);
-//    {
-//        return new GaltTileEntityCustRender();
-//    }
-
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemBlock)

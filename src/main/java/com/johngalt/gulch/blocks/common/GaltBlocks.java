@@ -24,7 +24,7 @@ public class GaltBlocks
 
     public static GaltMoldStationBlock MoldStationActive;
     public static GaltMoldStationBlock MoldStationIdle;
-    public static GaltRenderedBlock BellowBlock;
+    public static GaltBellowBlock BellowBlock;
 
     public static Block water;
 
@@ -45,7 +45,7 @@ public class GaltBlocks
         MoldStationActive = new GaltMoldStationBlock(true);
         MoldStationIdle = new GaltMoldStationBlock(false);
 
-        BellowBlock = new GaltRenderedBlock(Material.wood);
+        BellowBlock = new GaltBellowBlock(Material.wood);
 
         water = new GaltWaterMultiBlockStorageBlock();
     }

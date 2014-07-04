@@ -1,7 +1,7 @@
 package com.johngalt.gulch.proxy;
 
 import com.johngalt.gulch.tileentities.GaltTileEntity;
-import com.johngalt.gulch.tileentities.GaltTileEntityBellow;
+import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
 import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CommonProxy
 {
-    private List<RegisterEntry> _TilesToRegister = new ArrayList<RegisterEntry>();
+    private List<RegisterTileEntry> _TilesToRegister = new ArrayList<RegisterTileEntry>();
 
     public void RegisterRenderers()
     {
@@ -25,27 +25,27 @@ public class CommonProxy
     {
         GameRegistry.registerTileEntity(GaltTileEntity.class, "GaltTileEntity");
         GameRegistry.registerTileEntity(GaltTileEntityContainer.class, "GaltTileEntityContainer");
-        GameRegistry.registerTileEntity(GaltTileEntityBellow.class, "GaltTileEntityBellow");
+        GameRegistry.registerTileEntity(GaltTileEntityCustRender.class, "GaltTileEntityBellow");
 
-        for (RegisterEntry entry : _TilesToRegister)
+        for (RegisterTileEntry entry : _TilesToRegister)
             GameRegistry.registerTileEntity(entry.TheClass, entry.RegisterName);
     }
 
     public void registerTileEntity(Class<? extends TileEntity> aClass, String simpleName)
     {
-        for (RegisterEntry entry : _TilesToRegister)
+        for (RegisterTileEntry entry : _TilesToRegister)
             if (entry.TheClass == aClass)
                 return;
 
-        _TilesToRegister.add(new RegisterEntry(aClass, simpleName));
+        _TilesToRegister.add(new RegisterTileEntry(aClass, simpleName));
     }
 
-    private class RegisterEntry
+    private class RegisterTileEntry
     {
         public Class<? extends TileEntity> TheClass;
         public String RegisterName;
 
-        public RegisterEntry(Class<? extends TileEntity> aClass, String simpleName)
+        public RegisterTileEntry(Class<? extends TileEntity> aClass, String simpleName)
         {
             TheClass = aClass;
             RegisterName = simpleName;
