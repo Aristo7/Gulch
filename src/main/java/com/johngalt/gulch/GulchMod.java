@@ -6,6 +6,7 @@ import com.johngalt.gulch.creativetab.GaltTab;
 import com.johngalt.gulch.dimension.GulchWorldGen;
 import com.johngalt.gulch.dimension.GulchWorldProvider;
 import com.johngalt.gulch.entities.GaltEntities;
+import com.johngalt.gulch.entities.mobs.EntityMobHandler;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.lib.GaltLangGenerator;
@@ -36,8 +37,8 @@ public class GulchMod
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
 
-    private static CreativeTabs tab = new GaltTab(GaltTab.class.getSimpleName());
-    public static int gulchDimension = 66;
+    private static CreativeTabs tab            = new GaltTab(GaltTab.class.getSimpleName());
+    public static  int          gulchDimension = 66;
     public static GulchWorldGen worldProvider;
 
     public static CreativeTabs getCreativeTab()
@@ -53,6 +54,7 @@ public class GulchMod
         GaltItems.init();
         GaltBlocks.init();
         GaltEntities.RegisterEntities();
+        EntityMobHandler.register();
         proxy.RegisterRenderers();
         proxy.registerTileEntities();
 
