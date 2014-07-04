@@ -262,12 +262,10 @@ public class GaltModelBellow extends ModelBase
     }
 
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
-    }
-
-
+        private void setRotation(ModelRenderer model, float x, float y, float z)
+        {
+            model.rotateAngleX = x;
+            model.rotateAngleY = y;
+            model.rotateAngleZ = z;
+        }
 }
