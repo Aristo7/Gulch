@@ -1,13 +1,17 @@
 package com.johngalt.gulch.entities;
 
 import com.johngalt.gulch.GulchMod;
+import com.johngalt.gulch.entities.mobs.ExampleMob;
 import com.johngalt.gulch.items.GaltCommonGun;
 import com.johngalt.gulch.items.ItemBlasterRifle;
 import com.johngalt.gulch.items.ItemMusket;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 /**
  * Created on 6/14/2014.
@@ -16,7 +20,17 @@ public class GaltEntities
 {
     public static void RegisterEntities()
     {
-        EntityRegistry.registerModEntity(EntityBlasterBolt.class, "BlasterBolt", EntityRegistry.findGlobalUniqueEntityId(), GulchMod.instance, 120, 3, true);
+        registerEntity(EntityBlasterBolt.class, "BlasterBolt", 120, 3, true);
+        registerMob(ExampleMob.class, "Example Mob", 64, 1, true);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void registerEntity(Class<? extends Entity> entity, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    {
+        int entityId = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerGlobalEntityID(EntityBlasterBolt.class, "BlasterBolt", entityId);
+        EntityRegistry.registerModEntity(EntityBlasterBolt.class, "BlasterBolt", entityId, GulchMod.instance,
+                trackingRange, updateFrequency, sendsVelocityUpdates);
     }
 
     public static Entity getBulletInstance(GaltCommonGun gunType, World world, EntityPlayer player)
@@ -31,6 +45,21 @@ public class GaltEntities
         }
 
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void registerMob(Class<? extends Entity> mobClass, String mobName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    {
+        int entityId = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerGlobalEntityID(mobClass, mobName, entityId);
+        EntityRegistry.registerModEntity(mobClass, mobName, entityId, GulchMod.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+
+        Random random = new Random(mobName.hashCode());
+        int mainColor = random.nextInt() * 16777215;
+        int subColor = random.nextInt() * 16777215;
+
+        EntityList.entityEggs.put(Integer.valueOf(entityId),
+                new EntityList.EntityEggInfo(entityId, mainColor, subColor));
     }
 }
 
