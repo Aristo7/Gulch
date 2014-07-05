@@ -1,4 +1,4 @@
-package com.johngalt.gulch.tileentities;
+package com.johngalt.gulch.tileentities.common;
 
 import com.johngalt.gulch.items.GaltItems;
 import net.minecraft.block.Block;

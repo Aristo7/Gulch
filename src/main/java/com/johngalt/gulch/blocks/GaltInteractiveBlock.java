@@ -3,7 +3,7 @@ package com.johngalt.gulch.blocks;
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.common.GaltCommonBlock;
 import com.johngalt.gulch.gui.GuiHandler;
-import com.johngalt.gulch.tileentities.GaltTileEntity;
+import com.johngalt.gulch.tileentities.common.GaltTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

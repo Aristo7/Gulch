@@ -1,6 +1,6 @@
 package com.johngalt.gulch.gui;
 
-import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;

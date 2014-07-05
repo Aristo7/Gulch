@@ -1,7 +1,7 @@
 package com.johngalt.gulch.gui;
 
 import com.johngalt.gulch.inventory.GaltSlotTest;
-import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;

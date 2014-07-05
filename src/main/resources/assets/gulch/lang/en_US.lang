@@ -22,3 +22,4 @@ tile.gulch:GaltMoldStationBlockOn.name=Mold Station Block On
 tile.gulch:GaltMoldStationBlockOff.name=Mold Station Block Off
 tile.gulch:GaltWaterMultiBlockStorageBlock.name=Water Multi Block Storage Block
 tile.gulch:GaltBellowBlock.name=Bellow
+tile.gulch:GaltClayFurnaceBlock.name=Clay Furnace Block

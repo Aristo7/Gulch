@@ -1,4 +1,4 @@
-package com.johngalt.gulch.tileentities;
+package com.johngalt.gulch.tileentities.common;
 
 import net.minecraft.tileentity.TileEntity;
 

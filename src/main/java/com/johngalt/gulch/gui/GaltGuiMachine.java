@@ -1,7 +1,7 @@
 package com.johngalt.gulch.gui;
 
 import com.johngalt.gulch.lib.References;
-import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;

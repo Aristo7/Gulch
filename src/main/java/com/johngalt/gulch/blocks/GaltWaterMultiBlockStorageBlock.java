@@ -5,7 +5,7 @@ import com.johngalt.gulch.blocks.common.GaltMultiBlockBlock;
 import com.johngalt.gulch.blocks.common.MultiBlockManager;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.lib.References;
-import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;

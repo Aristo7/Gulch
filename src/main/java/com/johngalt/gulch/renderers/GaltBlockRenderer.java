@@ -1,7 +1,7 @@
 package com.johngalt.gulch.renderers;
 
 import com.johngalt.gulch.lib.References;
-import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityCustRender;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
  */
 public class GaltBlockRenderer extends TileEntitySpecialRenderer
 {
-    private static ResourceLocation _Texture;// = new ResourceLocation(References.RESOURCESPREFIX + "textures/blocks/GaltModelBellow.png");
+    private ResourceLocation _Texture;// = new ResourceLocation(References.RESOURCESPREFIX + "textures/blocks/GaltModelBellow.png");
     private ModelBase _Model;
 
     public GaltBlockRenderer(ModelBase model, String gulchTextureLocation)

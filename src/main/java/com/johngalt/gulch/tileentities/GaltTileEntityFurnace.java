@@ -2,6 +2,7 @@ package com.johngalt.gulch.tileentities;
 
 import com.johngalt.gulch.blocks.common.GaltBlocks;
 import com.johngalt.gulch.items.GaltItems;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

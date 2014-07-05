@@ -1,8 +1,8 @@
 package com.johngalt.gulch.blocks.common;
 
-import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.proxy.ClientProxy;
-import com.johngalt.gulch.tileentities.GaltTileEntityCustRender;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityCustRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,6 +29,7 @@ public abstract class GaltRenderedBlock extends GaltCommonBlockContainer
         this.setBlockTextureName("");
 
         ClientProxy.RegisterRenderedBlock(this);
+        GulchMod.proxy.registerTileEntity(GetTileEntityCustRenderClass(), GetTileEntityCustRenderClass().getSimpleName());
     }
 
     public String GetTextureLocation()

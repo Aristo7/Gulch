@@ -1,34 +1,35 @@
 package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.blocks.common.GaltRenderedBlock;
-import com.johngalt.gulch.model.GaltModelBellow;
-import com.johngalt.gulch.tileentities.GaltBellowTECustRender;
+import com.johngalt.gulch.model.GaltClayFurnaceModel;
+import com.johngalt.gulch.tileentities.GaltClayFurnaceTECustRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
- * Created on 7/3/2014.
+ * Created on 7/4/2014.
  */
-public class GaltBellowBlock extends GaltRenderedBlock
+public class GaltClayFurnaceBlock extends GaltRenderedBlock
 {
-    public GaltBellowBlock(Material material)
+    public GaltClayFurnaceBlock()
     {
-        super(material, new GaltModelBellow(), "textures/blocks/GaltModelBellow.png");
+        super(Material.wood, new GaltClayFurnaceModel(), "textures/blocks/GaltModelClayFurnace.png");
+
         this.setHardness(2.0F);
         this.setResistance(5.0F);
-        this.setBlockBounds(0, 0, .0625F, 1, 0.75F, 0.9375F);
+        this.setBlockBounds(0, 0, 0, 1, 0.9375F, 1);
     }
 
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return new GaltBellowTECustRender();
+        return new GaltClayFurnaceTECustRender();
     }
 
     @Override
     public Class<? extends TileEntity> GetTileEntityCustRenderClass()
     {
-        return GaltBellowTECustRender.class;
+        return GaltClayFurnaceTECustRender.class;
     }
 }

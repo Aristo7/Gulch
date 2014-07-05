@@ -1,6 +1,5 @@
-package com.johngalt.gulch.tileentities;
+package com.johngalt.gulch.tileentities.common;
 
-import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.GaltMachineBlock;
 import com.johngalt.gulch.gui.GaltContainerMachine;
 import com.johngalt.gulch.gui.GaltGuiMachine;

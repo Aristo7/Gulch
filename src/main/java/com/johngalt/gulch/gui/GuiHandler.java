@@ -2,8 +2,8 @@ package com.johngalt.gulch.gui;
 
 import com.johngalt.gulch.blocks.common.GaltMultiBlockBlock;
 import com.johngalt.gulch.blocks.common.MultiBlockManager;
-import com.johngalt.gulch.tileentities.GaltTileEntityContainer;
-import com.johngalt.gulch.tileentities.GaltTileEntityMachine;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
