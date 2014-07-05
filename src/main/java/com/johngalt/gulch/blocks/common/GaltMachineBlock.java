@@ -1,7 +1,6 @@
-package com.johngalt.gulch.blocks;
+package com.johngalt.gulch.blocks.common;
 
 import com.johngalt.gulch.GulchMod;
-import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
 import com.johngalt.gulch.gui.GuiHandler;
 import com.johngalt.gulch.lib.References;
 import com.johngalt.gulch.tileentities.common.GaltTileEntity;

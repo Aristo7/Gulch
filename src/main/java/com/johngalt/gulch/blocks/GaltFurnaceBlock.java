@@ -1,6 +1,7 @@
 package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.GulchMod;
+import com.johngalt.gulch.blocks.common.GaltMachineBlock;
 import com.johngalt.gulch.tileentities.GaltTileEntityFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

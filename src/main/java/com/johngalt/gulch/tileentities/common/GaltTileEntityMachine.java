@@ -1,6 +1,6 @@
 package com.johngalt.gulch.tileentities.common;
 
-import com.johngalt.gulch.blocks.GaltMachineBlock;
+import com.johngalt.gulch.blocks.common.GaltMachineBlock;
 import com.johngalt.gulch.gui.GaltContainerMachine;
 import com.johngalt.gulch.gui.GaltGuiMachine;
 import cpw.mods.fml.common.registry.GameRegistry;
