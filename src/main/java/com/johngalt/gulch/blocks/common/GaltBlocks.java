@@ -22,10 +22,9 @@ public class GaltBlocks
     public static GaltFurnaceBlock GaltFurnaceIdle;
     public static GaltFurnaceBlock GaltFurnaceActive;
 
-    public static GaltMoldStationBlock MoldStationActive;
-    public static GaltMoldStationBlock MoldStationIdle;
     public static GaltBellowBlock BellowBlock;
     public static GaltClayFurnaceBlock ClayFurnaceBlock;
+    public static GaltMoldStationBlock MoldStationBlock;
 
     public static Block water;
 
@@ -43,13 +42,12 @@ public class GaltBlocks
         GaltFurnaceActive = new GaltFurnaceBlock(true);
         GaltFurnaceIdle = new GaltFurnaceBlock(false);
 
-        MoldStationActive = new GaltMoldStationBlock(true);
-        MoldStationIdle = new GaltMoldStationBlock(false);
-
         BellowBlock = new GaltBellowBlock(Material.wood);
         ClayFurnaceBlock = new GaltClayFurnaceBlock();
+        MoldStationBlock = new GaltMoldStationBlock();
 
         water = new GaltWaterMultiBlockStorageBlock();
+
     }
 
     public static void register(GaltCommonBlock block)

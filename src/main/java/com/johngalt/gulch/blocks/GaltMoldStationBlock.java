@@ -1,41 +1,36 @@
 package com.johngalt.gulch.blocks;
 
-import com.johngalt.gulch.blocks.common.GaltMachineBlock;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import com.johngalt.gulch.blocks.common.GaltRenderedBlock;
+import com.johngalt.gulch.model.GaltMoldStationModel;
+import com.johngalt.gulch.tileentities.GaltMoldStationTECustRender;
+import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 /**
  * Created on 6/28/2014.
  */
-public class GaltMoldStationBlock extends GaltMachineBlock
+public class GaltMoldStationBlock extends GaltRenderedBlock
 {
-    private static Block _DroppedBlockItem;
 
-    public GaltMoldStationBlock(boolean isActive)
+
+    public GaltMoldStationBlock()
     {
-        super(isActive);
-
-        if (!isActive)
-        {
-            _DroppedBlockItem = this;
-        }
+        super(Material.wood, new GaltMoldStationModel(), "textures/blocks/GaltModelMoldingStation.png");
+        this.setHardness(2.0F);
+        this.setResistance(5.0F);
+        this.setBlockBounds(0, 0, 0, 1, 0.75F, 1);
     }
 
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return null;
+        return new GaltMoldStationTECustRender();
     }
 
     @Override
-    public Item getItemDropped(int slot, Random random, int j)
+    public Class<? extends TileEntity> GetTileEntityCustRenderClass()
     {
-        return Item.getItemFromBlock(_DroppedBlockItem == null ? this : _DroppedBlockItem);
+        return GaltMoldStationTECustRender.class;
     }
-
-
 }
