@@ -14,7 +14,7 @@ public class GaltMoldStationBlock extends GaltRenderedBlock
 {
 
 
-    public GaltMoldStationBlock()
+    public GaltMoldStateuionBlock()
     {
         super(Material.wood, new GaltMoldStationModel(), "textures/blocks/GaltModelMoldingStation.png");
         this.setHardness(2.0F);
