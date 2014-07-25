@@ -8,8 +8,11 @@ import com.johngalt.gulch.items.ItemMusket;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 
 import java.util.Random;
 
@@ -53,6 +56,15 @@ public class GaltEntities
         int entityId = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(mobClass, mobName, entityId);
         EntityRegistry.registerModEntity(mobClass, mobName, entityId, GulchMod.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+
+        {
+            int weightedProb = 50;
+            int min = 2;
+            int max = 4;
+            EnumCreatureType typeOfCreature = EnumCreatureType.monster;
+            BiomeGenBase biome = BiomeGenBase.forest;
+            EntityRegistry.addSpawn(((Class<? extends  EntityLiving>) mobClass), weightedProb, min, max, typeOfCreature, biome);
+        }
 
         Random random = new Random(mobName.hashCode());
         int mainColor = random.nextInt() * 16777215;
