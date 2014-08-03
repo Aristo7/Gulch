@@ -1,6 +1,7 @@
 package com.johngalt.gulch.proxy;
 
 
+import com.johngalt.gulch.tileentities.GaltMultiblockTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -25,6 +26,7 @@ public class CommonProxy
     {
         GameRegistry.registerTileEntity(GaltTileEntity.class, "GaltTileEntity");
         GameRegistry.registerTileEntity(GaltTileEntityContainer.class, "GaltTileEntityContainer");
+        GameRegistry.registerTileEntity(GaltMultiblockTileEntity.class, "GaltMultiblockTileEntity");
 
         for (RegisterTileEntry entry : _TilesToRegister)
             GameRegistry.registerTileEntity(entry.TheClass, entry.RegisterName);

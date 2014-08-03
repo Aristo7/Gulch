@@ -1,8 +1,5 @@
 package com.johngalt.gulch.gui;
 
-import com.johngalt.gulch.blocks.common.GaltMultiBlockBlock;
-import com.johngalt.gulch.blocks.common.MultiBlockManager;
-import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
 import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,19 +34,19 @@ public class GuiHandler implements IGuiHandler
                 case GuiWaterMultiBlock:
                     // Create an Object of our TE, so we can give that to our inventory.
 
-                    TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
-                    if (tileEntity == null)
-                    {
-                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
-                        return new GaltInventoryContainer(player.inventory, tileEntityTestContainer);
-                    }
-                    else
-                    {
-                        if (tileEntity instanceof GaltTileEntityContainer)
-                            return new GaltInventoryContainer(player.inventory, (GaltTileEntityContainer) tileEntity);
-                        else
-                            return null;
-                    }
+//                    TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
+//                    if (tileEntity == null)
+//                    {
+//                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
+//                        return new GaltInventoryContainer(player.inventory, tileEntityTestContainer);
+//                    }
+//                    else
+//                    {
+//                        if (tileEntity instanceof GaltTileEntityContainer)
+//                            return new GaltInventoryContainer(player.inventory, (GaltTileEntityContainer) tileEntity);
+//                        else
+//                            return null;
+//                    }
             }
         }
         return null;
@@ -71,32 +68,32 @@ public class GuiHandler implements IGuiHandler
                 case GuiWaterMultiBlock:
                     // Create an Object of our TE, so we can give that to our GUI.
 
-                    TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
-                    if (tileEntity == null)
-                    {
-                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
-                        return new GuiInventory(player.inventory, tileEntityTestContainer);
-                    }
-                    else
-                    {
-                        if (tileEntity instanceof GaltTileEntityContainer)
-                            return new GaltInventoryContainer(player.inventory, (GaltTileEntityContainer) tileEntity);
-                        else
-                            return null;
-                    }
+//                    TileEntity tileEntity = getEntityFromStructure(world, x, y, z);
+//                    if (tileEntity == null)
+//                    {
+//                        GaltTileEntityContainer tileEntityTestContainer = (GaltTileEntityContainer) world.getTileEntity(x, y, z);
+//                        return new GuiInventory(player.inventory, tileEntityTestContainer);
+//                    }
+//                    else
+//                    {
+//                        if (tileEntity instanceof GaltTileEntityContainer)
+//                            return new GaltInventoryContainer(player.inventory, (GaltTileEntityContainer) tileEntity);
+//                        else
+//                            return null;
+//                    }
             }
         }
         return null;
     }
 
-    private TileEntity getEntityFromStructure(World world, int x, int y, int z)
-    {
-        MultiBlockManager.StructureInWorld structure = GaltMultiBlockBlock.registrationManager.findStructure(world, x, y, z);
-        if (structure != null)
-        {
-            return structure.commonEntity;
-        }
-
-        return null;
-    }
+//    private TileEntity getEntityFromStructure(World world, int x, int y, int z)
+//    {
+//        MultiBlockManager.StructureInWorld structure = GaltMultiBlockBlock.registrationManager.findStructure(world, x, y, z);
+//        if (structure != null)
+//        {
+//            return structure.commonEntity;
+//        }
+//
+//        return null;
+//    }
 }

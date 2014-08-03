@@ -1,11 +1,11 @@
 package com.johngalt.gulch.blocks.common;
 
+import com.johngalt.gulch.lib.Position;
+import com.johngalt.gulch.tileentities.GaltMultiblockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
 
 /**
  * Created by on 6/25/2014.
@@ -15,7 +15,7 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
     private Definition[] description;
 
     public static int updateClientsFlag = 2;
-    public static MultiBlockManager registrationManager = new MultiBlockManager();
+    //public static MultiBlockManager registrationManager = new MultiBlockManager();
 
     /**
      * Constructor
@@ -46,7 +46,6 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
             this.dz = dz;
 
             this.block = block;
-            this.meta = 0;
         }
 
         public Definition(int dx, int dy, int dz, Block block, int meta)
@@ -56,7 +55,6 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
             this.dz = dz;
 
             this.block = block;
-            this.meta = meta;
         }
 
         // local displacement from a logical center (0, 0, 0)
@@ -65,8 +63,7 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
         // What block should be at that displacement
         Block block;
 
-        // and a specific metadata of that block
-        int meta;
+
     }
 
     /**
@@ -79,75 +76,111 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor)
     {
-        boolean isComplete = false;
+        boolean isComplete;
         Direction foundDirection = null;
         Definition foundOriginPoint = null;
 
-        for (Direction dir : Direction.AllDirections)
+        // pull from entity if complete
+        TileEntity etest = world.getTileEntity(x, y, z);
+        if (etest instanceof GaltMultiblockTileEntity)
         {
-            for (Definition def : this.description)
+            GaltMultiblockTileEntity entity = (GaltMultiblockTileEntity) etest;
+            isComplete = entity.IsComplete();
+
+            if (isComplete)
             {
-                if (isComplete(world, x, y, z, def, dir))
+                foundDirection = entity.GetDirection();
+                foundOriginPoint = entity.GetOriginDefinition();
+            }
+
+
+            // if it is complete, check to see if it is still structurally sound
+            if (isComplete)
+            {
+                if (!isComplete(world, x, y, z, foundOriginPoint, foundDirection))
                 {
-                    isComplete = true;
-                    foundDirection = dir;
-                    foundOriginPoint = def;
-                    break;
+                    isComplete = false;
+                }
+            }
+            else // if not complete, see if it is now
+            {
+                for (Direction dir : Direction.AllDirections)
+                {
+                    for (Definition def : this.description)
+                    {
+                        if (isComplete(world, x, y, z, def, dir))
+                        {
+                            isComplete = true;
+                            foundDirection = dir;
+                            foundOriginPoint = def;
+                            break;
+                        }
+                    }
+
+                    if (isComplete)
+                        break;
                 }
             }
 
-            if (isComplete)
-                break;
-        }
 
-        if (isComplete)
-        {
-            markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, 15);
-        }
-        else
-        {
-            // reset back to default metadata - the structure is not complete
-            registrationManager.findAndRemoveStructure(world, x, y, z);
+            // if it is complete but not set as such yet, then mark it as complete
+            if (isComplete && !entity.IsComplete())
+            {
+                markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, true);
+            }
+            else if (!isComplete && entity.IsComplete())
+            {
+                markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, false);
+            }
         }
     }
 
-    private void markAllBlocks(World world, int x, int y, int z, Definition ref, Direction dir, int newMeta)
+    private void markAllBlocks(World world, int x, int y, int z, Definition ref, Direction dir, boolean completed)
     {
-        ArrayList<Definition> registration = new ArrayList<Definition>();
-        boolean isThisNewStructure = false;
+        // set the origin tile entity
+        Position originPos = new Position(x - ref.dx, y - ref.dy, z - ref.dz);
+        TileEntity entity = world.getTileEntity(originPos.x, originPos.y, originPos.z);
+        if (entity instanceof GaltMultiblockTileEntity)
+        {
+            GaltMultiblockTileEntity originMBEntity = (GaltMultiblockTileEntity) entity;
 
+            // Set origin
+            if (completed)
+            {
+                originMBEntity.SetOrigin(originPos, dir, true);
+                originMBEntity.SetCompleted(true);
+
+            }
+            else
+            {
+                originMBEntity.SetCompleted(false);
+            }
+        }
+
+        // set the other tiles as complete/incomplete
         for (Definition d : this.description)
         {
             Vector result = dir.apply(new Vector(x, y, z), new Vector(d.dx - ref.dx, d.dy - ref.dy, d.dz - ref.dz));
 
-            if (world.getBlock(result.x, result.y, result.z) == d.block)
+            entity = world.getTileEntity(result.x, result.y, result.z);
+            if (entity instanceof GaltMultiblockTileEntity)
             {
-                if (world.getBlockMetadata(result.x, result.y, result.z) != newMeta)
+                GaltMultiblockTileEntity mbEntity = (GaltMultiblockTileEntity) entity;
+                if (mbEntity.IsComplete() != completed)
                 {
-                    world.setBlock(result.x, result.y, result.z, d.block, newMeta, updateClientsFlag);
-                    registration.add(new Definition(result.x, result.y, result.z, d.block));
-
-                    isThisNewStructure = true;
+                    if (completed)
+                    {
+                        mbEntity.SetOrigin(originPos, dir, false);
+                        mbEntity.SetCompleted(true);
+                    }
+                    else
+                    {
+                        mbEntity.ResetOriginValues();
+                        mbEntity.SetCompleted(false);
+                    }
                 }
             }
         }
-
-        if (isThisNewStructure)
-        {
-            TileEntity tile = world.getTileEntity(x, y, z);
-            assert tile != null;
-            registrationManager.registerStructure(world, registration, tile);
-        }
-    }
-
-    /**
-     * Override to customize
-     *
-     * @return
-     */
-    public TileEntity getCommonTileEntity()
-    {
-        return null;
     }
 
     /**
@@ -174,64 +207,12 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
 
         return true;
     }
+
+    @Override
+    public TileEntity createTileEntity(World world, int metadata)
+    {
+        return new GaltMultiblockTileEntity();
+    }
+
 }
 
-class Direction
-{
-    public int multiplier;
-    public boolean swapCoords;
-
-    public Direction(int multiplier, boolean swapCoords)
-    {
-        this.multiplier = multiplier;
-        this.swapCoords = swapCoords;
-    }
-
-    // rotates into various directions: North/South/West/East
-    public Vector apply(Vector start, Vector ref)
-    {
-        Vector newVector = new Vector();
-
-        if (this.swapCoords == false)
-        {
-            newVector.x = start.x + ref.x * this.multiplier;
-            newVector.y = start.y + ref.y;
-            newVector.z = start.z + ref.z * this.multiplier;
-        }
-        else
-        {
-            // swapping delta x with delta z
-            newVector.x = start.x + ref.z * this.multiplier;
-            newVector.y = start.y + ref.y;
-            newVector.z = start.z + ref.x * this.multiplier;
-        }
-
-        return newVector;
-    }
-
-    public static Direction North = new Direction(1, false);
-    public static Direction South = new Direction(-1, false);
-    public static Direction West = new Direction(1, true);
-    public static Direction East = new Direction(-1, true);
-
-    public static Direction[] AllDirections = new Direction[]{North, South, East, West};
-}
-
-class Vector
-{
-    public Vector()
-    {
-        x = 0;
-        y = 0;
-        z = 0;
-    }
-
-    public Vector(int x, int y, int z)
-    {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public int x, y, z;
-}
