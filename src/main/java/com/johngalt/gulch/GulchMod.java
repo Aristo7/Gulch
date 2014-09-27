@@ -36,8 +36,8 @@ public class GulchMod
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
 
-    private static CreativeTabs tab = new GaltTab(GaltTab.class.getSimpleName());
-    public static int gulchDimension = 66;
+    private static CreativeTabs tab            = new GaltTab(GaltTab.class.getSimpleName());
+    public static  int          gulchDimension = 66;
     public static GulchWorldGen worldProvider;
 
     public static CreativeTabs getCreativeTab()
@@ -53,6 +53,7 @@ public class GulchMod
         GaltBlocks.init();
 
         GaltEntities.RegisterEntities();
+        proxy.RegisterRenderers();
         proxy.registerTileEntities();
 
 

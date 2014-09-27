@@ -1,9 +1,12 @@
 package com.johngalt.gulch.proxy;
 
-
+import com.johngalt.gulch.entities.mobs.ExampleMob;
+import com.johngalt.gulch.entities.mobs.models.ModelExampleMob;
+import com.johngalt.gulch.entities.mobs.render.RenderExampleMob;
 import com.johngalt.gulch.tileentities.GaltMultiblockTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.tileentity.TileEntity;
 
@@ -19,7 +22,7 @@ public class CommonProxy
 
     public void RegisterRenderers()
     {
-
+        RenderingRegistry.registerEntityRenderingHandler(ExampleMob.class, new RenderExampleMob(new ModelExampleMob(), 0.5F));
     }
 
     public void registerTileEntities()
