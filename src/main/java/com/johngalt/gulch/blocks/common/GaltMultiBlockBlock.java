@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
 {
     private Definition[] description;
+    private long _Tick;
 
     public static int updateClientsFlag = 2;
     //public static MultiBlockManager registrationManager = new MultiBlockManager();
@@ -124,13 +125,18 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
 
 
             // if it is complete but not set as such yet, then mark it as complete
-            if (isComplete && !entity.IsComplete())
+            if (_Tick != world.getWorldTime()) // Only perform this once per a place
             {
-                markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, true);
-            }
-            else if (!isComplete && entity.IsComplete())
-            {
-                markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, false);
+                _Tick = world.getWorldTime();
+                if (isComplete && !entity.IsComplete())
+                {
+                    markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, true);
+                }
+                else if (!isComplete && entity.IsComplete())
+                {
+
+                    markAllBlocks(world, x, y, z, foundOriginPoint, foundDirection, false);
+                }
             }
         }
     }

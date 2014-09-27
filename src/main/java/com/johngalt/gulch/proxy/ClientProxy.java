@@ -28,6 +28,8 @@ public class ClientProxy extends CommonProxy
     @Override
     public void RegisterRenderers()
     {
+        super.RegisterRenderers();
+
         RenderingRegistry.registerEntityRenderingHandler(EntityBlasterBolt.class, new RenderBlasterAmmo());
 
         try
