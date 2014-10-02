@@ -1,23 +1,60 @@
 package com.johngalt.gulch.blocks;
 
-import com.johngalt.gulch.blocks.common.GaltRenderedBlock;
+import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
+import com.johngalt.gulch.blocks.common.GaltRenderedBlockHelper;
 import com.johngalt.gulch.model.GaltModelBellow;
 import com.johngalt.gulch.tileentities.GaltBellowTECustRender;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
  * Created on 7/3/2014.
  */
-public class GaltBellowBlock extends GaltRenderedBlock
+public class GaltBellowBlock extends GaltCommonBlockContainer implements GaltRenderedBlock
 {
-    public GaltBellowBlock(Material material)
+    public GaltRenderedBlockHelper _RenderHelper;
+
+    public GaltBellowBlock()
     {
-        super(material, new GaltModelBellow(), "textures/blocks/GaltModelBellow.png");
+        super(Material.wood);
         this.setHardness(2.0F);
         this.setResistance(5.0F);
         this.setBlockBounds(0, 0, .0625F, 1, 0.75F, 0.9375F);
+
+        _RenderHelper = new GaltRenderedBlockHelper(new GaltModelBellow(), "textures/blocks/GaltModelBellow.png", this);
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return GaltRenderedBlockHelper.getRenderType();
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return GaltRenderedBlockHelper.isOpaqueCube();
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return GaltRenderedBlockHelper.renderAsNormalBlock();
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemBlock)
+    {
+        GaltRenderedBlockHelper.onBlockPlacedBy(world, x, y, z, player, itemBlock);
+    }
+
+    @Override
+    public GaltRenderedBlockHelper GetRenderHelper()
+    {
+        return _RenderHelper;
     }
 
     @Override
@@ -31,4 +68,5 @@ public class GaltBellowBlock extends GaltRenderedBlock
     {
         return GaltBellowTECustRender.class;
     }
+
 }

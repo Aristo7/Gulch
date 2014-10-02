@@ -42,7 +42,7 @@ public class GaltBlocks
         GaltFurnaceActive = new GaltFurnaceBlock(true);
         GaltFurnaceIdle = new GaltFurnaceBlock(false);
 
-        BellowBlock = new GaltBellowBlock(Material.wood);
+        BellowBlock = new GaltBellowBlock();
         ClayFurnaceBlock = new GaltClayFurnaceBlock();
         MoldStationBlock = new GaltMoldStationBlock();
 

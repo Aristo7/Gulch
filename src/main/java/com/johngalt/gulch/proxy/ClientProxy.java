@@ -1,8 +1,8 @@
 package com.johngalt.gulch.proxy;
 
 
+import com.johngalt.gulch.blocks.GaltRenderedBlock;
 import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
-import com.johngalt.gulch.blocks.common.GaltRenderedBlock;
 import com.johngalt.gulch.blocks.common.GaltRenderedMachineBlock;
 import com.johngalt.gulch.entities.EntityBlasterBolt;
 import com.johngalt.gulch.renderers.GaltBlockRenderer;
@@ -41,7 +41,7 @@ public class ClientProxy extends CommonProxy
 
                 if (block instanceof GaltRenderedBlock)
                 {
-                    renderer = new GaltBlockRenderer(((GaltRenderedBlock) block).GetModel(), ((GaltRenderedBlock) block).GetTextureLocation());
+                    renderer = new GaltBlockRenderer(((GaltRenderedBlock) block).GetRenderHelper().GetModel(), ((GaltRenderedBlock) block).GetRenderHelper().GetTextureLocation());
                     ClientRegistry.bindTileEntitySpecialRenderer(((GaltRenderedBlock) block).GetTileEntityCustRenderClass(), renderer);
                 }
                 else if (block instanceof GaltRenderedMachineBlock)

@@ -1,9 +1,9 @@
 package com.johngalt.gulch.blocks.common;
 
 import com.johngalt.gulch.GulchMod;
+import com.johngalt.gulch.blocks.GaltRenderedBlock;
 import com.johngalt.gulch.proxy.ClientProxy;
 import com.johngalt.gulch.tileentities.common.GaltTileEntityCustRender;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -14,22 +14,27 @@ import net.minecraft.world.World;
 /**
  * Created on 7/1/2014.
  */
-public abstract class GaltRenderedBlock extends GaltCommonBlockContainer
+public class GaltRenderedBlockHelper
 {
     private String _GulchTextureLocation;
     private ModelBase _Model;
 
-    public GaltRenderedBlock(Material material, ModelBase model, String gulchTextureLocation)
+    public GaltRenderedBlockHelper(ModelBase model, String gulchTextureLocation, GaltCommonBlockContainer block)
     {
-        super(material);
+        if (!(block instanceof GaltRenderedBlock))
+            throw new ExceptionInInitializerError("Rendered blocks must use GaltRenderedBlock interface");
 
         _GulchTextureLocation = gulchTextureLocation;
         _Model = model;
 
-        this.setBlockTextureName("");
+        // disable default textures
+        block.setBlockTextureName("");
 
-        ClientProxy.RegisterRenderedBlock(this);
-        GulchMod.proxy.registerTileEntity(GetTileEntityCustRenderClass(), GetTileEntityCustRenderClass().getSimpleName());
+        // register block and TE
+        ClientProxy.RegisterRenderedBlock(block);
+
+        GaltRenderedBlock renderedBlock = (GaltRenderedBlock)block;
+        GulchMod.proxy.registerTileEntity(renderedBlock.GetTileEntityCustRenderClass(), renderedBlock.GetTileEntityCustRenderClass().getSimpleName());
     }
 
     public String GetTextureLocation()
@@ -42,29 +47,29 @@ public abstract class GaltRenderedBlock extends GaltCommonBlockContainer
         return _Model;
     }
 
-    @Override
-    public int getRenderType()
+    //@Override
+    public static int getRenderType()
     {
         return -1;
     }
 
-    @Override
-    public boolean isOpaqueCube()
+    //@Override
+    public static boolean isOpaqueCube()
     {
         return false;
     }
 
-    @Override
-    public boolean renderAsNormalBlock()
+    //@Override
+    public static boolean renderAsNormalBlock()
     {
         return false;
     }
 
-    @Override
-    public abstract TileEntity createNewTileEntity(World var1, int var2);
+    //@Override
+    //public abstract TileEntity createNewTileEntity(World var1, int var2);
 
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemBlock)
+    //@Override
+    public static void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemBlock)
     {
         TileEntity entity = world.getTileEntity(x, y, z);
 
@@ -76,6 +81,4 @@ public abstract class GaltRenderedBlock extends GaltCommonBlockContainer
 
 
     }
-
-    public abstract Class<? extends TileEntity> GetTileEntityCustRenderClass();
 }
