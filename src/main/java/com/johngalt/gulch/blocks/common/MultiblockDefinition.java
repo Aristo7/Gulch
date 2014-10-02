@@ -2,36 +2,71 @@ package com.johngalt.gulch.blocks.common;
 
 import net.minecraft.block.Block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created on 10/2/2014.
  */
 public class MultiblockDefinition
 {
-    public int DX;
-    public int DY;
-    public int DZ;
-    public Block Block;
+    private List<MultiblockDefElement> _Elements;
 
-    public MultiblockDefinition(int dx, int dy, int dz, Block block)
+    public MultiblockDefinition ()
     {
-        DX = dx;
-        DY = dy;
-        DZ = dz;
-        Block = block;
+        _Elements = new ArrayList<MultiblockDefElement>();
     }
 
-    public int TranslateX(int x)
+    public void AddElement(int dx, int dy, int dz, Block block)
     {
-        return x + DX;
+        _Elements.add(new MultiblockDefElement(dx, dy, dz, block));
     }
 
-    public int TranslateY(int y)
+    public MultiblockDefinition TranslateRelativeToAbsolute(int x, int y, int z)
     {
-        return y + DY;
+        MultiblockDefinition absMBD = new MultiblockDefinition();
+
+        for (MultiblockDefElement element : _Elements)
+        {
+            absMBD.AddElement(element.TranslateX(x), element.TranslateY(y), element.TranslateZ(z), element.Block);
+        }
+
+        return absMBD;
     }
 
-    public int TranslateZ(int z)
+    public List<MultiblockDefElement> GetElements()
     {
-        return z + DZ;
+        return _Elements;
+    }
+
+    public class MultiblockDefElement
+    {
+        public int DX;
+        public int DY;
+        public int DZ;
+        public Block Block;
+
+        public MultiblockDefElement(int dx, int dy, int dz, Block block)
+        {
+            DX = dx;
+            DY = dy;
+            DZ = dz;
+            Block = block;
+        }
+
+        public int TranslateX(int x)
+        {
+            return x + DX;
+        }
+
+        public int TranslateY(int y)
+        {
+            return y + DY;
+        }
+
+        public int TranslateZ(int z)
+        {
+            return z + DZ;
+        }
     }
 }

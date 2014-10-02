@@ -1,9 +1,8 @@
 package com.johngalt.gulch.proxy;
 
 
-import com.johngalt.gulch.blocks.GaltRenderedBlock;
+import com.johngalt.gulch.blocks.GaltRenderedBlockInterface;
 import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
-import com.johngalt.gulch.blocks.common.GaltRenderedMachineBlock;
 import com.johngalt.gulch.entities.EntityBlasterBolt;
 import com.johngalt.gulch.renderers.GaltBlockRenderer;
 import com.johngalt.gulch.renderers.GaltInventoryBlockRenderHelper;
@@ -39,15 +38,10 @@ public class ClientProxy extends CommonProxy
             {
                 GaltBlockRenderer renderer;
 
-                if (block instanceof GaltRenderedBlock)
+                if (block instanceof GaltRenderedBlockInterface)
                 {
-                    renderer = new GaltBlockRenderer(((GaltRenderedBlock) block).GetRenderHelper().GetModel(), ((GaltRenderedBlock) block).GetRenderHelper().GetTextureLocation());
-                    ClientRegistry.bindTileEntitySpecialRenderer(((GaltRenderedBlock) block).GetTileEntityCustRenderClass(), renderer);
-                }
-                else if (block instanceof GaltRenderedMachineBlock)
-                {
-                    renderer = new GaltBlockRenderer(((GaltRenderedMachineBlock) block).GetModel(), ((GaltRenderedMachineBlock) block).GetTextureLocation());
-                    ClientRegistry.bindTileEntitySpecialRenderer(((GaltRenderedMachineBlock) block).GetTileEntityCustRenderClass(), renderer);
+                    renderer = new GaltBlockRenderer(((GaltRenderedBlockInterface) block).GetRenderHelper().GetModel(), ((GaltRenderedBlockInterface) block).GetRenderHelper().GetTextureLocation());
+                    ClientRegistry.bindTileEntitySpecialRenderer(((GaltRenderedBlockInterface) block).GetTileEntityCustRenderClass(), renderer);
                 }
                 else
                 {
@@ -68,7 +62,7 @@ public class ClientProxy extends CommonProxy
 
     public static void RegisterRenderedBlock(GaltCommonBlockContainer galtRenderedBlock)
     {
-        if (galtRenderedBlock instanceof GaltRenderedBlock || galtRenderedBlock instanceof GaltRenderedMachineBlock)
+        if (galtRenderedBlock instanceof GaltRenderedBlockInterface)
             _RenderedBlocks.add(galtRenderedBlock);
     }
 }

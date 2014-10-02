@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 /**
  * Created on 7/4/2014.
  */
-public class GaltClayFurnaceBlock extends GaltCommonBlockContainer implements GaltRenderedBlock
+public class GaltClayFurnaceBlock extends GaltCommonBlockContainer implements GaltRenderedBlockInterface
 {
 
     private GaltRenderedBlockHelper _RenderHelper;

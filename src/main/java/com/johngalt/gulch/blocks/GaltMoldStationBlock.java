@@ -1,21 +1,24 @@
 package com.johngalt.gulch.blocks;
 
-import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
-import com.johngalt.gulch.blocks.common.GaltRenderedBlockHelper;
+import com.johngalt.gulch.blocks.common.*;
 import com.johngalt.gulch.model.GaltMoldStationModel;
-import com.johngalt.gulch.tileentities.GaltMoldStationTECustRender;
+import com.johngalt.gulch.tileentities.GaltMoldStationTE;
+import com.johngalt.gulch.tileentities.common.GaltTECustRenderInterface;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 /**
  * Created on 6/28/2014.
  */
-public class GaltMoldStationBlock extends GaltCommonBlockContainer implements GaltRenderedBlock
+public class GaltMoldStationBlock extends GaltCommonBlockContainer implements GaltRenderedBlockInterface
 {
     private GaltRenderedBlockHelper _RenderHelper;
+
+
 
     public GaltMoldStationBlock()
     {
@@ -24,19 +27,22 @@ public class GaltMoldStationBlock extends GaltCommonBlockContainer implements Ga
         this.setResistance(5.0F);
         this.setBlockBounds(0, 0, 0, 1, 0.75F, 1);
 
+
+
         _RenderHelper = new GaltRenderedBlockHelper(new GaltMoldStationModel(), "textures/blocks/GaltModelMoldingStation.png", this);
     }
+
 
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return new GaltMoldStationTECustRender();
+        return new GaltMoldStationTE();
     }
 
     @Override
     public Class<? extends TileEntity> GetTileEntityCustRenderClass()
     {
-        return GaltMoldStationTECustRender.class;
+        return GaltMoldStationTE.class;
     }
 
     @Override
@@ -61,6 +67,9 @@ public class GaltMoldStationBlock extends GaltCommonBlockContainer implements Ga
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemBlock)
     {
         GaltRenderedBlockHelper.onBlockPlacedBy(world, x, y, z, player, itemBlock);
+
+//        int dir = (MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3) % 4;
+//        ((GaltTECustRenderInterface) entity).GetTECustRenderHelper().SetDirection((short) dir);
     }
 
     @Override
@@ -68,4 +77,6 @@ public class GaltMoldStationBlock extends GaltCommonBlockContainer implements Ga
     {
         return _RenderHelper;
     }
+
+
 }

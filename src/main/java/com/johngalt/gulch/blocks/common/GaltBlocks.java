@@ -46,6 +46,7 @@ public class GaltBlocks
         ClayFurnaceBlock = new GaltClayFurnaceBlock();
         MoldStationBlock = new GaltMoldStationBlock();
 
+
         water = new GaltWaterMultiBlockStorageBlock();
 
     }

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 /**
  * Created on 7/3/2014.
  */
-public class GaltBellowBlock extends GaltCommonBlockContainer implements GaltRenderedBlock
+public class GaltBellowBlock extends GaltCommonBlockContainer implements GaltRenderedBlockInterface
 {
     public GaltRenderedBlockHelper _RenderHelper;
 

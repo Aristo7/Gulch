@@ -1,7 +1,7 @@
 package com.johngalt.gulch.renderers;
 
 import com.johngalt.gulch.lib.References;
-import com.johngalt.gulch.tileentities.common.GaltTileEntityCustRender;
+import com.johngalt.gulch.tileentities.common.GaltTECustRenderInterface;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -20,17 +20,15 @@ public class GaltBlockRenderer extends TileEntitySpecialRenderer
     {
         _Model = model;
         _Texture = new ResourceLocation(References.RESOURCESPREFIX + gulchTextureLocation); //"textures/blocks/GaltModelBellow.png");
-
-
     }
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f)
     {
         short direction = 0;
-        if (tileEntity instanceof GaltTileEntityCustRender)
+        if (tileEntity instanceof GaltTECustRenderInterface)
         {
-            direction = ((GaltTileEntityCustRender) tileEntity).GetDirection();
+            direction = ((GaltTECustRenderInterface) tileEntity).GetTECustRenderHelper().GetDirection();
         }
 
         GL11.glPushMatrix();

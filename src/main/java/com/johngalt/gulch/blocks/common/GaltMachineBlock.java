@@ -43,17 +43,25 @@ public abstract class GaltMachineBlock extends GaltCommonBlockContainer
     @SideOnly(Side.CLIENT)
     private IIcon _IconBottom;
 
-    public GaltMachineBlock(boolean isActive, int guiID)
+    public GaltMachineBlock(boolean isActive, int guiID, Material material)
     {
-        super(Material.iron, false);
+        super(material, false);
 
         _IsActive = isActive;
         _GuiID = guiID;
 
         this.initializeContainer(GetGaltName() + (_IsActive ? "On" : "Off"));
         this.setHardness(3.5F);
+    }
 
+    public GaltMachineBlock(boolean isActive, Material material)
+    {
+        this(isActive, GuiHandler.GUI_ID_MACHINEBLOCK, material);
+    }
 
+    public GaltMachineBlock(boolean isActive, int guiID)
+    {
+        this(isActive, guiID, Material.iron);
     }
 
     public GaltMachineBlock(boolean isActive)

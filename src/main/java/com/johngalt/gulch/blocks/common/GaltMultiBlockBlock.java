@@ -49,15 +49,6 @@ public abstract class GaltMultiBlockBlock extends GaltCommonBlockContainer
             this.block = block;
         }
 
-        public Definition(int dx, int dy, int dz, Block block, int meta)
-        {
-            this.dx = dx;
-            this.dy = dy;
-            this.dz = dz;
-
-            this.block = block;
-        }
-
         // local displacement from a logical center (0, 0, 0)
         public int dx, dy, dz;
 

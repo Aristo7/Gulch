@@ -1,9 +1,10 @@
 package com.johngalt.gulch.blocks.common;
 
 import com.johngalt.gulch.GulchMod;
-import com.johngalt.gulch.blocks.GaltRenderedBlock;
+import com.johngalt.gulch.blocks.GaltRenderedBlockInterface;
 import com.johngalt.gulch.proxy.ClientProxy;
-import com.johngalt.gulch.tileentities.common.GaltTileEntityCustRender;
+import com.johngalt.gulch.tileentities.common.GaltTECustRenderHelper;
+import com.johngalt.gulch.tileentities.common.GaltTECustRenderInterface;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ public class GaltRenderedBlockHelper
 
     public GaltRenderedBlockHelper(ModelBase model, String gulchTextureLocation, GaltCommonBlockContainer block)
     {
-        if (!(block instanceof GaltRenderedBlock))
+        if (!(block instanceof GaltRenderedBlockInterface))
             throw new ExceptionInInitializerError("Rendered blocks must use GaltRenderedBlock interface");
 
         _GulchTextureLocation = gulchTextureLocation;
@@ -33,7 +34,7 @@ public class GaltRenderedBlockHelper
         // register block and TE
         ClientProxy.RegisterRenderedBlock(block);
 
-        GaltRenderedBlock renderedBlock = (GaltRenderedBlock)block;
+        GaltRenderedBlockInterface renderedBlock = (GaltRenderedBlockInterface)block;
         GulchMod.proxy.registerTileEntity(renderedBlock.GetTileEntityCustRenderClass(), renderedBlock.GetTileEntityCustRenderClass().getSimpleName());
     }
 
@@ -73,10 +74,10 @@ public class GaltRenderedBlockHelper
     {
         TileEntity entity = world.getTileEntity(x, y, z);
 
-        if (entity instanceof GaltTileEntityCustRender)
+        if (entity instanceof GaltTECustRenderInterface)
         {
             int dir = (MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3) % 4;
-            ((GaltTileEntityCustRender) entity).SetDirection((short) dir);
+            ((GaltTECustRenderInterface) entity).GetTECustRenderHelper().SetDirection((short) dir);
         }
 
 
