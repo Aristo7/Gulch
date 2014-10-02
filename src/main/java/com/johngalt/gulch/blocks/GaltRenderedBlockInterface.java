@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 /**
  * Created on 10/1/2014.
  */
-public interface GaltRenderedBlock
+public interface GaltRenderedBlockInterface
 {
     //@Override
     public abstract int getRenderType();

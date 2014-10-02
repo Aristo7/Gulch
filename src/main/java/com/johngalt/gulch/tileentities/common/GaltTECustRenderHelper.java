@@ -8,11 +8,11 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 /**
  * Created on 7/1/2014.
  */
-public class GaltTileEntityCustRender extends GaltTileEntity
+public class GaltTECustRenderHelper
 {
     private short _Direction;
 
-    public GaltTileEntityCustRender()
+    public GaltTECustRenderHelper()
     {
         super();
     }
@@ -27,32 +27,30 @@ public class GaltTileEntityCustRender extends GaltTileEntity
         return _Direction;
     }
 
-    @Override
+    //@Override
     public void readFromNBT(NBTTagCompound nbt)
     {
-        super.readFromNBT(nbt);
         _Direction = nbt.getShort("direction");
     }
 
-    @Override
+    //@Override
     public void writeToNBT(NBTTagCompound nbt)
     {
-        super.writeToNBT(nbt);
         nbt.setShort("direction", _Direction);
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    //@Override
+    public static void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt, GaltTileEntity te)
     {
-        this.readFromNBT(pkt.func_148857_g());
+        te.readFromNBT(pkt.func_148857_g());
     }
 
-    @Override
-    public Packet getDescriptionPacket()
+    //@Override
+    public static Packet getDescriptionPacket(GaltTileEntity te)
     {
         NBTTagCompound tagCom = new NBTTagCompound();
-        this.writeToNBT(tagCom);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, this.blockMetadata, tagCom);
+        te.writeToNBT(tagCom);
+        return new S35PacketUpdateTileEntity(te.xCoord, te.yCoord, te.zCoord, te.blockMetadata, tagCom);
     }
 
 }
