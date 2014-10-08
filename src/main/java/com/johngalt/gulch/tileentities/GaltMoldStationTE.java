@@ -22,6 +22,8 @@ public class GaltMoldStationTE extends GaltTileEntity implements GaltTECustRende
     private MultiblockDefinition _DefinitionRel; //stores absolute values
     private int _TickCurrentCycle = 0;
     private boolean _MBComplete = false;
+    private short _Direction = 0;
+
 
     public GaltMoldStationTE()
     {
@@ -73,7 +75,7 @@ public class GaltMoldStationTE extends GaltTileEntity implements GaltTECustRende
         {
             _TickCurrentCycle = 0;
 
-            MultiblockDefinition defAbs = _DefinitionRel.TranslateRelativeToAbsolute(this.xCoord, this.yCoord, this.zCoord); //absolute positions
+            MultiblockDefinition defAbs = _DefinitionRel.TranslateRelativeToAbsolute(this.xCoord, this.yCoord, this.zCoord, _Direction); //absolute positions
 
             boolean complete = true;
 
@@ -103,4 +105,8 @@ public class GaltMoldStationTE extends GaltTileEntity implements GaltTECustRende
 
     }
 
+    public void SetDirection(short dir)
+    {
+        _Direction = dir;
+    }
 }

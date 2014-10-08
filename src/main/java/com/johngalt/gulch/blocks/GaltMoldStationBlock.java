@@ -18,16 +18,12 @@ public class GaltMoldStationBlock extends GaltCommonBlockContainer implements Ga
 {
     private GaltRenderedBlockHelper _RenderHelper;
 
-
-
     public GaltMoldStationBlock()
     {
         super(Material.wood);
         this.setHardness(2.0F);
         this.setResistance(5.0F);
         this.setBlockBounds(0, 0, 0, 1, 0.75F, 1);
-
-
 
         _RenderHelper = new GaltRenderedBlockHelper(new GaltMoldStationModel(), "textures/blocks/GaltModelMoldingStation.png", this);
     }
@@ -68,8 +64,12 @@ public class GaltMoldStationBlock extends GaltCommonBlockContainer implements Ga
     {
         GaltRenderedBlockHelper.onBlockPlacedBy(world, x, y, z, player, itemBlock);
 
-//        int dir = (MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3) % 4;
-//        ((GaltTECustRenderInterface) entity).GetTECustRenderHelper().SetDirection((short) dir);
+        TileEntity entity = world.getTileEntity(x, y, z);
+        if (entity instanceof GaltMoldStationTE)
+        {
+            int dir = (MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3) % 4;
+            ((GaltMoldStationTE)entity).SetDirection((short) dir);
+        }
     }
 
     @Override

@@ -22,13 +22,13 @@ public class MultiblockDefinition
         _Elements.add(new MultiblockDefElement(dx, dy, dz, block));
     }
 
-    public MultiblockDefinition TranslateRelativeToAbsolute(int x, int y, int z)
+    public MultiblockDefinition TranslateRelativeToAbsolute(int x, int y, int z, short direction)
     {
         MultiblockDefinition absMBD = new MultiblockDefinition();
 
         for (MultiblockDefElement element : _Elements)
         {
-            absMBD.AddElement(element.TranslateX(x), element.TranslateY(y), element.TranslateZ(z), element.Block);
+            absMBD.AddElement(element.TranslateX(x, direction), element.TranslateY(y, direction), element.TranslateZ(z, direction), element.Block);
         }
 
         return absMBD;
@@ -54,19 +54,61 @@ public class MultiblockDefinition
             Block = block;
         }
 
-        public int TranslateX(int x)
+        public int TranslateX(int x, short direction)
         {
-            return x + DX;
+            int xMod;
+
+            switch (direction)
+            {
+                case 0:
+                    xMod = -DX;
+                    break;
+                case 2:
+                    xMod = DX;
+                    break;
+                case 1:
+                    xMod = -DZ;
+                    break;
+                case 3:
+                    xMod = DZ;
+                    break;
+                default:
+                    xMod = DX;
+                    break;
+            }
+
+            return x + xMod;
         }
 
-        public int TranslateY(int y)
+        public int TranslateY(int y, short direction)
         {
             return y + DY;
         }
 
-        public int TranslateZ(int z)
+        public int TranslateZ(int z, short direction)
         {
-            return z + DZ;
+            int zMod;
+
+            switch (direction)
+            {
+                case 0:
+                    zMod = DZ;
+                    break;
+                case 2:
+                    zMod = -DZ;
+                    break;
+                case 1:
+                    zMod = -DX;
+                    break;
+                case 3:
+                    zMod = DX;
+                    break;
+                default:
+                    zMod = DZ;
+                    break;
+            }
+
+            return z + zMod;
         }
     }
 }
