@@ -929,7 +929,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
                     }
                 }
 
-                // seperate out slot types
+                // separate out slot types
                 List<ItemStack> slotinputs = new ArrayList<ItemStack>();
                 List<ItemStack> slotfuel = new ArrayList<ItemStack>();
                 List<ItemStack> slotrequired = new ArrayList<ItemStack>();

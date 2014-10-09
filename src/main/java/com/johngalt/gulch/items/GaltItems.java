@@ -18,6 +18,9 @@ public class GaltItems
     public static ItemPaperCartridge PaperCartridge;
     public static Item simpleItem;
     public static ItemGunPowder GunPowder;
+    public static ItemKnife Knife;
+    public static ItemWoodMusketShot WoodMusketShot;
+    public static ItemMusketShotMold MusketShotMold;
 
     /**
      * Initiates all the item instances.
@@ -33,6 +36,10 @@ public class GaltItems
         IngotLead = new ItemIngotLead();
         PaperCartridge = new ItemPaperCartridge();
         GunPowder = new ItemGunPowder();
+        WoodMusketShot = new ItemWoodMusketShot();
+        Knife = new ItemKnife();
+
+        MusketShotMold = new ItemMusketShotMold();
     }
 
     /**

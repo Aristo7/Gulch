@@ -2,10 +2,15 @@ package com.johngalt.gulch.tileentities;
 
 import com.johngalt.gulch.blocks.common.GaltBlocks;
 import com.johngalt.gulch.blocks.common.MultiblockDefinition;
+import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.tileentities.common.GaltTECustRenderHelper;
 import com.johngalt.gulch.tileentities.common.GaltTECustRenderInterface;
 import com.johngalt.gulch.tileentities.common.GaltTileEntity;
+import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -15,7 +20,7 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created on 7/5/2014.
  */
-public class GaltMoldStationTE extends GaltTileEntity implements GaltTECustRenderInterface
+public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements GaltTECustRenderInterface
 {
     private GaltTECustRenderHelper _TERenderer;
 
@@ -25,15 +30,37 @@ public class GaltMoldStationTE extends GaltTileEntity implements GaltTECustRende
     private short _Direction = 0;
 
 
-    public GaltMoldStationTE()
+    public GaltMoldStationTileEntity()
     {
-        super();
+        super(GaltBlocks.MoldStationBlockOn, GaltBlocks.MoldStationBlockOff);
 
+        // custom renderer code
         _TERenderer = new GaltTECustRenderHelper();
 
+        // multblock stuff
         _DefinitionRel = new MultiblockDefinition();
         _DefinitionRel.AddElement(0, 0, 1, GaltBlocks.ClayFurnaceBlock);
         _DefinitionRel.AddElement(1, 0, 1, GaltBlocks.BellowBlock);
+
+        // Machine code
+        this.Slots.add(new GaltTileEntityMachine.MachineSlot(0, GaltTileEntityMachine.ComponentType.Input, 56, 35, new ItemStack[]{new ItemStack(GaltItems.IngotLead)}));
+        this.Slots.add(new GaltTileEntityMachine.MachineSlot(1, GaltTileEntityMachine.ComponentType.Fuel, 8, 62));
+        this.Slots.add(new GaltTileEntityMachine.MachineSlot(2, GaltTileEntityMachine.ComponentType.Output, 116, 35));
+
+        this.RecipeList.AddRecipe(
+                new ItemStack[]{new ItemStack(GaltItems.IngotLead, 1)},
+                null,
+                null,
+                new ItemStack[]{new ItemStack(GaltItems.MusketShot, 16)}
+        );
+
+        this.RecipeList.AddFuel(new ItemStack(GaltItems.GunPowder, 1), 100);
+
+        this.AllowRegisteredFuel();
+
+        this.setGuiDisplayName("Molding Station");
+
+
     }
 
     @Override
@@ -71,6 +98,8 @@ public class GaltMoldStationTE extends GaltTileEntity implements GaltTECustRende
     @Override
     public void updateEntity()
     {
+        super.updateEntity();
+
         if (_TickCurrentCycle > 40)
         {
             _TickCurrentCycle = 0;

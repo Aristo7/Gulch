@@ -8,7 +8,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 /**
  * Created on 6/21/2014.
  */
-public class ItemMusketShot extends GaltCommonItem implements IGaltRecipes
+public class ItemMusketShot extends GaltCommonItem
 {
     public ItemMusketShot()
     {
@@ -16,9 +16,4 @@ public class ItemMusketShot extends GaltCommonItem implements IGaltRecipes
         this.setMaxStackSize(64);
     }
 
-    @Override
-    public void RegisterRecipes()
-    {
-        GaltRecipes.RegisterRecipe(new ShapelessOreRecipe(new ItemStack(this, 16), GaltItems.IngotLead.GetOreDictName()));
-    }
 }
