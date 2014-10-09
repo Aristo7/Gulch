@@ -2,24 +2,30 @@ package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.common.*;
+import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.model.GaltMoldStationModel;
+import com.johngalt.gulch.recipes.GaltRecipes;
+import com.johngalt.gulch.recipes.IGaltRecipes;
 import com.johngalt.gulch.tileentities.GaltMoldStationTileEntity;
 import com.johngalt.gulch.tileentities.GaltTileEntityFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Random;
 
 /**
  * Created on 6/28/2014.
  */
-public class GaltMoldStationBlock extends GaltMachineBlock implements GaltRenderedBlockInterface
+public class GaltMoldStationBlock extends GaltMachineBlock implements GaltRenderedBlockInterface, IGaltRecipes
 {
     private GaltRenderedBlockHelper _RenderHelper;
     private static Block _DroppedBlockItem;
@@ -97,4 +103,9 @@ public class GaltMoldStationBlock extends GaltMachineBlock implements GaltRender
     }
 
 
+    @Override
+    public void RegisterRecipes()
+    {
+        //GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), "   ", "   ", "   ", '', Items.clay_ball, GaltItems.WoodMusketShot));
+    }
 }

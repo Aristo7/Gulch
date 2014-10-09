@@ -19,8 +19,20 @@ public class GaltItems
     public static Item simpleItem;
     public static ItemGunPowder GunPowder;
     public static ItemKnife Knife;
-    public static ItemWoodMusketShot WoodMusketShot;
-    public static ItemMusketShotMold MusketShotMold;
+
+    public static ItemWoodBase WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot");
+    public static ItemWoodBase WoodMusketTrigger= new ItemWoodBase(1, "ItemWoodMusketTrigger");
+    public static ItemWoodBase WoodMusketHammer = new ItemWoodBase(1, "ItemWoodMusketHammer");
+    public static ItemWoodBase WoodMusketBarrel = new ItemWoodBase(1, "ItemWoodMusketBarrel");
+
+    public static ItemMold MusketShotSoftMold;
+    public static ItemMold MusketShotMold;
+    public static ItemMold MusketTriggerSoftMold;
+    public static ItemMold MusketTriggerMold;
+    public static ItemMold MusketHammerSoftMold;
+    public static ItemMold MusketHammerMold;
+    public static ItemMold MusketBarrelSoftMold;
+    public static ItemMold MusketBarrelMold;
 
     /**
      * Initiates all the item instances.
@@ -36,10 +48,25 @@ public class GaltItems
         IngotLead = new ItemIngotLead();
         PaperCartridge = new ItemPaperCartridge();
         GunPowder = new ItemGunPowder();
-        WoodMusketShot = new ItemWoodMusketShot();
         Knife = new ItemKnife();
 
-        MusketShotMold = new ItemMusketShotMold();
+//        WoodMusketShot =
+//        WoodMusketTrigger ;
+//        WoodMusketHammer;
+//        WoodMusketBarrel;
+
+        MusketShotSoftMold = new ItemMold(GaltItems.WoodMusketShot, "ItemMusketShotMold");
+        MusketShotMold = MusketShotSoftMold.GetFiredMold();
+
+        MusketTriggerSoftMold = new ItemMold(GaltItems.WoodMusketTrigger, "ItemMusketTriggerMold");
+        MusketTriggerMold = MusketTriggerSoftMold.GetFiredMold();
+
+        MusketHammerSoftMold = new ItemMold(GaltItems.WoodMusketHammer, "ItemMusketHammerMold");
+        MusketHammerMold = MusketHammerSoftMold.GetFiredMold();
+
+        MusketBarrelSoftMold = new ItemMold(GaltItems.WoodMusketBarrel, "ItemMusketBarrelMold");
+        MusketBarrelMold = MusketBarrelSoftMold.GetFiredMold();
+
     }
 
     /**

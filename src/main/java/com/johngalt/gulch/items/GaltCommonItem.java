@@ -73,8 +73,8 @@ public class GaltCommonItem extends Item implements IGaltObject
     /**
      * What the poopinickle is this for??
      *
-     * @param itemStack
-     * @return
+     * @param itemStack wtf is this for
+     * @return returns the name
      */
     @Override
     public String getUnlocalizedName(ItemStack itemStack)

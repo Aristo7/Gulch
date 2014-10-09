@@ -2,8 +2,11 @@ package com.johngalt.gulch.items;
 
 import com.johngalt.gulch.recipes.GaltRecipes;
 import com.johngalt.gulch.recipes.IGaltRecipes;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 /**

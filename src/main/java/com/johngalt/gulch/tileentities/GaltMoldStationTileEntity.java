@@ -5,11 +5,8 @@ import com.johngalt.gulch.blocks.common.MultiblockDefinition;
 import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.tileentities.common.GaltTECustRenderHelper;
 import com.johngalt.gulch.tileentities.common.GaltTECustRenderInterface;
-import com.johngalt.gulch.tileentities.common.GaltTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntityMachine;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -43,15 +40,23 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
         _DefinitionRel.AddElement(1, 0, 1, GaltBlocks.BellowBlock);
 
         // Machine code
-        this.Slots.add(new GaltTileEntityMachine.MachineSlot(0, GaltTileEntityMachine.ComponentType.Input, 56, 35, new ItemStack[]{new ItemStack(GaltItems.IngotLead)}));
+        this.Slots.add(new GaltTileEntityMachine.MachineSlot(0, GaltTileEntityMachine.ComponentType.Input, 56, 35, new ItemStack[]{new ItemStack(GaltItems.IngotLead), new ItemStack(GaltItems.MusketShotSoftMold)}));
+        this.Slots.add(new GaltTileEntityMachine.MachineSlot(3, ComponentType.RequiredItems, 84, 60, new ItemStack[]{new ItemStack(GaltItems.MusketShotMold)}));
         this.Slots.add(new GaltTileEntityMachine.MachineSlot(1, GaltTileEntityMachine.ComponentType.Fuel, 8, 62));
         this.Slots.add(new GaltTileEntityMachine.MachineSlot(2, GaltTileEntityMachine.ComponentType.Output, 116, 35));
 
         this.RecipeList.AddRecipe(
                 new ItemStack[]{new ItemStack(GaltItems.IngotLead, 1)},
                 null,
-                null,
+                new ItemStack[]{new ItemStack(GaltItems.MusketShotMold)},
                 new ItemStack[]{new ItemStack(GaltItems.MusketShot, 16)}
+        );
+
+        this.RecipeList.AddRecipe(
+                new ItemStack[]{new ItemStack(GaltItems.MusketShotSoftMold, 1)},
+                null,
+                null,
+                new ItemStack[]{new ItemStack(GaltItems.MusketShotMold, 1)}
         );
 
         this.RecipeList.AddFuel(new ItemStack(GaltItems.GunPowder, 1), 100);
