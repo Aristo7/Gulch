@@ -22,9 +22,14 @@ public class GaltCommonItem extends Item implements IGaltObject
 
     public GaltCommonItem()
     {
+        this("noname");
+    }
+
+    public GaltCommonItem(String customName)
+    {
         super();
 
-        this.setUnlocalizedName(GetGaltName());
+        this.setUnlocalizedName(customName.equals("noname") ? GetGaltName() : customName);
         GaltLangGenerator.AddEntry(this);
         GaltItems.register(this);
         this.setCreativeTab(GulchMod.getCreativeTab());

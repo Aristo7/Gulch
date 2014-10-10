@@ -14,7 +14,7 @@ public class ItemWoodBase extends GaltCommonItem implements IGaltRecipes
 
     public ItemWoodBase(int knifeSlot, String woodBaseName)
     {
-        super();
+        super(woodBaseName);
         this.setMaxStackSize(64);
 
         _KnifeSlot = knifeSlot;
@@ -61,11 +61,5 @@ public class ItemWoodBase extends GaltCommonItem implements IGaltRecipes
         }
 
         GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), top, middle, bottom, 'p', "plankWood", 'x', GaltItems.Knife.GetOreDictName()));
-    }
-
-    @Override
-    public String GetGaltName()
-    {
-        return _WoodBaseName;
     }
 }

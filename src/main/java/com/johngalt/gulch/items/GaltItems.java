@@ -20,19 +20,29 @@ public class GaltItems
     public static ItemGunPowder GunPowder;
     public static ItemKnife Knife;
 
-    public static ItemWoodBase WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot");
-    public static ItemWoodBase WoodMusketTrigger= new ItemWoodBase(1, "ItemWoodMusketTrigger");
-    public static ItemWoodBase WoodMusketHammer = new ItemWoodBase(1, "ItemWoodMusketHammer");
-    public static ItemWoodBase WoodMusketBarrel = new ItemWoodBase(1, "ItemWoodMusketBarrel");
+    public static ItemWoodBase WoodMusketShot;
+    public static ItemWoodBase WoodMusketTrigger;
+    public static ItemWoodBase WoodMusketHammer;
+    public static ItemWoodBase WoodMusketBarrel;
+    public static ItemWoodBase WoodMusketRamRod;
 
-    public static ItemMold MusketShotSoftMold;
     public static ItemMold MusketShotMold;
-    public static ItemMold MusketTriggerSoftMold;
+    public static ItemMold MusketShotMoldFired;
     public static ItemMold MusketTriggerMold;
-    public static ItemMold MusketHammerSoftMold;
+    public static ItemMold MusketTriggerMoldFired;
     public static ItemMold MusketHammerMold;
-    public static ItemMold MusketBarrelSoftMold;
+    public static ItemMold MusketHammerMoldFired;
     public static ItemMold MusketBarrelMold;
+    public static ItemMold MusketBarrelMoldFired;
+    public static ItemMold MusketRamRodMold;
+    public static ItemMold MusketRamRodMoldFired;
+
+    public static GaltCommonItem MusketBarrel;
+    public static GaltCommonItem MusketRamRod;
+    public static GaltCommonItem MusketTrigger;
+    public static GaltCommonItem MusketHammer;
+    public static GaltCommonItem MusketStock;
+
 
     /**
      * Initiates all the item instances.
@@ -50,23 +60,32 @@ public class GaltItems
         GunPowder = new ItemGunPowder();
         Knife = new ItemKnife();
 
-//        WoodMusketShot =
-//        WoodMusketTrigger ;
-//        WoodMusketHammer;
-//        WoodMusketBarrel;
+        WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot");
+        WoodMusketTrigger= new ItemWoodBase(2, "ItemWoodMusketTrigger");
+        WoodMusketHammer = new ItemWoodBase(3, "ItemWoodMusketHammer");
+        WoodMusketBarrel = new ItemWoodBase(4, "ItemWoodMusketBarrel");
+        WoodMusketRamRod = new ItemWoodBase(6, "ItemWoodMusketRamRod");
 
-        MusketShotSoftMold = new ItemMold(GaltItems.WoodMusketShot, "ItemMusketShotMold");
-        MusketShotMold = MusketShotSoftMold.GetFiredMold();
+        MusketShotMold = new ItemMold(GaltItems.WoodMusketShot, "ItemMusketShotMold");
+        MusketShotMoldFired = MusketShotMold.GetFiredMold();
 
-        MusketTriggerSoftMold = new ItemMold(GaltItems.WoodMusketTrigger, "ItemMusketTriggerMold");
-        MusketTriggerMold = MusketTriggerSoftMold.GetFiredMold();
+        MusketTriggerMold = new ItemMold(GaltItems.WoodMusketTrigger, "ItemMusketTriggerMold");
+        MusketTriggerMoldFired = MusketTriggerMold.GetFiredMold();
 
-        MusketHammerSoftMold = new ItemMold(GaltItems.WoodMusketHammer, "ItemMusketHammerMold");
-        MusketHammerMold = MusketHammerSoftMold.GetFiredMold();
+        MusketHammerMold = new ItemMold(GaltItems.WoodMusketHammer, "ItemMusketHammerMold");
+        MusketHammerMoldFired = MusketHammerMold.GetFiredMold();
 
-        MusketBarrelSoftMold = new ItemMold(GaltItems.WoodMusketBarrel, "ItemMusketBarrelMold");
-        MusketBarrelMold = MusketBarrelSoftMold.GetFiredMold();
+        MusketBarrelMold = new ItemMold(GaltItems.WoodMusketBarrel, "ItemMusketBarrelMold");
+        MusketBarrelMoldFired = MusketBarrelMold.GetFiredMold();
 
+        MusketRamRodMold = new ItemMold(GaltItems.WoodMusketRamRod, "ItemMusketRamRodMold");
+        MusketRamRodMoldFired = MusketRamRodMold.GetFiredMold();
+
+        MusketBarrel = new GaltCommonItem("ItemMusketBarrel");
+        MusketRamRod = new GaltCommonItem("ItemMusketRamRod");
+        MusketTrigger = new GaltCommonItem("ItemMusketTrigger");
+        MusketHammer = new GaltCommonItem("ItemMusketHammer");
+        MusketStock = new GaltCommonItem("ItemMusketStock");
     }
 
     /**
