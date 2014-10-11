@@ -41,7 +41,7 @@ public class GaltItems
     public static GaltCommonItem MusketRamRod;
     public static GaltCommonItem MusketTrigger;
     public static GaltCommonItem MusketHammer;
-    public static GaltCommonItem MusketStock;
+    public static ItemMusketStock MusketStock;
 
 
     /**
@@ -62,9 +62,9 @@ public class GaltItems
 
         WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot");
         WoodMusketTrigger= new ItemWoodBase(2, "ItemWoodMusketTrigger");
-        WoodMusketHammer = new ItemWoodBase(3, "ItemWoodMusketHammer");
+        WoodMusketHammer = new ItemWoodBase(4, "ItemWoodMusketHammer");
         WoodMusketBarrel = new ItemWoodBase(4, "ItemWoodMusketBarrel");
-        WoodMusketRamRod = new ItemWoodBase(6, "ItemWoodMusketRamRod");
+        WoodMusketRamRod = new ItemWoodBase(7, "ItemWoodMusketRamRod");
 
         MusketShotMold = new ItemMold(GaltItems.WoodMusketShot, "ItemMusketShotMold");
         MusketShotMoldFired = MusketShotMold.GetFiredMold();
@@ -85,7 +85,7 @@ public class GaltItems
         MusketRamRod = new GaltCommonItem("ItemMusketRamRod");
         MusketTrigger = new GaltCommonItem("ItemMusketTrigger");
         MusketHammer = new GaltCommonItem("ItemMusketHammer");
-        MusketStock = new GaltCommonItem("ItemMusketStock");
+        MusketStock = new ItemMusketStock();
     }
 
     /**

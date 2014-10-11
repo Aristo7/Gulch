@@ -1,6 +1,7 @@
 package com.johngalt.gulch.tileentities;
 
 import com.johngalt.gulch.blocks.common.GaltBlocks;
+import com.johngalt.gulch.blocks.common.GaltMachineBlock;
 import com.johngalt.gulch.blocks.common.MultiblockDefinition;
 import com.johngalt.gulch.items.GaltCommonItem;
 import com.johngalt.gulch.items.GaltItems;
@@ -21,7 +22,8 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created on 7/5/2014.
  */
-public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements GaltTECustRenderInterface {
+public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements GaltTECustRenderInterface
+{
     private GaltTECustRenderHelper _TERenderer;
 
     private MultiblockDefinition _DefinitionRel; //stores absolute values
@@ -30,8 +32,9 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
     private short _Direction = 0;
 
 
-    public GaltMoldStationTileEntity() {
-        super(GaltBlocks.MoldStationBlockOn, GaltBlocks.MoldStationBlockOff);
+    public GaltMoldStationTileEntity()
+    {
+        super(GaltBlocks.MoldStationBlock, GaltBlocks.MoldStationBlock);
 
         // custom renderer code
         _TERenderer = new GaltTECustRenderHelper();
@@ -62,7 +65,8 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
 
     }
 
-    private void addMoldAndProductRecipe(ItemMold mold, ItemMold firedMold, Item rawMaterial, GaltCommonItem finalProduct, int numOutput) {
+    private void addMoldAndProductRecipe(ItemMold mold, ItemMold firedMold, Item rawMaterial, GaltCommonItem finalProduct, int numOutput)
+    {
         this.RecipeList.AddRecipe(
                 new ItemStack[]{new ItemStack(mold, 1)},
                 null,
@@ -79,64 +83,89 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(NBTTagCompound nbt)
+    {
         super.readFromNBT(nbt);
         _TERenderer.readFromNBT(nbt);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(NBTTagCompound nbt)
+    {
         super.writeToNBT(nbt);
         _TERenderer.writeToNBT(nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
         GaltTECustRenderHelper.onDataPacket(net, pkt, this);
     }
 
     @Override
-    public Packet getDescriptionPacket() {
+    public Packet getDescriptionPacket()
+    {
         return GaltTECustRenderHelper.getDescriptionPacket(this);
     }
 
     @Override
-    public GaltTECustRenderHelper GetTECustRenderHelper() {
+    public GaltTECustRenderHelper GetTECustRenderHelper()
+    {
         return _TERenderer;
     }
 
     @Override
-    public void updateEntity() {
+    public void updateEntity()
+    {
         super.updateEntity();
 
-        if (_TickCurrentCycle > 40) {
+        if (_TickCurrentCycle > 40)
+        {
             _TickCurrentCycle = 0;
 
             MultiblockDefinition defAbs = _DefinitionRel.TranslateRelativeToAbsolute(this.xCoord, this.yCoord, this.zCoord, _Direction); //absolute positions
 
             boolean complete = true;
 
-            for (MultiblockDefinition.MultiblockDefElement element : defAbs.GetElements()) {
-                if (!this.worldObj.getBlock(element.DX, element.DY, element.DZ).equals(element.Block)) {
+            for (MultiblockDefinition.MultiblockDefElement element : defAbs.GetElements())
+            {
+                if (!this.worldObj.getBlock(element.DX, element.DY, element.DZ).equals(element.Block))
+                {
                     complete = false;
                 }
             }
 
-            if (_MBComplete != complete) {
+            if (_MBComplete != complete)
+            {
                 _MBComplete = complete;
                 onMBCompletenessChange();
                 Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Multiblock completeness: " + complete));
             }
-        } else {
+        }
+        else
+        {
             _TickCurrentCycle++;
         }
     }
 
-    private void onMBCompletenessChange() {
+    private void onMBCompletenessChange()
+    {
 
     }
 
+    public boolean IsMBComplete()
+    {
+        return _MBComplete;
+    }
+
+
     public void SetDirection(short dir) {
         _Direction = dir;
+    }
+
+    @Override
+    protected void setActiveInactiveBlocks(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
+    {
+
     }
 }

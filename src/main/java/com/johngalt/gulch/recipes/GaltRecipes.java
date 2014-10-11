@@ -66,6 +66,18 @@ public class GaltRecipes
         {
             OreDictionary.registerOre("charcoal", new ItemStack(Items.coal, 1, 1));
         }
+        if (!oredict.contains("plankWood"))
+        {
+            OreDictionary.registerOre("plankWood", Blocks.planks);
+        }
+        if (!oredict.contains("stickWood"))
+        {
+            OreDictionary.registerOre("stickWood", Items.stick);
+        }
+        if (!oredict.contains("treeWood"))
+        {
+            OreDictionary.registerOre("treeWood", Blocks.log);
+        }
 
         for (IGaltRecipes recipe : _RecipesObjects)
             recipe.RegisterRecipes();

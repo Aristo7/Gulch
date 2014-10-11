@@ -1,24 +1,25 @@
 package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.GulchMod;
-import com.johngalt.gulch.blocks.common.*;
+import com.johngalt.gulch.blocks.common.GaltMachineBlock;
+import com.johngalt.gulch.blocks.common.GaltRenderedBlockHelper;
 import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.model.GaltMoldStationModel;
 import com.johngalt.gulch.recipes.GaltRecipes;
 import com.johngalt.gulch.recipes.IGaltRecipes;
 import com.johngalt.gulch.tileentities.GaltMoldStationTileEntity;
-import com.johngalt.gulch.tileentities.GaltTileEntityFurnace;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Random;
 
@@ -30,17 +31,15 @@ public class GaltMoldStationBlock extends GaltMachineBlock implements GaltRender
     private GaltRenderedBlockHelper _RenderHelper;
     private static Block _DroppedBlockItem;
 
-    public GaltMoldStationBlock(boolean isActive)
+    public GaltMoldStationBlock()
     {
-        super(isActive, Material.wood);
+        super(false, Material.wood, false);
         this.setHardness(2.0F);
         this.setResistance(5.0F);
         this.setBlockBounds(0, 0, 0, 1, 0.75F, 1);
+        this.CustomRendered = true;
 
-        if (!isActive)
-        {
-            _DroppedBlockItem = this;
-        }
+        _DroppedBlockItem = this;
 
         _RenderHelper = new GaltRenderedBlockHelper(new GaltMoldStationModel(), "textures/blocks/GaltModelMoldingStation.png", this);
         GulchMod.proxy.registerTileEntity(GaltMoldStationTileEntity.class, GaltMoldStationTileEntity.class.getSimpleName());
@@ -87,12 +86,13 @@ public class GaltMoldStationBlock extends GaltMachineBlock implements GaltRender
         if (entity instanceof GaltMoldStationTileEntity)
         {
             int dir = (MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3) % 4;
-            ((GaltMoldStationTileEntity)entity).SetDirection((short) dir);
+            ((GaltMoldStationTileEntity) entity).SetDirection((short) dir);
         }
     }
 
     @Override
-    public Item getItemDropped(int slot, Random random, int j) {
+    public Item getItemDropped(int slot, Random random, int j)
+    {
         return Item.getItemFromBlock(_DroppedBlockItem == null ? this : _DroppedBlockItem);
     }
 
@@ -106,6 +106,26 @@ public class GaltMoldStationBlock extends GaltMachineBlock implements GaltRender
     @Override
     public void RegisterRecipes()
     {
-        //GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), "   ", "   ", "   ", '', Items.clay_ball, GaltItems.WoodMusketShot));
+        GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), " k ", "ppp", "l l", 'k', GaltItems.Knife.GetOreDictName(), 'p', "plankWood", 'l', "treeWood"));
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
+    {
+        TileEntity entity = world.getTileEntity(x, y, z);
+        if (entity instanceof GaltMoldStationTileEntity)
+        {
+            if (((GaltMoldStationTileEntity) entity).IsMBComplete())
+                return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+        }
+
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick(World world, int x, int y, int z, Random random)
+    {
+
     }
 }

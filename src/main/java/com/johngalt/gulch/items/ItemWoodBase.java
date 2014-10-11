@@ -25,36 +25,38 @@ public class ItemWoodBase extends GaltCommonItem implements IGaltRecipes
     @Override
     public void RegisterRecipes()
     {
-        String top = "   ";
-        String middle = " p ";
-        String bottom = "   ";
+        String top = "  ";
+        String middle = " p";
+        String bottom = "  ";
 
 
         switch (_KnifeSlot)
         {
             case 1:
-                top = "x  ";
+                top = "x ";
                 break;
             case 2:
-                top = " x ";
+                top = " x";
                 break;
             case 3:
-                top = "  x";
+                top = " x";
+                middle = "p ";
                 break;
             case 4:
-                middle = "xp ";
+                middle = "xp";
                 break;
             case 6:
-                middle = " px";
+                middle = "px";
                 break;
             case 7:
-                bottom = "x  ";
+                bottom = "x ";
                 break;
             case 8:
-                bottom = " x ";
+                bottom = " x";
                 break;
             case 9:
-                bottom = "  x";
+                bottom = " x";
+                middle = "p ";
                 break;
             default:
                 return;

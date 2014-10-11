@@ -4,6 +4,8 @@ import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.lib.GaltLangGenerator;
 import com.johngalt.gulch.lib.IGaltObject;
 import com.johngalt.gulch.lib.References;
+import com.johngalt.gulch.recipes.GaltRecipes;
+import com.johngalt.gulch.recipes.IGaltRecipes;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -21,6 +23,8 @@ public abstract class GaltCommonBlockContainer extends BlockContainer implements
     {
         super(material);
         initializeContainer(GetGaltName());
+
+        if (this instanceof IGaltRecipes) GaltRecipes.DeclareRecipes((IGaltRecipes) this);
     }
 
     protected GaltCommonBlockContainer(Material material, boolean customInitialization)
@@ -31,6 +35,8 @@ public abstract class GaltCommonBlockContainer extends BlockContainer implements
         {
             initializeContainer(GetGaltName());
         }
+
+        if (this instanceof IGaltRecipes) GaltRecipes.DeclareRecipes((IGaltRecipes) this);
     }
 
     protected void initializeContainer(String customBlockName)
@@ -39,6 +45,8 @@ public abstract class GaltCommonBlockContainer extends BlockContainer implements
         GaltBlocks.register(this);
         GaltLangGenerator.AddEntry(this);
         this.setCreativeTab(GulchMod.getCreativeTab());
+
+
     }
 
     public String getUnwrappedUnlocalizedName()

@@ -31,6 +31,9 @@ public abstract class GaltMachineBlock extends GaltCommonBlockContainer
 {
     private final boolean _IsActive;
     public static boolean SkipBreakEvent;
+    public final static int DefaultGUI = GuiHandler.GUI_ID_MACHINEBLOCK;
+
+    public boolean CustomRendered;
 
     private int _GuiID;
 
@@ -43,30 +46,35 @@ public abstract class GaltMachineBlock extends GaltCommonBlockContainer
     @SideOnly(Side.CLIENT)
     private IIcon _IconBottom;
 
-    public GaltMachineBlock(boolean isActive, int guiID, Material material)
+    public GaltMachineBlock(boolean isActive, Material material)
+    {
+        this(isActive, material, true);
+    }
+
+    public GaltMachineBlock(boolean isActive, Material material, boolean hasActiveInactive)
     {
         super(material, false);
 
         _IsActive = isActive;
-        _GuiID = guiID;
+        _GuiID = GaltMachineBlock.DefaultGUI;
 
-        this.initializeContainer(GetGaltName() + (_IsActive ? "On" : "Off"));
+        if (hasActiveInactive)
+            this.initializeContainer(GetGaltName() + (_IsActive ? "On" : "Off"));
+        else
+            this.initializeContainer(GetGaltName());
+
         this.setHardness(3.5F);
-    }
-
-    public GaltMachineBlock(boolean isActive, Material material)
-    {
-        this(isActive, GuiHandler.GUI_ID_MACHINEBLOCK, material);
     }
 
     public GaltMachineBlock(boolean isActive, int guiID)
     {
-        this(isActive, guiID, Material.iron);
+        this(isActive, Material.iron);
+        _GuiID = guiID;
     }
 
     public GaltMachineBlock(boolean isActive)
     {
-        this(isActive, GuiHandler.GUI_ID_MACHINEBLOCK);
+        this(isActive, GaltMachineBlock.DefaultGUI);
     }
 
     @SideOnly(Side.CLIENT)
@@ -74,10 +82,18 @@ public abstract class GaltMachineBlock extends GaltCommonBlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         String name = this.GetGaltName();
-        this.blockIcon = iconRegister.registerIcon(References.RESOURCESPREFIX + name + ".Side");
-        _IconFront = iconRegister.registerIcon(References.RESOURCESPREFIX + name + (_IsActive ? ".FrontOn" : ".FrontOff"));
-        _IconTop = iconRegister.registerIcon(References.RESOURCESPREFIX + name + ".Top");
-        _IconBottom = iconRegister.registerIcon(References.RESOURCESPREFIX + name + ".Bottom");
+        if (CustomRendered)
+        {
+            this.blockIcon = iconRegister.registerIcon(References.RESOURCESPREFIX + name);
+            _IconFront = _IconTop = _IconBottom = this.blockIcon;
+        }
+        else
+        {
+            this.blockIcon = iconRegister.registerIcon(References.RESOURCESPREFIX + name + ".Side");
+            _IconFront = iconRegister.registerIcon(References.RESOURCESPREFIX + name + (_IsActive ? ".FrontOn" : ".FrontOff"));
+            _IconTop = iconRegister.registerIcon(References.RESOURCESPREFIX + name + ".Top");
+            _IconBottom = iconRegister.registerIcon(References.RESOURCESPREFIX + name + ".Bottom");
+        }
     }
 
     @SideOnly(Side.CLIENT)

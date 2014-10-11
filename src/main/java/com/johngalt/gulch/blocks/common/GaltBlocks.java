@@ -24,8 +24,7 @@ public class GaltBlocks
 
     public static GaltBellowBlock BellowBlock;
     public static GaltClayFurnaceBlock ClayFurnaceBlock;
-    public static GaltMoldStationBlock MoldStationBlockOn;
-    public static GaltMoldStationBlock MoldStationBlockOff;
+    public static GaltMoldStationBlock MoldStationBlock;
 
     public static Block water;
 
@@ -45,8 +44,7 @@ public class GaltBlocks
 
         BellowBlock = new GaltBellowBlock();
         ClayFurnaceBlock = new GaltClayFurnaceBlock();
-        MoldStationBlockOn = new GaltMoldStationBlock(true);
-        MoldStationBlockOff = new GaltMoldStationBlock(false);
+        MoldStationBlock = new GaltMoldStationBlock();
 
 
         water = new GaltWaterMultiBlockStorageBlock();

@@ -2,18 +2,23 @@ package com.johngalt.gulch.blocks;
 
 import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
 import com.johngalt.gulch.blocks.common.GaltRenderedBlockHelper;
+import com.johngalt.gulch.items.GaltItems;
 import com.johngalt.gulch.model.GaltClayFurnaceModel;
+import com.johngalt.gulch.recipes.GaltRecipes;
+import com.johngalt.gulch.recipes.IGaltRecipes;
 import com.johngalt.gulch.tileentities.GaltClayFurnaceTECustRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 /**
  * Created on 7/4/2014.
  */
-public class GaltClayFurnaceBlock extends GaltCommonBlockContainer implements GaltRenderedBlockInterface
+public class GaltClayFurnaceBlock extends GaltCommonBlockContainer implements GaltRenderedBlockInterface, IGaltRecipes
 {
 
     private GaltRenderedBlockHelper _RenderHelper;
@@ -70,6 +75,12 @@ public class GaltClayFurnaceBlock extends GaltCommonBlockContainer implements Ga
     public Class<? extends TileEntity> GetTileEntityCustRenderClass()
     {
         return GaltClayFurnaceTECustRender.class;
+    }
+
+    @Override
+    public void RegisterRecipes()
+    {
+        GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), "ccc", "ckc", "ccc", 'c', Items.clay_ball, 'k', GaltItems.Knife.GetOreDictName()));
     }
 }
 

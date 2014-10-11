@@ -11,6 +11,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
     }
 
 
-    private void setActiveInactiveBlocks(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
+    protected void setActiveInactiveBlocks(GaltMachineBlock activeBlock, GaltMachineBlock inactiveBlock)
     {
         _ActiveBlock = activeBlock;
         _InactiveBlock = inactiveBlock;
@@ -202,7 +203,7 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
             if (_UseRegisteredFuel && amount == 0)
             {
-                return GameRegistry.getFuelValue(itemstack);
+                return TileEntityFurnace.getItemBurnTime(itemstack);
             }
             else
             {

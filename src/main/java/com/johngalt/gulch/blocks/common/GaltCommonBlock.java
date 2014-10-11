@@ -4,6 +4,8 @@ import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.lib.GaltLangGenerator;
 import com.johngalt.gulch.lib.IGaltObject;
 import com.johngalt.gulch.lib.References;
+import com.johngalt.gulch.recipes.GaltRecipes;
+import com.johngalt.gulch.recipes.IGaltRecipes;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -22,6 +24,8 @@ public class GaltCommonBlock extends Block implements IGaltObject
         GaltLangGenerator.AddEntry(this);
         GaltBlocks.register(this);
         this.setCreativeTab(GulchMod.getCreativeTab());
+
+        if (this instanceof IGaltRecipes) GaltRecipes.DeclareRecipes((IGaltRecipes) this);
     }
 
     public GaltCommonBlock()

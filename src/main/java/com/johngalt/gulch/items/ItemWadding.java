@@ -18,6 +18,6 @@ public class ItemWadding extends GaltCommonItem implements IGaltRecipes
     @Override
     public void RegisterRecipes()
     {
-        GaltRecipes.RegisterRecipe(false, new ItemStack(this, 8), new ItemStack(Items.paper, 1));
+        GaltRecipes.RegisterRecipe(false, new ItemStack(this, 8), new ItemStack(Items.paper, 1), new ItemStack(GaltItems.Knife));
     }
 }
