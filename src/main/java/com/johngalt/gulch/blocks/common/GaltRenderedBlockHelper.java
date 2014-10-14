@@ -2,8 +2,7 @@ package com.johngalt.gulch.blocks.common;
 
 import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.blocks.GaltRenderedBlockInterface;
-import com.johngalt.gulch.proxy.ClientProxy;
-import com.johngalt.gulch.tileentities.common.GaltTECustRenderHelper;
+import com.johngalt.gulch.proxy.CommonProxy;
 import com.johngalt.gulch.tileentities.common.GaltTECustRenderInterface;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,9 +31,9 @@ public class GaltRenderedBlockHelper
         block.setBlockTextureName("");
 
         // register block and TE
-        ClientProxy.RegisterRenderedBlock(block);
+        GulchMod.proxy.RegisterRenderedBlock(block);
 
-        GaltRenderedBlockInterface renderedBlock = (GaltRenderedBlockInterface)block;
+        GaltRenderedBlockInterface renderedBlock = (GaltRenderedBlockInterface) block;
         GulchMod.proxy.registerTileEntity(renderedBlock.GetTileEntityCustRenderClass(), renderedBlock.GetTileEntityCustRenderClass().getSimpleName());
     }
 

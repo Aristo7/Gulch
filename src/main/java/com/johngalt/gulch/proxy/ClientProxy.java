@@ -59,8 +59,8 @@ public class ClientProxy extends CommonProxy
         }
     }
 
-
-    public static void RegisterRenderedBlock(GaltCommonBlockContainer galtRenderedBlock)
+    @Override
+    public void RegisterRenderedBlock(GaltCommonBlockContainer galtRenderedBlock)
     {
         if (galtRenderedBlock instanceof GaltRenderedBlockInterface)
             _RenderedBlocks.add(galtRenderedBlock);

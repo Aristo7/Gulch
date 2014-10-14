@@ -1,6 +1,7 @@
 package com.johngalt.gulch.proxy;
 
 
+import com.johngalt.gulch.blocks.common.GaltCommonBlockContainer;
 import com.johngalt.gulch.tileentities.GaltMultiblockTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntity;
 import com.johngalt.gulch.tileentities.common.GaltTileEntityContainer;
@@ -51,5 +52,9 @@ public class CommonProxy
             TheClass = aClass;
             RegisterName = simpleName;
         }
+    }
+
+    public void RegisterRenderedBlock(GaltCommonBlockContainer galtRenderedBlock)
+    {
     }
 }

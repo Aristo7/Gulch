@@ -90,6 +90,9 @@ public class GaltLangGenerator
 
     public static void AddEntry(IGaltObject item)
     {
+        if (!GulchMod.generateLangFile)
+            return;
+
         for (GaltLangEntry entry : _fileEntries)
         {
             if (entry.Contains(item))

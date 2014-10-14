@@ -15,9 +15,10 @@ public class ItemPaperCartridge extends GaltCommonItem implements IGaltRecipes
         super();
     }
 
+    @SuppressWarnings("RedundantArrayCreation")
     @Override
     public void RegisterRecipes()
     {
-        GaltRecipes.RegisterRecipe(new ShapelessOreRecipe(new ItemStack(GaltItems.PaperCartridge, 1), new Object[]{"gunpowder", GaltItems.Wadding, GaltItems.MusketShot}));
+        GaltRecipes.RegisterRecipe(new ShapelessOreRecipe(new ItemStack(GaltItems.PaperCartridge, 1), new Object[]{"dustGunpowder", GaltItems.Wadding, GaltItems.MusketShot}));
     }
 }

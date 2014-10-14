@@ -32,12 +32,13 @@ public class GulchMod
     public static CommonProxy proxy;
 
     public static final Boolean generateLangFile = false;
+    public static final Boolean DisableGulchKnife = true;
 
     @Mod.Instance(References.MODID)
     public static GulchMod instance;
 
     private static CreativeTabs tab            = new GaltTab(GaltTab.class.getSimpleName());
-    public static  int          gulchDimension = 66;
+    public static  int          gulchDimension = 67;
     public static GulchWorldGen worldProvider;
 
     public static CreativeTabs getCreativeTab()

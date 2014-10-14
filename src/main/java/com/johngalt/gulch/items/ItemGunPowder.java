@@ -18,22 +18,23 @@ public class ItemGunPowder extends GaltCommonItem implements IGaltRecipes
     {
         super();
 
-        this.RegisterWithOreDictionary("gunpowder");
+        this.RegisterWithOreDictionary("dustGunpowder");
     }
 
     /**
      * There are three ways to make gun powder through this mod: sand, lava, coal/coaldust/charcoal.
      */
+    @SuppressWarnings("RedundantArrayCreation")
     @Override
     public void RegisterRecipes()
     {
-        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ItemStack(this, 16), new Object[]{"sand", Items.coal, Items.lava_bucket});
+        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", Items.coal, "bucketLava"});
         GaltRecipes.RegisterRecipe(recipe);
 
-        ShapelessOreRecipe recipe2 = new ShapelessOreRecipe(new ItemStack(this, 16), new Object[]{"sand", "dustCoal", Items.lava_bucket});
+        ShapelessOreRecipe recipe2 = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", "dustCoal", "bucketLava"});
         GaltRecipes.RegisterRecipe(recipe2);
 
-        ShapelessOreRecipe recipe3 = new ShapelessOreRecipe(new ItemStack(this, 16), new Object[]{"sand", "charcoal", Items.lava_bucket});
+        ShapelessOreRecipe recipe3 = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", "gemCharcoal", "bucketLava"});
         GaltRecipes.RegisterRecipe(recipe3);
     }
 }

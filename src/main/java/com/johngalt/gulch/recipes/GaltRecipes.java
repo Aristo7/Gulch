@@ -54,17 +54,17 @@ public class GaltRecipes
     public static void RegisterRecipes()
     {
         List<String> oredict = Arrays.asList(OreDictionary.getOreNames());
-        if (!oredict.contains("gunpowder"))
+        if (!oredict.contains("dustGunpowder"))
         {
-            OreDictionary.registerOre("gunpowder", Items.gunpowder);
+            OreDictionary.registerOre("dustGunpowder", Items.gunpowder);
         }
         if (!oredict.contains("sand"))
         {
             OreDictionary.registerOre("sand", Blocks.sand);
         }
-        if (!oredict.contains("charcoal"))
+        if (!oredict.contains("gemCharcoal"))
         {
-            OreDictionary.registerOre("charcoal", new ItemStack(Items.coal, 1, 1));
+            OreDictionary.registerOre("gemCharcoal", new ItemStack(Items.coal, 1, 1));
         }
         if (!oredict.contains("plankWood"))
         {
@@ -78,7 +78,10 @@ public class GaltRecipes
         {
             OreDictionary.registerOre("treeWood", Blocks.log);
         }
-
+        if (!oredict.contains("bucketLava"))
+        {
+            OreDictionary.registerOre("bucketLava", Items.lava_bucket);
+        }
         for (IGaltRecipes recipe : _RecipesObjects)
             recipe.RegisterRecipes();
     }

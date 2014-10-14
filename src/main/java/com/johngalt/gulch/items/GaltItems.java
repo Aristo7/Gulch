@@ -58,10 +58,11 @@ public class GaltItems
         IngotLead = new ItemIngotLead();
         PaperCartridge = new ItemPaperCartridge();
         GunPowder = new ItemGunPowder();
+
         Knife = new ItemKnife();
 
         WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot");
-        WoodMusketTrigger= new ItemWoodBase(2, "ItemWoodMusketTrigger");
+        WoodMusketTrigger = new ItemWoodBase(2, "ItemWoodMusketTrigger");
         WoodMusketHammer = new ItemWoodBase(4, "ItemWoodMusketHammer");
         WoodMusketBarrel = new ItemWoodBase(4, "ItemWoodMusketBarrel");
         WoodMusketRamRod = new ItemWoodBase(7, "ItemWoodMusketRamRod");

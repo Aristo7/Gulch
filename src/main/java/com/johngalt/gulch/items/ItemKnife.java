@@ -1,5 +1,6 @@
 package com.johngalt.gulch.items;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.recipes.GaltRecipes;
 import com.johngalt.gulch.recipes.IGaltRecipes;
 import net.minecraft.init.Items;
@@ -13,7 +14,7 @@ public class ItemKnife extends GaltCommonItem implements IGaltRecipes
         super();
         this.setMaxStackSize(1);
 
-        this.RegisterWithOreDictionary("Knife");
+        this.RegisterWithOreDictionary("craftingToolKnife");
         this.setContainerItem(this);
     }
 
@@ -21,6 +22,7 @@ public class ItemKnife extends GaltCommonItem implements IGaltRecipes
     @Override
     public void RegisterRecipes()
     {
-        GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), "c  ", "i  ", "s  ", 'c', "stone", 'i', "ingotIron", 's', Items.leather));
+        if (!GulchMod.DisableGulchKnife)
+            GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), "c  ", "i  ", "s  ", 'c', "stone", 'i', "ingotIron", 's', Items.leather));
     }
 }
