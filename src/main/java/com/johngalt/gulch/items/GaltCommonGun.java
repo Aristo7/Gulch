@@ -37,7 +37,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         setMaxStackSize(1);
         this.setMaxDamage(_ClipSize + 1);
 
-        GaltRecipes.DeclareRecipes(this);
+        //GaltRecipes.DeclareRecipes(this);
 
     }
 
@@ -52,7 +52,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
      * @param gun    The gun being shot.
      * @param world  The world is a vampire.
      * @param player player shooting the gun
-     * @return
+     * @return ??? Profit?
      */
     @Override
     public ItemStack onItemRightClick(ItemStack gun, World world, EntityPlayer player)
@@ -98,7 +98,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
 
                     input.add(new ItemStack(this, 1, dam));
 
-                    List<Object> additionalRequirements = GetAdditionalReloadRequirements(bullet);
+                    List<Object> additionalRequirements = GetAdditionalReloadRequirements(bullet, numAmmo);
                     if (additionalRequirements != null)
                     {
                         input.addAll(additionalRequirements);
@@ -115,7 +115,7 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
      *
      * @return The list of objects to add to the reload recipe.
      */
-    protected List<Object> GetAdditionalReloadRequirements(BulletEnum bullet)
+    protected List<Object> GetAdditionalReloadRequirements(BulletEnum bullet, int numAmmo)
     {
         return null;
     }
@@ -141,6 +141,10 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         else if (bullet == BulletEnum.PaperCartridge)
         {
             return GaltItems.PaperCartridge;
+        }
+        else if (bullet == BulletEnum.RevolverShot)
+        {
+            return GaltItems.RevolverShot;
         }
 
         return null;

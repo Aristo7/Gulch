@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * Created on 6/21/2014.
  */
-public class ItemMusket extends GaltCommonGun implements IGaltRecipes
+public class ItemSimpleRevolver extends GaltCommonGun implements IGaltRecipes
 {
-    public ItemMusket()
+    public ItemSimpleRevolver()
     {
-        super(Arrays.asList(new BulletEnum[]{BulletEnum.MusketShot, BulletEnum.PaperCartridge}), 1, GaltSounds.SoundsEnum.musket_shot, GaltEffects.EffectEnum.Flame);
+        super(Arrays.asList(new BulletEnum[]{BulletEnum.RevolverShot}), 4, GaltSounds.SoundsEnum.musket_shot, GaltEffects.EffectEnum.Flame);
     }
 
     /**
@@ -31,17 +31,11 @@ public class ItemMusket extends GaltCommonGun implements IGaltRecipes
     @Override
     protected List<Object> GetAdditionalReloadRequirements(BulletEnum bullet, int numAmmo)
     {
-        if (bullet.equals(BulletEnum.MusketShot))
-        {
-            List<Object> additional = new ArrayList<Object>();
-            additional.add(new ItemStack(GaltItems.Wadding, 1));
+        List<Object> additional = new ArrayList<Object>();
+        for (int i = 0; i < numAmmo; i++)
             additional.add(new ItemStack(Items.gunpowder, 1));
-            return additional;
-        }
-        else
-        {
-            return null;
-        }
+
+        return additional;
     }
 
     @Override
@@ -51,11 +45,12 @@ public class ItemMusket extends GaltCommonGun implements IGaltRecipes
 
         GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1),
                         " h ", "bbs", "rrt",
-                        'h', GaltItems.MusketHammer,
-                        'b', GaltItems.MusketBarrel,
-                        's', GaltItems.MusketStock,
-                        'r', GaltItems.MusketRamRod,
-                        't', GaltItems.MusketTrigger)
+                        'h', GaltItems.BasicRevolverHammer,
+                        'b', GaltItems.BasicRevolverBarrel,
+                        's', GaltItems.BasicRevolverStock,
+                        'r', GaltItems.BasicRevolverInnerRod,
+                        't', GaltItems.BasicRevolverTrigger,
+                        'r', GaltItems.BasicRevolverCylinder)
         );
     }
 }

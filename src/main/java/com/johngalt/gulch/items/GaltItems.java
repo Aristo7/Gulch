@@ -43,6 +43,16 @@ public class GaltItems
     public static GaltCommonItem MusketHammer;
     public static ItemMusketStock MusketStock;
 
+    public static GaltCommonItem RevolverShot;
+    public static ItemSimpleRevolver SimpleRevolver;
+
+    public static GaltCommonItem BasicRevolverHammer;
+    public static GaltCommonItem BasicRevolverBarrel;
+    public static ItemBasicRevolverStock BasicRevolverStock;
+    public static GaltCommonItem BasicRevolverInnerRod;
+    public static GaltCommonItem BasicRevolverTrigger;
+    public static GaltCommonItem BasicRevolverCylinder;
+
 
     /**
      * Initiates all the item instances.
@@ -87,6 +97,19 @@ public class GaltItems
         MusketTrigger = new GaltCommonItem("ItemMusketTrigger");
         MusketHammer = new GaltCommonItem("ItemMusketHammer");
         MusketStock = new ItemMusketStock();
+
+        RevolverShot = new GaltCommonItem();
+        RevolverShot.setMaxStackSize(64);
+
+
+        BasicRevolverHammer = new GaltCommonItem("BasicRevolverHammer");
+        BasicRevolverBarrel = new GaltCommonItem("BasicRevolverBarrel");
+        BasicRevolverStock = new ItemBasicRevolverStock();
+        BasicRevolverInnerRod = new GaltCommonItem("BasicRevolverInnerRod");
+        BasicRevolverTrigger = new GaltCommonItem("BasicRevolverTrigger");
+        BasicRevolverCylinder = new GaltCommonItem("BasicRevolverCylinder");
+
+        SimpleRevolver = new ItemSimpleRevolver();
     }
 
     /**

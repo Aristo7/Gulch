@@ -5,6 +5,7 @@ import com.johngalt.gulch.entities.mobs.ExampleMob;
 import com.johngalt.gulch.items.GaltCommonGun;
 import com.johngalt.gulch.items.ItemBlasterRifle;
 import com.johngalt.gulch.items.ItemMusket;
+import com.johngalt.gulch.items.ItemSimpleRevolver;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -45,6 +46,10 @@ public class GaltEntities
         else if (gunType instanceof ItemMusket)
         {
             return new EntityMusketShot(world, player);
+        }
+        else if (gunType instanceof ItemSimpleRevolver)
+        {
+            return new EntityRevolverShot(world, player);
         }
 
         return null;

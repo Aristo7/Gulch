@@ -46,3 +46,5 @@ item.gulch:ItemMusketTrigger.name=Musket Trigger
 item.gulch:ItemMusketHammer.name=Musket Hammer
 item.gulch:ItemMusketStock.name=Musket Stock
 item.gulch:ItemWoodMusketRamRod.name=Wood Musket Ram Rod
+item.gulch:GaltCommonItem.name=Common Item
+item.gulch:ItemSimpleRevolver.name=Simple Revolver

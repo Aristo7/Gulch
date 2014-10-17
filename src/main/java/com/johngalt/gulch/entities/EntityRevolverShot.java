@@ -6,16 +6,16 @@ import net.minecraft.world.World;
 /**
  * Created on 6/21/2014.
  */
-public class EntityMusketShot extends GaltAmmoEntity
+public class EntityRevolverShot extends GaltAmmoEntity
 {
     // DO NOT USE
-    public EntityMusketShot(World world)
+    public EntityRevolverShot(World world)
     {
         super(world);
     }
 
-    public EntityMusketShot(World world, EntityPlayer player)
+    public EntityRevolverShot(World world, EntityPlayer player)
     {
-        super(world, player, (byte) 22, 0.01F);
+        super(world, player, (byte) 14, 0.01F);
     }
 }

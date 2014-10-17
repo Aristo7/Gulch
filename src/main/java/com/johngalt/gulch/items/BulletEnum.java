@@ -4,5 +4,6 @@ public enum BulletEnum
 {
     BlasterBolt,
     MusketShot,
+    RevolverShot,
     PaperCartridge
 }
