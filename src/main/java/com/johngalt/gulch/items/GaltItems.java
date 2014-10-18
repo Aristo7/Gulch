@@ -52,6 +52,13 @@ public class GaltItems
     public static GaltCommonItem BasicRevolverInnerRod;
     public static GaltCommonItem BasicRevolverTrigger;
     public static GaltCommonItem BasicRevolverCylinder;
+    public static ItemMusketWoodBase MusketWoodBase;
+    public static ItemBasicRevolverWoodBase BasicRevolverWoodBase;
+    public static ItemWoodBase WoodBasicRevolverTrigger;
+    public static ItemWoodBase WoodBasicRevolverHammer;
+    public static ItemWoodBase WoodBasicRevolverBarrel;
+    public static ItemWoodBase WoodBasicRevolverInnerRod;
+    public static ItemWoodBase WoodBasicRevolverCartidge;
 
 
     /**
@@ -71,11 +78,13 @@ public class GaltItems
 
         Knife = new ItemKnife();
 
-        WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot");
-        WoodMusketTrigger = new ItemWoodBase(2, "ItemWoodMusketTrigger");
-        WoodMusketHammer = new ItemWoodBase(4, "ItemWoodMusketHammer");
-        WoodMusketBarrel = new ItemWoodBase(4, "ItemWoodMusketBarrel");
-        WoodMusketRamRod = new ItemWoodBase(7, "ItemWoodMusketRamRod");
+        MusketWoodBase = new ItemMusketWoodBase();
+
+        WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot", MusketWoodBase);
+        WoodMusketTrigger = new ItemWoodBase(2, "ItemWoodMusketTrigger", MusketWoodBase);
+        WoodMusketHammer = new ItemWoodBase(4, "ItemWoodMusketHammer", MusketWoodBase);
+        WoodMusketBarrel = new ItemWoodBase(6, "ItemWoodMusketBarrel", MusketWoodBase);
+        WoodMusketRamRod = new ItemWoodBase(7, "ItemWoodMusketRamRod", MusketWoodBase);
 
         MusketShotMold = new ItemMold(GaltItems.WoodMusketShot, "ItemMusketShotMold");
         MusketShotMoldFired = MusketShotMold.GetFiredMold();
@@ -100,6 +109,15 @@ public class GaltItems
 
         RevolverShot = new GaltCommonItem();
         RevolverShot.setMaxStackSize(64);
+
+        BasicRevolverWoodBase = new ItemBasicRevolverWoodBase();
+
+
+        WoodBasicRevolverTrigger = new ItemWoodBase(2, "ItemWoodMusketTrigger", BasicRevolverWoodBase);
+        WoodBasicRevolverHammer = new ItemWoodBase(4, "WoodBasicRevolverHammer", BasicRevolverWoodBase);
+        WoodBasicRevolverBarrel = new ItemWoodBase(6, "WoodBasicRevolverBarrel", BasicRevolverWoodBase);
+        WoodBasicRevolverInnerRod = new ItemWoodBase(7, "WoodBasicRevolverInnerRod", BasicRevolverWoodBase);
+        WoodBasicRevolverCartidge = new ItemWoodBase(1, "WoodBasicRevolverCartidge", BasicRevolverWoodBase);
 
 
         BasicRevolverHammer = new GaltCommonItem("BasicRevolverHammer");
