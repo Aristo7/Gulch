@@ -20,6 +20,7 @@ public class GaltItems
     public static ItemGunPowder GunPowder;
     public static ItemKnife Knife;
 
+    public static ItemMusketWoodBase MusketWoodBase;
     public static ItemWoodBase WoodMusketShot;
     public static ItemWoodBase WoodMusketTrigger;
     public static ItemWoodBase WoodMusketHammer;
@@ -46,19 +47,32 @@ public class GaltItems
     public static GaltCommonItem RevolverShot;
     public static ItemSimpleRevolver SimpleRevolver;
 
-    public static GaltCommonItem BasicRevolverHammer;
-    public static GaltCommonItem BasicRevolverBarrel;
-    public static ItemBasicRevolverStock BasicRevolverStock;
-    public static GaltCommonItem BasicRevolverInnerRod;
-    public static GaltCommonItem BasicRevolverTrigger;
-    public static GaltCommonItem BasicRevolverCylinder;
-    public static ItemMusketWoodBase MusketWoodBase;
     public static ItemBasicRevolverWoodBase BasicRevolverWoodBase;
+    public static ItemWoodBase WoodRevolverShot;
     public static ItemWoodBase WoodBasicRevolverTrigger;
     public static ItemWoodBase WoodBasicRevolverHammer;
     public static ItemWoodBase WoodBasicRevolverBarrel;
     public static ItemWoodBase WoodBasicRevolverInnerRod;
     public static ItemWoodBase WoodBasicRevolverCartidge;
+
+    public static ItemMold RevolverShotMold;
+    public static ItemMold RevolverShotMoldFired;
+    public static ItemMold BasicRevolverTriggerMold;
+    public static ItemMold BasicRevolverTriggerMoldFired;
+    public static ItemMold BasicRevolverHammerMold;
+    public static ItemMold BasicRevolverHammerMoldFired;
+    public static ItemMold BasicRevolverBarrelMold;
+    public static ItemMold BasicRevolverBarrelMoldFired;
+    public static ItemMold BasicRevolverCartidgeMold;
+    public static ItemMold BasicRevolverCartidgeMoldFired;
+
+    public static GaltCommonItem BasicRevolverHammer;
+    public static GaltCommonItem BasicRevolverBarrel;
+    public static ItemBasicRevolverStock BasicRevolverStock;
+    public static GaltCommonItem BasicRevolverInnerRod;
+    public static GaltCommonItem BasicRevolverTrigger;
+    public static GaltCommonItem BasicRevolverCartridge;
+    public static GaltCommonItem BasicRevolverCylinder;
 
 
     /**
@@ -78,6 +92,53 @@ public class GaltItems
 
         Knife = new ItemKnife();
 
+        buildMusketParts();
+        buildRevolverParts();
+    }
+
+    private static void buildRevolverParts()
+    {
+        RevolverShot = new GaltCommonItem();
+        RevolverShot.setMaxStackSize(64);
+
+        BasicRevolverWoodBase = new ItemBasicRevolverWoodBase();
+
+
+        WoodBasicRevolverTrigger = new ItemWoodBase(2, "WoodBasicRevolverTrigger", BasicRevolverWoodBase);
+        WoodBasicRevolverHammer = new ItemWoodBase(4, "WoodBasicRevolverHammer", BasicRevolverWoodBase);
+        WoodBasicRevolverBarrel = new ItemWoodBase(6, "WoodBasicRevolverBarrel", BasicRevolverWoodBase);
+        WoodBasicRevolverInnerRod = new ItemWoodBase(7, "WoodBasicRevolverInnerRod", BasicRevolverWoodBase);
+        WoodBasicRevolverCartidge = new ItemWoodBase(1, "WoodBasicRevolverCartidge", BasicRevolverWoodBase);
+
+
+        RevolverShotMold = new ItemMold(GaltItems.WoodRevolverShot, "ItemBasicRevolverShotMold");
+        RevolverShotMoldFired = RevolverShotMold.GetFiredMold();
+
+        BasicRevolverTriggerMold = new ItemMold(GaltItems.WoodBasicRevolverTrigger, "ItemBasicRevolverTriggerMold");
+        BasicRevolverTriggerMoldFired = MusketTriggerMold.GetFiredMold();
+
+        BasicRevolverHammerMold = new ItemMold(GaltItems.WoodBasicRevolverHammer, "ItemBasicRevolverHammerMold");
+        BasicRevolverHammerMoldFired = MusketHammerMold.GetFiredMold();
+
+        BasicRevolverBarrelMold = new ItemMold(GaltItems.WoodBasicRevolverBarrel, "ItemBasicRevolverBarrelMold");
+        BasicRevolverBarrelMoldFired = MusketBarrelMold.GetFiredMold();
+
+        BasicRevolverCartidgeMold = new ItemMold(GaltItems.WoodBasicRevolverCartidge, "ItemBasicRevolverCartidgeMold");
+        BasicRevolverCartidgeMoldFired = BasicRevolverCartidgeMold.GetFiredMold();
+
+        BasicRevolverHammer = new GaltCommonItem("BasicRevolverHammer");
+        BasicRevolverBarrel = new GaltCommonItem("BasicRevolverBarrel");
+        BasicRevolverStock = new ItemBasicRevolverStock();
+        BasicRevolverInnerRod = new GaltCommonItem("BasicRevolverInnerRod");
+        BasicRevolverTrigger = new GaltCommonItem("BasicRevolverTrigger");
+        BasicRevolverCartridge = new GaltCommonItem("BasicRevolverCartridge");
+        BasicRevolverCylinder = new GaltCommonItem("BasicRevolverCylinder");
+
+        SimpleRevolver = new ItemSimpleRevolver();
+    }
+
+    private static void buildMusketParts()
+    {
         MusketWoodBase = new ItemMusketWoodBase();
 
         WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot", MusketWoodBase);
@@ -106,28 +167,6 @@ public class GaltItems
         MusketTrigger = new GaltCommonItem("ItemMusketTrigger");
         MusketHammer = new GaltCommonItem("ItemMusketHammer");
         MusketStock = new ItemMusketStock();
-
-        RevolverShot = new GaltCommonItem();
-        RevolverShot.setMaxStackSize(64);
-
-        BasicRevolverWoodBase = new ItemBasicRevolverWoodBase();
-
-
-        WoodBasicRevolverTrigger = new ItemWoodBase(2, "ItemWoodMusketTrigger", BasicRevolverWoodBase);
-        WoodBasicRevolverHammer = new ItemWoodBase(4, "WoodBasicRevolverHammer", BasicRevolverWoodBase);
-        WoodBasicRevolverBarrel = new ItemWoodBase(6, "WoodBasicRevolverBarrel", BasicRevolverWoodBase);
-        WoodBasicRevolverInnerRod = new ItemWoodBase(7, "WoodBasicRevolverInnerRod", BasicRevolverWoodBase);
-        WoodBasicRevolverCartidge = new ItemWoodBase(1, "WoodBasicRevolverCartidge", BasicRevolverWoodBase);
-
-
-        BasicRevolverHammer = new GaltCommonItem("BasicRevolverHammer");
-        BasicRevolverBarrel = new GaltCommonItem("BasicRevolverBarrel");
-        BasicRevolverStock = new ItemBasicRevolverStock();
-        BasicRevolverInnerRod = new GaltCommonItem("BasicRevolverInnerRod");
-        BasicRevolverTrigger = new GaltCommonItem("BasicRevolverTrigger");
-        BasicRevolverCylinder = new GaltCommonItem("BasicRevolverCylinder");
-
-        SimpleRevolver = new ItemSimpleRevolver();
     }
 
     /**

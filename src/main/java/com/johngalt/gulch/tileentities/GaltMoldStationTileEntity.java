@@ -56,6 +56,13 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
         addMoldAndProductRecipe(GaltItems.MusketRamRodMold, GaltItems.MusketRamRodMoldFired, Items.iron_ingot, GaltItems.MusketRamRod, 1);
         addMoldAndProductRecipe(GaltItems.MusketHammerMold, GaltItems.MusketHammerMoldFired, Items.iron_ingot, GaltItems.MusketHammer, 1);
 
+        addMoldAndProductRecipe(GaltItems.RevolverShotMold, GaltItems.RevolverShotMoldFired, GaltItems.IngotLead, GaltItems.RevolverShot, 16);
+        addMoldAndProductRecipe(GaltItems.BasicRevolverBarrelMold, GaltItems.BasicRevolverBarrelMoldFired, Items.iron_ingot, GaltItems.BasicRevolverBarrel, 1);
+        addMoldAndProductRecipe(GaltItems.BasicRevolverCartidgeMold, GaltItems.BasicRevolverCartidgeMoldFired, Items.iron_ingot, GaltItems.BasicRevolverCartridge, 1);
+        addMoldAndProductRecipe(GaltItems.BasicRevolverHammerMold, GaltItems.BasicRevolverHammerMoldFired, Items.iron_ingot, GaltItems.BasicRevolverHammer, 1);
+
+        // shit forgot inner rod
+
         this.RecipeList.AddFuel(new ItemStack(GaltItems.GunPowder, 1), 100);
 
         this.AllowRegisteredFuel();
