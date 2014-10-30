@@ -3,7 +3,7 @@ package com.johngalt.gulch.tileentities.common;
 import com.johngalt.gulch.blocks.common.GaltMachineBlock;
 import com.johngalt.gulch.gui.GaltContainerMachine;
 import com.johngalt.gulch.gui.GaltGuiMachine;
-import cpw.mods.fml.common.registry.GameRegistry;
+import com.johngalt.gulch.items.GaltCommonItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1017,10 +1018,28 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
 
                     for (ItemStack slotItem : slotinputs)
                     {
-                        if (recipeItem.isItemEqual(slotItem) && slotItem.stackSize >= recipeItem.stackSize)
+                        if (!found)
                         {
-                            found = true;
-                            break;
+                            if (recipeItem.isItemEqual(slotItem) && slotItem.stackSize >= recipeItem.stackSize)
+                            {
+                                found = true;
+                            }
+                            if (recipeItem.getItem() instanceof GaltCommonItem)
+                            {
+                                GaltCommonItem galtItem = (GaltCommonItem) recipeItem.getItem();
+                                if (galtItem.GetOreDictName() != null)
+                                {
+                                    List<ItemStack> oreitems = OreDictionary.getOres(galtItem.GetOreDictName());
+                                    for (ItemStack item : oreitems)
+                                    {
+                                        if (item.isItemEqual(slotItem))
+                                        {
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 

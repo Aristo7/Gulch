@@ -16,5 +16,10 @@
     {
         "category": "master",
         "sounds": ["musket_shot"]
+    },
+	"revolver_shot":
+    {
+        "category": "master",
+        "sounds": ["revolver_shot"]
     }
 }

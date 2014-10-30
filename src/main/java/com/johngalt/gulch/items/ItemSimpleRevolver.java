@@ -19,7 +19,7 @@ public class ItemSimpleRevolver extends GaltCommonGun implements IGaltRecipes
 {
     public ItemSimpleRevolver()
     {
-        super(Arrays.asList(new BulletEnum[]{BulletEnum.RevolverShot}), 4, GaltSounds.SoundsEnum.musket_shot, GaltEffects.EffectEnum.Flame);
+        super(Arrays.asList(new BulletEnum[]{BulletEnum.RevolverShot}), 4, GaltSounds.SoundsEnum.revolver_shot, GaltEffects.EffectEnum.Poof);
     }
 
     /**
@@ -44,13 +44,13 @@ public class ItemSimpleRevolver extends GaltCommonGun implements IGaltRecipes
         super.RegisterRecipes();
 
         GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1),
-                        " h ", "bbs", "rrt",
+                        " h ", "bbs", "rct",
                         'h', GaltItems.BasicRevolverHammer,
                         'b', GaltItems.BasicRevolverBarrel,
                         's', GaltItems.BasicRevolverStock,
                         'r', GaltItems.BasicRevolverInnerRod,
                         't', GaltItems.BasicRevolverTrigger,
-                        'r', GaltItems.BasicRevolverCylinder)
+                        'c', GaltItems.BasicRevolverCylinder)
         );
     }
 }

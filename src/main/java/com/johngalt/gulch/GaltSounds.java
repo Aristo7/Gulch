@@ -18,7 +18,8 @@ public class GaltSounds
     {
         blaster_shot,
         no_ammo,
-        musket_shot
+        musket_shot,
+        revolver_shot
     }
 }
 

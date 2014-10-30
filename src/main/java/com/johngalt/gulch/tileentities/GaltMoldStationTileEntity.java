@@ -60,6 +60,8 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
         addMoldAndProductRecipe(GaltItems.BasicRevolverBarrelMold, GaltItems.BasicRevolverBarrelMoldFired, Items.iron_ingot, GaltItems.BasicRevolverBarrel, 1);
         addMoldAndProductRecipe(GaltItems.BasicRevolverCartidgeMold, GaltItems.BasicRevolverCartidgeMoldFired, Items.iron_ingot, GaltItems.BasicRevolverCartridge, 1);
         addMoldAndProductRecipe(GaltItems.BasicRevolverHammerMold, GaltItems.BasicRevolverHammerMoldFired, Items.iron_ingot, GaltItems.BasicRevolverHammer, 1);
+        addMoldAndProductRecipe(GaltItems.BasicRevolverTriggerMold, GaltItems.BasicRevolverTriggerMoldFired, Items.iron_ingot, GaltItems.BasicRevolverTrigger, 1);
+        addMoldAndProductRecipe(GaltItems.BasicRevolverInnerRodMold, GaltItems.BasicRevolverInnerRodMoldFired, Items.iron_ingot, GaltItems.BasicRevolverInnerRod, 1);
 
         // shit forgot inner rod
 

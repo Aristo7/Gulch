@@ -64,6 +64,6 @@ public class ItemWoodBase extends GaltCommonItem implements IGaltRecipes
                 return;
         }
 
-        GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), top, middle, bottom, 'p', _Base, 'x', GaltItems.Knife.GetOreDictName()));
+        GaltRecipes.RegisterRecipe(new ShapedOreRecipe(new ItemStack(this, 1), false, top, middle, bottom, 'p', _Base, 'x', GaltItems.Knife.GetOreDictName()));
     }
 }

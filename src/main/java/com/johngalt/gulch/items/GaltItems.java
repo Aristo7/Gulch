@@ -63,6 +63,8 @@ public class GaltItems
     public static ItemMold BasicRevolverHammerMoldFired;
     public static ItemMold BasicRevolverBarrelMold;
     public static ItemMold BasicRevolverBarrelMoldFired;
+    public static ItemMold BasicRevolverInnerRodMold;
+    public static ItemMold BasicRevolverInnerRodMoldFired;
     public static ItemMold BasicRevolverCartidgeMold;
     public static ItemMold BasicRevolverCartidgeMoldFired;
 
@@ -72,7 +74,7 @@ public class GaltItems
     public static GaltCommonItem BasicRevolverInnerRod;
     public static GaltCommonItem BasicRevolverTrigger;
     public static GaltCommonItem BasicRevolverCartridge;
-    public static GaltCommonItem BasicRevolverCylinder;
+    public static ItemBasicRevolverCylinder BasicRevolverCylinder;
 
 
     /**
@@ -84,10 +86,10 @@ public class GaltItems
         BlasterAmmo = new ItemBlasterAmmo();
         simpleItem = new GaltSimpleItem();
         Musket = new ItemMusket();
-        MusketShot = new ItemMusketShot();
+
         Wadding = new ItemWadding();
         IngotLead = new ItemIngotLead();
-        PaperCartridge = new ItemPaperCartridge();
+
         GunPowder = new ItemGunPowder();
 
         Knife = new ItemKnife();
@@ -98,30 +100,32 @@ public class GaltItems
 
     private static void buildRevolverParts()
     {
-        RevolverShot = new GaltCommonItem();
+        RevolverShot = new GaltCommonItem("ItemRevolverShot");
         RevolverShot.setMaxStackSize(64);
 
         BasicRevolverWoodBase = new ItemBasicRevolverWoodBase();
 
-
+        WoodRevolverShot = new ItemWoodBase(3, "WoodRevolverShot", BasicRevolverWoodBase);
         WoodBasicRevolverTrigger = new ItemWoodBase(2, "WoodBasicRevolverTrigger", BasicRevolverWoodBase);
         WoodBasicRevolverHammer = new ItemWoodBase(4, "WoodBasicRevolverHammer", BasicRevolverWoodBase);
         WoodBasicRevolverBarrel = new ItemWoodBase(6, "WoodBasicRevolverBarrel", BasicRevolverWoodBase);
         WoodBasicRevolverInnerRod = new ItemWoodBase(7, "WoodBasicRevolverInnerRod", BasicRevolverWoodBase);
         WoodBasicRevolverCartidge = new ItemWoodBase(1, "WoodBasicRevolverCartidge", BasicRevolverWoodBase);
 
-
         RevolverShotMold = new ItemMold(GaltItems.WoodRevolverShot, "ItemBasicRevolverShotMold");
         RevolverShotMoldFired = RevolverShotMold.GetFiredMold();
 
         BasicRevolverTriggerMold = new ItemMold(GaltItems.WoodBasicRevolverTrigger, "ItemBasicRevolverTriggerMold");
-        BasicRevolverTriggerMoldFired = MusketTriggerMold.GetFiredMold();
+        BasicRevolverTriggerMoldFired = BasicRevolverTriggerMold.GetFiredMold();
 
         BasicRevolverHammerMold = new ItemMold(GaltItems.WoodBasicRevolverHammer, "ItemBasicRevolverHammerMold");
-        BasicRevolverHammerMoldFired = MusketHammerMold.GetFiredMold();
+        BasicRevolverHammerMoldFired = BasicRevolverHammerMold.GetFiredMold();
 
         BasicRevolverBarrelMold = new ItemMold(GaltItems.WoodBasicRevolverBarrel, "ItemBasicRevolverBarrelMold");
-        BasicRevolverBarrelMoldFired = MusketBarrelMold.GetFiredMold();
+        BasicRevolverBarrelMoldFired = BasicRevolverBarrelMold.GetFiredMold();
+
+        BasicRevolverInnerRodMold = new ItemMold(GaltItems.WoodBasicRevolverInnerRod, "BasicRevolverInnerRodMold");
+        BasicRevolverInnerRodMoldFired = BasicRevolverInnerRodMold.GetFiredMold();
 
         BasicRevolverCartidgeMold = new ItemMold(GaltItems.WoodBasicRevolverCartidge, "ItemBasicRevolverCartidgeMold");
         BasicRevolverCartidgeMoldFired = BasicRevolverCartidgeMold.GetFiredMold();
@@ -132,13 +136,16 @@ public class GaltItems
         BasicRevolverInnerRod = new GaltCommonItem("BasicRevolverInnerRod");
         BasicRevolverTrigger = new GaltCommonItem("BasicRevolverTrigger");
         BasicRevolverCartridge = new GaltCommonItem("BasicRevolverCartridge");
-        BasicRevolverCylinder = new GaltCommonItem("BasicRevolverCylinder");
+        BasicRevolverCylinder = new ItemBasicRevolverCylinder();
 
         SimpleRevolver = new ItemSimpleRevolver();
     }
 
     private static void buildMusketParts()
     {
+        MusketShot = new ItemMusketShot();
+        PaperCartridge = new ItemPaperCartridge();
+
         MusketWoodBase = new ItemMusketWoodBase();
 
         WoodMusketShot = new ItemWoodBase(1, "ItemWoodMusketShot", MusketWoodBase);
