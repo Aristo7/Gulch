@@ -1,5 +1,6 @@
 package com.johngalt.gulch.items;
 
+import com.johngalt.gulch.GulchMod;
 import com.johngalt.gulch.recipes.GaltRecipes;
 import com.johngalt.gulch.recipes.IGaltRecipes;
 import net.minecraft.init.Blocks;
@@ -28,13 +29,16 @@ public class ItemGunPowder extends GaltCommonItem implements IGaltRecipes
     @Override
     public void RegisterRecipes()
     {
-        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", Items.coal, "bucketLava"});
-        GaltRecipes.RegisterRecipe(recipe);
+        if (!GulchMod.DisableGulchGunPowder)
+        {
+            ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", Items.coal, "bucketLava"});
+            GaltRecipes.RegisterRecipe(recipe);
 
-        ShapelessOreRecipe recipe2 = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", "dustCoal", "bucketLava"});
-        GaltRecipes.RegisterRecipe(recipe2);
+            ShapelessOreRecipe recipe2 = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", "dustCoal", "bucketLava"});
+            GaltRecipes.RegisterRecipe(recipe2);
 
-        ShapelessOreRecipe recipe3 = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", "gemCharcoal", "bucketLava"});
-        GaltRecipes.RegisterRecipe(recipe3);
+            ShapelessOreRecipe recipe3 = new ShapelessOreRecipe(new ItemStack(this, 4), new Object[]{"sand", "gemCharcoal", "bucketLava"});
+            GaltRecipes.RegisterRecipe(recipe3);
+        }
     }
 }

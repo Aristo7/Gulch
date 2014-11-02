@@ -31,8 +31,9 @@ public class GulchMod
     @SidedProxy(clientSide = References.CLIENTPROXYLOCATION, serverSide = References.COMMONPROXYLOCATION)
     public static CommonProxy proxy;
 
-    public static final Boolean generateLangFile = true;
+    public static final Boolean generateLangFile = false;
     public static final Boolean DisableGulchKnife = true;
+    public static final Boolean DisableGulchGunPowder = true;
 
     @Mod.Instance(References.MODID)
     public static GulchMod instance;

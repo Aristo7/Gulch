@@ -17,6 +17,6 @@ public class EntityRevolverShot extends GaltAmmoEntity
 
     public EntityRevolverShot(World world, EntityPlayer player, GaltCommonGun gun)
     {
-        super(world, player, (byte) 14, 0.01F, gun, 10);
+        super(world, player, (byte) 22, 0.02F, gun, 10);
     }
 }
