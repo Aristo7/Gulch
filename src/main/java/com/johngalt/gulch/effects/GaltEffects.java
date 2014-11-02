@@ -2,6 +2,7 @@ package com.johngalt.gulch.effects;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -13,7 +14,7 @@ public class GaltEffects
     private static Minecraft mc = Minecraft.getMinecraft();
     private static World theWorld = mc.theWorld;
 
-    public static EntityFX spawnParticleAtHeldItem(EffectEnum par1Effect, EntityPlayer par3EntityPlayer, double par8, double par10, double par12)
+    public static EntityFX spawnParticleAtHeldItem(EffectEnum par1Effect, EntityLivingBase par3EntityPlayer, double par8, double par10, double par12)
     {
         float zOffset = (float) Math.cos(Math.toRadians(par3EntityPlayer.rotationYaw + 40)) * 0.25F;
         float xOffset = (float) -(Math.sin(Math.toRadians(par3EntityPlayer.rotationYaw + 40))) * 0.25F;
@@ -73,7 +74,7 @@ public class GaltEffects
     public static enum EffectEnum
     {
         Flame,
-        Poof
+        _ShotPartical, Poof
 
     }
 }

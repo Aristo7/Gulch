@@ -1,5 +1,6 @@
 package com.johngalt.gulch.entities;
 
+import com.johngalt.gulch.items.GaltCommonGun;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -14,8 +15,8 @@ public class EntityRevolverShot extends GaltAmmoEntity
         super(world);
     }
 
-    public EntityRevolverShot(World world, EntityPlayer player)
+    public EntityRevolverShot(World world, EntityPlayer player, GaltCommonGun gun)
     {
-        super(world, player, (byte) 14, 0.01F);
+        super(world, player, (byte) 14, 0.01F, gun, 10);
     }
 }

@@ -20,6 +20,7 @@ public class ItemSimpleRevolver extends GaltCommonGun implements IGaltRecipes
     public ItemSimpleRevolver()
     {
         super(Arrays.asList(new BulletEnum[]{BulletEnum.RevolverShot}), 4, GaltSounds.SoundsEnum.revolver_shot, GaltEffects.EffectEnum.Poof);
+        this.TickDelay = 10;
     }
 
     /**

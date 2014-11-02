@@ -41,15 +41,15 @@ public class GaltEntities
     {
         if (gunType instanceof ItemBlasterRifle)
         {
-            return new EntityBlasterBolt(world, player);
+            return new EntityBlasterBolt(world, player, gunType);
         }
         else if (gunType instanceof ItemMusket)
         {
-            return new EntityMusketShot(world, player);
+            return new EntityMusketShot(world, player, gunType);
         }
         else if (gunType instanceof ItemSimpleRevolver)
         {
-            return new EntityRevolverShot(world, player);
+            return new EntityRevolverShot(world, player, gunType);
         }
 
         return null;

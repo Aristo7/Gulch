@@ -22,7 +22,9 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     private List<BulletEnum> _DefaultBulletTypes;
     private GaltEffects.EffectEnum _BarrelParticleEffect;
     private int _ClipSize;
-
+    protected int TickDelay;
+    private boolean _Firing;
+    private long _LastFired;
 
     public GaltCommonGun(List<BulletEnum> bulletTypes, int clipSize, GaltSounds.SoundsEnum shotSound, GaltEffects.EffectEnum barrelParticleEffect)
     {
@@ -32,7 +34,8 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         _DefaultBulletTypes = bulletTypes;
         _ShotSound = shotSound;
         _BarrelParticleEffect = barrelParticleEffect;
-
+        TickDelay = 0;
+        _Firing = false;
 
         setMaxStackSize(1);
         this.setMaxDamage(_ClipSize + 1);
@@ -57,22 +60,38 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
     @Override
     public ItemStack onItemRightClick(ItemStack gun, World world, EntityPlayer player)
     {
-        if (gun.getItemDamage() < _ClipSize)
+        if (!world.isRemote && _Firing && world.getWorldTime() - _LastFired > TickDelay)
         {
-            GaltSounds.PlaySound(_ShotSound, world, player);
-            if (!world.isRemote)
+            _Firing = false;
+        }
+
+        if (!_Firing)
+        {
+            if (gun.getItemDamage() < _ClipSize)
             {
+                if (!world.isRemote)
+                {
+                    _Firing = true;
+                    _LastFired = world.getWorldTime();
+                }
 
-                world.spawnEntityInWorld(GaltEntities.getBulletInstance(this, world, player));
-                GaltEffects.spawnParticleAtHeldItem(_BarrelParticleEffect, player, 0.0F, 0.0F, 0.0F);
+                GaltSounds.PlaySound(_ShotSound, world, player);
 
-                gun.damageItem(1, player);
+                if (!world.isRemote)
+                {
+
+                    world.spawnEntityInWorld(GaltEntities.getBulletInstance(this, world, player));
+
+
+                    gun.damageItem(1, player);
+                }
+            }
+            else
+            {
+                GaltSounds.PlaySound(GaltSounds.SoundsEnum.no_ammo, world, player);
             }
         }
-        else
-        {
-            GaltSounds.PlaySound(GaltSounds.SoundsEnum.no_ammo, world, player);
-        }
+
 
         return gun;
     }
@@ -148,5 +167,10 @@ public class GaltCommonGun extends GaltCommonItem implements IGaltRecipes
         }
 
         return null;
+    }
+
+    public GaltEffects.EffectEnum GetBarrelPartical()
+    {
+        return _BarrelParticleEffect;
     }
 }

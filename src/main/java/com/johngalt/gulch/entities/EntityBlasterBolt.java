@@ -1,5 +1,6 @@
 package com.johngalt.gulch.entities;
 
+import com.johngalt.gulch.items.GaltCommonGun;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -15,9 +16,9 @@ public class EntityBlasterBolt extends GaltAmmoEntity
         super(world);
     }
 
-    public EntityBlasterBolt(World world, EntityLivingBase entityLiving)
+    public EntityBlasterBolt(World world, EntityLivingBase entityLiving, GaltCommonGun gun)
     {
-        super(world, entityLiving, (byte) 10, 0.0F);
+        super(world, entityLiving, (byte) 10, 0.0F, gun);
     }
 
     @Override
