@@ -49,7 +49,7 @@ public class GaltAmmoEntity extends EntityThrowable
         if (ticksExisted >= _TickDelay)
         {
 
-            if (!this.worldObj.isRemote && !_Fired)
+            if (!_Fired)
             {
                 EntityLivingBase thrower = this.getThrower();
                 this.setLocationAndAngles(thrower.posX, thrower.posY + (double)thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
@@ -65,7 +65,11 @@ public class GaltAmmoEntity extends EntityThrowable
                 this.motionY = (double)(-MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float)Math.PI) * f);
                 this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, 3.0F, 1.0F);
 
-                GaltEffects.spawnParticleAtHeldItem(_ShotPartical, this.getThrower(), 0.0F, 0.0F, 0.0F);
+                if (!this.worldObj.isRemote)
+                {
+                    GaltEffects.spawnParticleAtHeldItem(_ShotPartical, this.getThrower(), 0.0F, 0.0F, 0.0F);
+                }
+
                 _Fired = true;
             }
 
