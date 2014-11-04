@@ -1,11 +1,14 @@
 package com.johngalt.gulch.effects;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityFlameFX;
 import net.minecraft.world.World;
 
 /**
  * Created on 6/17/2014.
  */
+@SideOnly(Side.CLIENT)
 public class GaltStillFlameFX extends EntityFlameFX
 {
 

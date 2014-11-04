@@ -810,11 +810,6 @@ public abstract class GaltTileEntityMachine extends GaltTileEntity implements IS
             return null;
         }
 
-        public void CalculateAndAddOreDictionaryEntries()
-        {
-            /// TODO
-        }
-
         public void AddRecipe(ItemStack[] inputs, ItemStack[] fuel, ItemStack[] required, ItemStack[] output)
         {
             _Recipes.add(new MachineRecipe(inputs, fuel, required, output));

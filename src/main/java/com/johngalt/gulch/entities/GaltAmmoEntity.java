@@ -52,23 +52,22 @@ public class GaltAmmoEntity extends EntityThrowable
             if (!_Fired)
             {
                 EntityLivingBase thrower = this.getThrower();
-                this.setLocationAndAngles(thrower.posX, thrower.posY + (double)thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
-                this.posX -= (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
+                this.setLocationAndAngles(thrower.posX, thrower.posY + (double) thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
+                this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
                 this.posY -= 0.10000000149011612D;
-                this.posZ -= (double)(MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
+                this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
                 this.setPosition(this.posX, this.posY, this.posZ);
                 this.yOffset = 0.0F;
 
                 float f = 0.4F;
-                this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * f);
-                this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * f);
-                this.motionY = (double)(-MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float)Math.PI) * f);
+                this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f);
+                this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f);
+                this.motionY = (double) (-MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float) Math.PI) * f);
                 this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, 3.0F, 1.0F);
 
-                if (!this.worldObj.isRemote)
-                {
-                    GaltEffects.spawnParticleAtHeldItem(_ShotPartical, this.getThrower(), 0.0F, 0.0F, 0.0F);
-                }
+                //if (this.worldObj.isRemote)
+                GaltEffects.spawnParticleAtHeldItem(_ShotPartical, this.getThrower(), 0.0F, 0.0F, 0.0F);
+
 
                 _Fired = true;
             }
@@ -91,7 +90,8 @@ public class GaltAmmoEntity extends EntityThrowable
     @Override
     protected void onImpact(MovingObjectPosition movingObject)
     {
-        GaltEffects.spawnParticle(GaltEffects.EffectEnum.Poof, this.posX, this.posY, this.posZ, 0.0F, 0.0F, 0.0F);
+        if (this.worldObj.isRemote)
+            GaltEffects.spawnParticle(GaltEffects.EffectEnum.Poof, this.posX, this.posY, this.posZ, 0.0F, 0.0F, 0.0F, this.dimension);
 
         if (movingObject.entityHit != null)
         {

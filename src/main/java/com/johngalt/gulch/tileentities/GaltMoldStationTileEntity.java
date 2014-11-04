@@ -149,10 +149,10 @@ public class GaltMoldStationTileEntity extends GaltTileEntityMachine implements 
                 _MBComplete = complete;
                 onMBCompletenessChange();
 
-                if (!this.worldObj.isRemote)
-                {
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Multiblock completeness: " + complete));
-                }
+//                if (!this.worldObj.isRemote)
+//                {
+//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Multiblock completeness: " + complete));
+//                }
             }
         }
         else
